@@ -28,7 +28,6 @@ const UserSchema = new Schema({
   },
   planId: {
     type: Number,
-    unique: true,
     default: 1,
   },
   creditBalance: {
