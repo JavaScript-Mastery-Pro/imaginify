@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/components/shared/Header";
 
 const Credits = () => {
-  const planName = "Free plan";
+  const planId = "1";
 
   return (
     <>
@@ -50,10 +50,10 @@ const Credits = () => {
                 ))}
               </ul>
 
-              {planName === plan.name ? (
+              {planId === plan._id ? (
                 <Button
                   variant="outline"
-                  className="w-full rounded-full bg-purple-100 bg-cover text-dark-600 hover:text-purple-500"
+                  className="w-full rounded-full bg-purple-100 bg-cover text-dark-600"
                 >
                   Active Plan
                 </Button>

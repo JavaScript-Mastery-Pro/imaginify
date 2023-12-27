@@ -23,12 +23,13 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  planType: {
-    type: String,
+  planId: {
+    type: Number,
     required: true,
-    default: "Free plan",
+    unique: true,
+    default: 1,
   },
-  credits: {
+  creditBalance: {
     type: Number,
     default: 10,
   },
