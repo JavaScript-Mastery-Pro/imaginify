@@ -11,6 +11,11 @@ const UserSchema = new Schema({
     required: true,
     unique: true,
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   firstName: {
     type: String,
     required: true,
@@ -25,7 +30,6 @@ const UserSchema = new Schema({
   },
   planId: {
     type: Number,
-    required: true,
     unique: true,
     default: 1,
   },
