@@ -2,26 +2,184 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ========================================== TAILWIND STYLES */
+@layer utilities {
+  /* ===== UTILITIES */
+  .wrapper {
+    @apply max-w-6xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full text-dark-400 p-16-regular;
+  }
+
+  .gradient-text {
+    @apply bg-purple-gradient bg-cover bg-clip-text text-transparent;
+  }
+
+  /* ===== ALIGNMENTS */
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+
+  /* ===== TYPOGRAPHY */
+  /* 48 */
+  .h1-semibold {
+    @apply font-semibold text-[48px] leading-[56px];
+  }
+
+  /* 36 */
+  .h2-bold {
+    @apply font-bold text-[36px] leading-[110%];
+  }
+
+  /* 30 */
+  .h3-bold {
+    @apply font-bold text-[30px] leading-[140%];
+  }
+
+  /* 24 */
+  .p-24-bold {
+    @apply font-bold text-[24px] leading-[120%];
+  }
+
+  /* 20 */
+  .p-20-semibold {
+    @apply font-semibold text-[20px] leading-[140%];
+  }
+
+  .p-20-regular {
+    @apply font-normal text-[20px] leading-[140%];
+  }
+
+  /* 16 */
+  .p-16-semibold {
+    @apply font-semibold text-[16px] leading-[140%];
+  }
+
+  .p-16-medium {
+    @apply font-medium text-[16px] leading-[140%];
+  }
+
+  .p-16-regular {
+    @apply font-normal text-[16px] leading-[140%];
+  }
+
+  /* 14 */
+  .p-14-medium {
+    @apply font-medium text-[14px] leading-[140%];
+  }
+
+  /* 10 */
+  .p-10-medium {
+    @apply font-medium text-[10px] leading-[140%];
+  }
+
+  /* =====  SHADCN OVERRIDES */
+  .button {
+    @apply py-4 px-6 flex-center gap-3 rounded-full;
+  }
+
+  .dropdown-content {
+    @apply shadow-lg rounded-md overflow-hidden p-0 mt-3;
+  }
+
+  .dropdown-item {
+    @apply p-16-medium text-dark-400 cursor-pointer transition-all px-4 py-3 rounded-none outline-none hover:border-none hover:text-white hover:bg-purple-gradient hover:bg-cover !important;
+  }
+
+  /* =============== */
+
+  .submit-button {
+    @apply blue-gradient-bg py-4 px-6 p-16-bold h-[44px] w-full md:h-[54px];
+  }
+
+  .input-field {
+    @apply h-[44px] md:h-[54px] text-white bg-dark-400 focus-visible:ring-offset-0 placeholder:text-blue-200/50 p-14-regular md:p-16-regular px-4 py-3 focus-visible:ring-transparent !important;
+  }
+
+  .select-field {
+    @apply w-full text-white h-[44px] md:h-[54px] bg-dark-400 placeholder:text-blue-200/50 p-14-regular md:p-16-regular px-5 py-3 focus:ring-offset-0 focus-visible:ring-transparent focus:ring-transparent !important;
+  }
+
+  .select-item {
+    @apply py-3 cursor-pointer;
+  }
+
+  .text-destructive {
+    @apply text-red-300;
+  }
 }
