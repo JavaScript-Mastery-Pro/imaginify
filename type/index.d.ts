@@ -7,8 +7,6 @@ declare type CreateUserParams = {
   firstName: string;
   lastName: string;
   photo: string;
-  planId: number;
-  creditBalance: number;
 };
 
 declare type UpdateUserParams = {
