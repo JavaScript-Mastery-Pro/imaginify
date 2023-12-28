@@ -7,6 +7,7 @@ const ImageRestore = () => {
         title="Image Restore"
         subTitle="Refine images by removing noise and imperfections"
       />
+      <section className="mt-14">Form</section>
     </>
   );
 };
