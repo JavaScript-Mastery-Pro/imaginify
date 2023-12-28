@@ -3,12 +3,13 @@ import { auth } from "@clerk/nextjs";
 
 import { Header } from "@/components/shared/Header";
 import { Collection } from "@/components/shared/Collection";
+import { getUserById } from "@/lib/actions/user.actions";
 
-const Profile = () => {
+const Profile = async () => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
 
-  console.log(userId);
+  const user = await getUserById(userId);
 
   return (
     <>
@@ -24,7 +25,7 @@ const Profile = () => {
               width={50}
               height={50}
             />
-            <h2 className="h2-bold text-dark-600">$64</h2>
+            <h2 className="h2-bold text-dark-600">${user.creditBalance}</h2>
           </div>
         </div>
         <div className="w-full rounded-[16px] bg-white px-6 py-8">

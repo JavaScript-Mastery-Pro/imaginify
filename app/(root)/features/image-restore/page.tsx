@@ -1,4 +1,5 @@
 import { Header } from "@/components/shared/Header";
+import { ServiceForm } from "@/components/shared/ServiceForm";
 
 const ImageRestore = () => {
   return (
@@ -7,7 +8,9 @@ const ImageRestore = () => {
         title="Image Restore"
         subTitle="Refine images by removing noise and imperfections"
       />
-      <section className="mt-14">Form</section>
+      <section className="mt-14">
+        <ServiceForm />
+      </section>
     </>
   );
 };

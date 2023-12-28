@@ -27,6 +27,9 @@ const ServiceSchema = new Schema({
     type: String,
     required: true,
   },
+  transformedImageUrl: {
+    type: String,
+  },
   serviceType: {
     type: String,
     required: true,
@@ -38,9 +41,6 @@ const ServiceSchema = new Schema({
     type: String,
   },
   prompt: {
-    type: String,
-  },
-  transformedImageUrl: {
     type: String,
   },
   author: {
