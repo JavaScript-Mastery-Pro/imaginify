@@ -23,9 +23,27 @@ const ServiceSchema = new Schema({
     type: String,
     required: true,
   },
-  imageUrl: {
-    type: String,
-    required: true,
+  image: {
+    id: {
+      type: String,
+      required: true,
+    },
+    public_id: {
+      type: String,
+      required: true,
+    },
+    display_name: {
+      type: String,
+      required: true,
+    },
+    imageUrl: {
+      type: String,
+      required: true,
+    },
+    thumbnail_url: {
+      type: String,
+      required: true,
+    },
   },
   transformedImageUrl: {
     type: String,

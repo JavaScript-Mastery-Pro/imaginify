@@ -79,7 +79,7 @@
 @layer utilities {
   /* ===== UTILITIES */
   .wrapper {
-    @apply max-w-6xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full text-dark-400 p-16-regular;
+    @apply max-w-5xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full text-dark-400 p-16-regular;
   }
 
   .gradient-text {
@@ -140,7 +140,7 @@
 
   /* 14 */
   .p-14-medium {
-    @apply font-medium text-[14px] leading-[140%];
+    @apply font-medium text-[14px] leading-[100%];
   }
 
   /* 10 */
@@ -161,15 +161,15 @@
     @apply p-16-medium text-dark-400 cursor-pointer transition-all px-4 py-3 rounded-none outline-none hover:border-none hover:text-white hover:bg-purple-gradient hover:bg-cover !important;
   }
 
-  /* =============== */
+  .input-field {
+    @apply rounded-full text-dark-600 p-16-semibold h-[44px] md:h-[54px] focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
+  }
 
   .submit-button {
-    @apply blue-gradient-bg py-4 px-6 p-16-bold h-[44px] w-full md:h-[54px];
+    @apply bg-purple-gradient bg-cover rounded-full py-4 px-6 p-16-semibold h-[44px] w-full md:h-[54px];
   }
 
-  .input-field {
-    @apply h-[44px] md:h-[54px] text-white bg-dark-400 focus-visible:ring-offset-0 placeholder:text-blue-200/50 p-14-regular md:p-16-regular px-4 py-3 focus-visible:ring-transparent !important;
-  }
+  /* =============== */
 
   .select-field {
     @apply w-full text-white h-[44px] md:h-[54px] bg-dark-400 placeholder:text-blue-200/50 p-14-regular md:p-16-regular px-5 py-3 focus:ring-offset-0 focus-visible:ring-transparent focus:ring-transparent !important;
