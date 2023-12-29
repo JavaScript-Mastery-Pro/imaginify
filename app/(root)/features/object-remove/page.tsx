@@ -11,7 +11,9 @@ const ObjectRemove = () => {
       <section className="mt-14">
         <ServiceForm
           type="Remove Object"
-          config={{ multiple: true, removeShadow: true, prompt: "" }}
+          config={{
+            remove: { prompt: "", removeShadow: true, multiple: true },
+          }}
         />
       </section>
     </>

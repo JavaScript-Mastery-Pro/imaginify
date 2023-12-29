@@ -22,13 +22,26 @@ export const serviceFormSchema = z.object({
   transformedImageUrl: z.string(),
   serviceType: z.string(),
   aspectRatio: z.string().optional(),
-  targetObject: z.string().optional(),
+  color: z.string().optional(),
   prompt: z.string().optional(),
 });
 
 type ServiceFormProps = {
   type: "Restore Image" | "Fill Image" | "Remove Object" | "Recolor Item";
-  config?: {};
+  config?: {
+    remove?: {
+      prompt: string;
+      removeShadow?: true;
+      multiple?: true;
+    };
+    restore?: boolean;
+    fillBackground?: boolean;
+    recolor?: {
+      prompt?: string;
+      to: string;
+      multiple?: true;
+    };
+  };
 };
 
 // COMPONENT
@@ -38,9 +51,8 @@ export const ServiceForm = ({
 }: ServiceFormProps) => {
   const [image, setImage] = useState<any>();
   const [transformation, setTransformation] = useState(config);
-  const initialValues = serviceInitialValues;
 
-  console.log({ image });
+  const initialValues = serviceInitialValues;
 
   // Form
   const form = useForm<z.infer<typeof serviceFormSchema>>({
@@ -51,9 +63,17 @@ export const ServiceForm = ({
   // Submit Handler
   const onSubmit = (values: z.infer<typeof serviceFormSchema>) => {
     if (image) {
-      console.log({ ...values, imageUrl: image?.public_id });
+      console.log({
+        ...values,
+        imageUrl: image?.public_id,
+        serviceType: type,
+        prompt:
+          transformation?.recolor?.prompt || transformation?.remove?.prompt,
+      });
     }
   };
+
+  console.log({ transformation });
 
   return (
     <Form {...form}>
@@ -79,19 +99,25 @@ export const ServiceForm = ({
         {(type === "Remove Object" || type === "Recolor Item") && (
           <CustomField
             control={form.control}
-            name="targetObject"
+            name="prompt"
             formLabel={
               type === "Remove Object" ? "Item to Remove" : "Item to Recolor"
             }
             className="w-full"
             render={({ field }) => (
               <Input
-                {...field}
                 className="input-field"
-                onChange={setTransformation((prevState) => ({
-                  ...prevState,
-                  prompt: field.value,
-                }))}
+                onChange={(e) => {
+                  field.onChange(
+                    setTransformation((prevState) => ({
+                      ...prevState,
+                      [type === "Remove Object" ? "remove" : "recolor"]: {
+                        ...prevState?.remove,
+                        prompt: e.target.value,
+                      },
+                    }))
+                  );
+                }}
               />
             )}
           />
@@ -100,10 +126,22 @@ export const ServiceForm = ({
         {type === "Recolor Item" && (
           <CustomField
             control={form.control}
-            name="prompt"
+            name="color"
             formLabel="Replacement Color"
             className="w-full"
-            render={({ field }) => <Input {...field} className="input-field" />}
+            render={({ field }) => (
+              <Input
+                className="input-field"
+                onChange={(e) => {
+                  field.onChange(
+                    setTransformation((prevState) => ({
+                      ...prevState,
+                      recolor: { ...prevState?.recolor, to: e.target.value },
+                    }))
+                  );
+                }}
+              />
+            )}
           />
         )}
 
@@ -122,26 +160,26 @@ export const ServiceForm = ({
               }}
               onSuccess={(result) => {
                 setImage(result?.info);
-
-                console.log({ result });
               }}
             >
               {({ open }) => {
                 return (
                   <>
                     {image ? (
-                      <div className="grid h-fit max-h-[600px] grid-cols-2 gap-5">
+                      <div className="grid h-fit max-h-[600px] grid-cols-1 gap-5 md:grid-cols-2">
+                        {/* Original Image */}
                         <div className="mt-4 flex flex-col gap-4">
                           <h3 className="h3-bold  text-dark-600">
                             Original Image
                           </h3>
+
                           <div
                             className="relative overflow-hidden rounded-[10px]"
                             onClick={() => open()}
                           >
                             <CldImage
-                              width="960"
-                              height="600"
+                              width="1000"
+                              height="1000"
                               src={
                                 image?.public_id || "imaginify/image_225_t3omjy"
                               }
@@ -157,18 +195,19 @@ export const ServiceForm = ({
 
                           {/* Bottom note */}
                           <p className="p-14-medium px-2">
-                            Hover the original image above to upload new
+                            Hover the image above to reupload
                           </p>
                         </div>
 
+                        {/* Transformed Image */}
                         <div className="mt-4 flex flex-col gap-4">
                           <h3 className="h3-bold  text-dark-600">
                             Transformed Image
                           </h3>
 
                           <CldImage
-                            width="960"
-                            height="600"
+                            width="1000"
+                            height="1000"
                             src={
                               image?.public_id || "imaginify/image_225_t3omjy"
                             }
@@ -191,7 +230,7 @@ export const ServiceForm = ({
                       </div>
                     ) : (
                       <div
-                        className="flex-center h-[600px] cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-white"
+                        className="flex-center h-60 max-h-[600px] cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-white"
                         onClick={() => open()}
                       >
                         <Image

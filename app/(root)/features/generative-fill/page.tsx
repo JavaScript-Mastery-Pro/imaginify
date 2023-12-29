@@ -10,7 +10,7 @@ const GenerativeFill = () => {
       />
 
       <section className="mt-14">
-        <ServiceForm type="Fill Image" config={{ restore: true }} />
+        <ServiceForm type="Fill Image" config={{ fillBackground: true }} />
       </section>
     </>
   );

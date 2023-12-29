@@ -55,7 +55,7 @@ const ServiceSchema = new Schema({
   aspectRatio: {
     type: String,
   },
-  targetObject: {
+  color: {
     type: String,
   },
   prompt: {

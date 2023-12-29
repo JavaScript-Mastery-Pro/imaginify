@@ -9,7 +9,7 @@ const ImageRestore = () => {
         subTitle="Refine images by removing noise and imperfections"
       />
       <section className="mt-14">
-        <ServiceForm type="Restore Image" />
+        <ServiceForm type="Restore Image" config={{ restore: true }} />
       </section>
     </>
   );
