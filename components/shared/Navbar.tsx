@@ -21,9 +21,9 @@ export const Navbar = () => {
 
   return (
     <header className="w-full bg-white shadow-sm">
-      <div className="wrapper flex-between ">
+      <div className="wrapper flex-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 py-4">
           <Image
             src="/assets/images/logo-text.svg"
             alt="logo"
@@ -33,12 +33,14 @@ export const Navbar = () => {
         </Link>
 
         {/* Nav Items */}
-        <nav className="flex-between gap-3 md:gap-8">
+        <nav className="flex-between min-h-16 gap-3 md:gap-8">
           <SignedIn>
             <ul className="md:flex-between hidden w-full flex-col items-start gap-8 md:flex-row">
               {headerLinks.map((link) => {
                 const isActive = link.route === pathname;
-                const isActiveFeature = pathname.startsWith("/features");
+                const isActiveFeature = pathname.startsWith(
+                  "/transformations/add/"
+                );
 
                 return (
                   <>
@@ -53,13 +55,9 @@ export const Navbar = () => {
                           <DropdownMenuTrigger
                             className={`${
                               isActiveFeature && "gradient-text"
-                            } flex items-center gap-2 capitalize`}
+                            } flex items-center gap-2 py-5 capitalize`}
                           >
-                            {isActiveFeature
-                              ? pathname
-                                  .substring("/features/".length)
-                                  .replace("-", " ")
-                              : "AI Features"}
+                            AI Features
                             <Image
                               src="/assets/icons/caret-down.svg"
                               alt="caret down"
@@ -87,7 +85,9 @@ export const Navbar = () => {
                           </DropdownMenuContent>
                         </DropdownMenu>
                       ) : (
-                        <Link href={link.route}>{link.label}</Link>
+                        <Link className="py-5" href={link.route}>
+                          {link.label}
+                        </Link>
                       )}
                     </li>
                   </>

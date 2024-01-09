@@ -2,7 +2,7 @@ import User from "@/lib/database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
 import { revalidatePath } from "next/cache";
-import Service from "../database/models/service.model";
+import Image from "../database/models/image.model";
 
 // CREATE
 export async function createUser(user: CreateUserParams) {
@@ -46,6 +46,28 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
   }
 }
 
+// USE CREDITS
+export async function deductCredits(userId: string) {
+  try {
+    await connectToDatabase();
+
+    const updatedUserCredits = await User.findOneAndUpdate(
+      { _id: userId },
+      { $inc: { creditBalance: -5 } },
+      {
+        new: true,
+      }
+    );
+
+    console.log({ updatedUserCredits });
+
+    if (!updatedUserCredits) throw new Error("User credit update failed");
+    return JSON.parse(JSON.stringify(updatedUserCredits));
+  } catch (error) {
+    handleError(error);
+  }
+}
+
 // DELETE
 export async function deleteUser(clerkId: string) {
   try {
@@ -61,7 +83,7 @@ export async function deleteUser(clerkId: string) {
     // Unlink relationships
     await Promise.all([
       // Update the 'events' collection to remove references to the user
-      Service.updateMany(
+      Image.updateMany(
         { _id: { $in: userToDelete.events } },
         { $pull: { organizer: userToDelete._id } }
       ),

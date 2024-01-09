@@ -1,24 +1,29 @@
 import { Collection } from "@/components/shared/Collection";
+import { getAllImages } from "@/lib/actions/image.actions";
 import Image from "next/image";
 
-export default function Home() {
+const Home = async ({ searchParams }: SearchParamProps) => {
+  const page = Number(searchParams?.page) || 1;
+  const images = await getAllImages({ page });
+
   return (
     <>
       {/* Banner */}
-      <section>
+      <section className="hidden sm:block">
         <Image
-          src="/assets/images/home-banner.png"
+          src="/assets/images/banner.png"
           alt="logo"
           width={2000}
           height={315}
-          className="ml-2 inline pb-5"
+          className="inline pb-5"
         />
       </section>
 
-      <section className="mt-14">
-        <h2 className="h2-bold mb-6 text-dark-600">Recent Edits</h2>
-        <Collection />
+      <section className="sm:mt-12">
+        <Collection hasSearch={false} images={images?.data} />
       </section>
     </>
   );
-}
+};
+
+export default Home;

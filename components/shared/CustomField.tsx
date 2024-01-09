@@ -9,12 +9,12 @@ import {
   FormLabel,
 } from "../ui/form";
 import { Control } from "react-hook-form";
-import { serviceFormSchema } from "./ServiceForm";
+import { formSchema } from "./Form";
 
 type CustomFieldProps = {
-  control: Control<z.infer<typeof serviceFormSchema>> | undefined;
+  control: Control<z.infer<typeof formSchema>> | undefined;
   render: (props: { field: any }) => React.ReactNode;
-  name: keyof z.infer<typeof serviceFormSchema>;
+  name: keyof z.infer<typeof formSchema>;
   formLabel?: string;
   className?: string;
 };

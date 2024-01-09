@@ -79,7 +79,7 @@
 @layer utilities {
   /* ===== UTILITIES */
   .wrapper {
-    @apply max-w-5xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full text-dark-400 p-16-regular;
+    @apply max-w-5xl lg:mx-auto px-5 md:px-10 xl:px-0 w-full text-dark-400 p-16-regular;
   }
 
   .gradient-text {
@@ -98,12 +98,12 @@
   /* ===== TYPOGRAPHY */
   /* 48 */
   .h1-semibold {
-    @apply font-semibold text-[48px] leading-[56px];
+    @apply text-[36px] font-semibold md:text-[48px] leading-[56px];
   }
 
   /* 36 */
   .h2-bold {
-    @apply font-bold text-[36px] leading-[110%];
+    @apply text-[30px] font-bold md:text-[36px] leading-[110%];
   }
 
   /* 30 */
@@ -150,34 +150,37 @@
 
   /* =====  SHADCN OVERRIDES */
   .button {
-    @apply py-4 px-6 flex-center gap-3 rounded-full;
+    @apply py-4 px-6 flex-center gap-3 rounded-full p-16-semibold;
   }
 
   .dropdown-content {
-    @apply shadow-lg rounded-md overflow-hidden p-0 mt-3;
+    @apply shadow-lg rounded-md overflow-hidden p-0;
   }
 
   .dropdown-item {
-    @apply p-16-medium text-dark-400 cursor-pointer transition-all px-4 py-3 rounded-none outline-none hover:border-none hover:text-white hover:bg-purple-gradient hover:bg-cover !important;
+    @apply p-16-medium text-dark-400 cursor-pointer transition-all px-4 py-3 rounded-none outline-none hover:border-none focus-visible:ring-transparent hover:text-white hover:bg-purple-gradient hover:bg-cover focus-visible:outline-none !important;
   }
 
   .input-field {
     @apply rounded-full text-dark-600 p-16-semibold h-[44px] md:h-[54px] focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
   }
 
+  .search-field {
+    @apply rounded-full text-dark-600 h-[44px] p-14-medium focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
+  }
+
   .submit-button {
     @apply bg-purple-gradient bg-cover rounded-full py-4 px-6 p-16-semibold h-[44px] w-full md:h-[54px];
   }
 
-  /* =============== */
-
   .select-field {
-    @apply w-full text-white h-[44px] md:h-[54px] bg-dark-400 placeholder:text-blue-200/50 p-14-regular md:p-16-regular px-5 py-3 focus:ring-offset-0 focus-visible:ring-transparent focus:ring-transparent !important;
+    @apply w-full rounded-full h-[44px] md:h-[54px] text-dark-600 p-16-semibold placeholder:text-dark-400/50 px-4 py-3 focus:ring-offset-0 focus-visible:ring-transparent focus:ring-transparent !important;
   }
 
   .select-item {
     @apply py-3 cursor-pointer;
   }
+  /* =============== */
 
   .text-destructive {
     @apply text-red-300;

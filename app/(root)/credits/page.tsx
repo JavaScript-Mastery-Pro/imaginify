@@ -1,16 +1,13 @@
 import Image from "next/image";
-import { auth } from "@clerk/nextjs";
+import { SignedIn, auth } from "@clerk/nextjs";
 
 import { plans } from "@/constants";
-import { Button } from "@/components/ui/button";
 import { Header } from "@/components/shared/Header";
-import { getUserById } from "@/lib/actions/user.actions";
+import Checkout from "@/components/shared/Checkout";
 
 const Credits = async () => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
-
-  const user = await getUserById(userId);
 
   return (
     <>
@@ -55,7 +52,15 @@ const Credits = async () => {
                 ))}
               </ul>
 
-              {user.planId === plan._id ? (
+              <SignedIn>
+                <Checkout
+                  plan={plan.name}
+                  amount={plan.price}
+                  userId={userId}
+                />
+              </SignedIn>
+
+              {/* {user.planId === plan._id ? (
                 <Button
                   variant="outline"
                   className="w-full rounded-full bg-purple-100 bg-cover text-dark-600"
@@ -66,7 +71,7 @@ const Credits = async () => {
                 <Button className="w-full rounded-full bg-purple-gradient bg-cover">
                   Get Started
                 </Button>
-              )}
+              )} */}
             </li>
           ))}
         </ul>

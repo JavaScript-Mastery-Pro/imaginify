@@ -5,26 +5,26 @@ export const headerLinks = [
   },
   {
     label: "AI Features",
-    route: "/features",
+    route: "/transformations",
     nested: [
       {
         label: "Image Restore",
-        route: "/features/image-restore",
+        route: "/transformations/add/restore",
         icon: "/assets/icons/image.svg",
       },
       {
         label: "Generative Fill",
-        route: "/features/generative-fill",
+        route: "/transformations/add/fill",
         icon: "/assets/icons/stars.svg",
       },
       {
         label: "Object Remove",
-        route: "/features/object-remove",
+        route: "/transformations/add/remove",
         icon: "/assets/icons/scan.svg",
       },
       {
-        label: "Image Recolor",
-        route: "/features/image-recolor",
+        label: "Object Recolor",
+        route: "/transformations/add/recolor",
         icon: "/assets/icons/camera.svg",
       },
     ],
@@ -118,12 +118,63 @@ export const plans = [
   },
 ];
 
-export const serviceInitialValues = {
+export const transformationTypes = {
+  restore: {
+    type: "restore",
+    title: "Restore Image",
+    subTitle: "Refine images by removing noise and imperfections",
+    config: { restore: true },
+    icon: "image.svg",
+  },
+  fill: {
+    type: "fill",
+    title: "Generative Fill",
+    subTitle: "Enhance an image's dimensions using AI outpainting",
+    config: { fillBackground: true },
+    icon: "stars.svg",
+  },
+  remove: {
+    type: "remove",
+    title: "Object Remove",
+    subTitle: "Identify and eliminate objects from images",
+    config: {
+      remove: { prompt: "", removeShadow: true, multiple: true },
+    },
+    icon: "scan.svg",
+  },
+  recolor: {
+    type: "recolor",
+    title: "Object Recolor",
+    subTitle: "Identify and recolor objects from the image",
+    config: {
+      recolor: { prompt: "", to: "", multiple: true },
+    },
+    icon: "camera.svg",
+  },
+};
+
+export const aspectRatioOptions = {
+  "1:1": {
+    aspectRatio: "1:1",
+    label: "Square (1:1)",
+    height: 1000,
+  },
+  "3:4": {
+    aspectRatio: "3:4",
+    label: "Standard Portrait (3:4)",
+    height: 1334,
+  },
+  "9:16": {
+    aspectRatio: "9:16",
+    label: "Phone Portrait (9:16)",
+    height: 1778,
+  },
+};
+
+export const defaultValues = {
   title: "",
-  imageUrl: "",
-  transformedImageUrl: "",
-  serviceType: "",
-  aspectRatio: "",
-  targetObject: "",
+  aspectRatio: "1:1",
+  color: "",
   prompt: "",
+  publicId: "",
 };
