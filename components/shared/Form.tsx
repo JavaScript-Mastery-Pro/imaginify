@@ -181,11 +181,11 @@ export const TransformationForm = ({
 
   return (
     <Form {...form}>
-      {creditBalance > 5 ? (
+      {/* {creditBalance > 5 ? (
         <UseCreditsModal userId={userId} />
       ) : (
         <InsufficientCreditsModal />
-      )}
+      )} */}
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <CustomField
