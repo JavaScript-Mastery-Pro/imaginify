@@ -61,6 +61,7 @@ type TransformationFormProps = {
 };
 
 // COMPONENT
+// Todo: use debounce method to prevent multiple calls to cloudinary when user is typing in the input field. Call cloudinary when user stops typing after few seconds.
 export const TransformationForm = ({
   action,
   data,
