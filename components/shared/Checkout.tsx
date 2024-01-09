@@ -24,12 +24,19 @@ const Checkout = ({
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
       console.log("Order placed! You will receive an email confirmation.");
+
+      // todo: updateCredits
+      // await updateCredits(userId, amount);
+
+      // todo: show a toast
     }
 
     if (query.get("canceled")) {
       console.log(
         "Order canceled -- continue to shop around and checkout when you're ready."
       );
+
+      // todo: show a toast
     }
   }, []);
 
@@ -59,3 +66,5 @@ const Checkout = ({
 };
 
 export default Checkout;
+
+// credit +10 -1 +100

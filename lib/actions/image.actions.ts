@@ -21,10 +21,12 @@ const populateUser = (query: any) => {
 export async function addImage({ image, userId, path }: AddImageParams) {
   try {
     await connectToDatabase();
-
+    // Find author by id
     const author = await User.findById(userId);
+    // If author not found, throw error
     if (!author) throw new Error("Author not found");
 
+    // Create new image with author id
     const newImage = await Image.create({
       ...image,
       author: author._id,
@@ -48,8 +50,10 @@ export async function getAllImages({
   try {
     await connectToDatabase();
 
+    // Calculate how many images to skip
     const skipAmount = (Number(page) - 1) * limit;
 
+    // Find all images, sort by upvotes, skip and limit
     const images = await populateUser(Image.find())
       .sort({ updatedAt: -1 }) // Sort by highest upvotes
       .skip(skipAmount)

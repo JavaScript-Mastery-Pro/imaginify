@@ -297,6 +297,7 @@ export const TransformationForm = ({
             name="publicId"
             className="flex h-full w-full flex-col"
             render={({ field }) => (
+              // Todo: Move to a separate component
               <CldUploadWidget
                 {...field}
                 uploadPreset="imaginify"
@@ -392,6 +393,7 @@ export const TransformationForm = ({
 
             {image ? (
               <>
+                {/* Todo: fix height issue */}
                 <CldImage
                   width={1000}
                   height={image?.height || 1000}

@@ -14,6 +14,11 @@ export async function checkoutOrder(transaction: CheckoutTransactionParams) {
 
   const amount = Number(transaction.amount) * 100;
 
+  /**
+   * Create a new checkout session
+   * https://stripe.com/docs/api/checkout/sessions/create
+   * https://stripe.com/docs/payments/checkout/accept-a-payment#create-checkout-session
+   */
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -44,6 +49,7 @@ export async function createTransaction(transaction: CreateTransactionParams) {
   try {
     await connectToDatabase();
 
+    // Create new transaction with buyer id
     const newTransaction = await Transaction.create({
       ...transaction,
       buyer: transaction.buyerId,
