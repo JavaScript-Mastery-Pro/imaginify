@@ -5,6 +5,16 @@ import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 
 import { Input } from "../ui/input";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
 import { transformationTypes } from "@/constants";
 import { IImage } from "@/lib/database/models/image.model";
 
@@ -35,36 +45,83 @@ export const Collection = ({
 
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {images.map((image) => (
-          <li key={image.id}>
-            <Link
-              href={`/transformations/${image._id}/update`}
-              className="flex flex-1 cursor-pointer flex-col gap-5 rounded-[16px] bg-white p-4 shadow-sm hover:shadow-md"
-            >
-              <CldImage
-                src={image.publicId}
-                alt="logo"
-                width={200}
-                height={200}
-                className="h-48 w-full rounded-[10px] object-cover"
-                {...image.config}
-              />
-              <div className="flex-between">
-                <p>{image.title}</p>
-                <Image
-                  src={`/assets/icons/${
-                    transformationTypes[
-                      image.transformationType as TransformationTypeKey
-                    ].icon
-                  }`}
-                  alt={image.title}
-                  width={24}
-                  height={24}
-                />
-              </div>
-            </Link>
-          </li>
+          <Card image={image} key={image.id} />
         ))}
       </ul>
+
+      {images.length > 6 && (
+        <Pagination className="mt-10">
+          <PaginationContent className="flex w-full">
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                className="button w-36 bg-purple-gradient bg-cover text-white"
+              />
+            </PaginationItem>
+
+            <div className="flex-center w-full flex-1">
+              <PaginationItem>
+                <PaginationLink href="#" isActive className="rounded-full">
+                  1
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#" className="rounded-full">
+                  2
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#" className="rounded-full">
+                  3
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            </div>
+
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                className="button w-36 bg-purple-gradient bg-cover text-white"
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </>
+  );
+};
+
+const Card = ({ image }: { image: IImage }) => {
+  return (
+    <li>
+      <Link
+        href={`/transformations/${image._id}/update`}
+        className="flex flex-1 cursor-pointer flex-col gap-5 rounded-[16px] bg-white p-4 shadow-sm hover:shadow-md"
+      >
+        <CldImage
+          src={image.publicId}
+          alt="logo"
+          width={200}
+          height={200}
+          className="h-48 w-full rounded-[10px] object-cover"
+          {...image.config}
+        />
+        <div className="flex-between">
+          <p>{image.title}</p>
+          <Image
+            src={`/assets/icons/${
+              transformationTypes[
+                image.transformationType as TransformationTypeKey
+              ].icon
+            }`}
+            alt={image.title}
+            width={24}
+            height={24}
+          />
+        </div>
+      </Link>
+    </li>
   );
 };

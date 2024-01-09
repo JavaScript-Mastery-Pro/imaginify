@@ -26,8 +26,6 @@ import { dataUrl, download } from "@/lib/utils";
 import { addImage, updateImage } from "@/lib/actions/image.actions";
 import { IImage } from "@/lib/database/models/image.model";
 import { DeleteConfirmation } from "./DeleteConfirmation";
-import { InsufficientCreditsModal } from "./InsufficientCreditsModal";
-import { UseCreditsModal } from "./UseCreditsModal";
 
 // ZOD VALIDATION
 export const formSchema = z.object({
@@ -292,7 +290,7 @@ export const TransformationForm = ({
           </div>
         )}
 
-        <div className="grid h-fit min-h-[500px] grid-cols-1 gap-5 py-4 md:grid-cols-2">
+        <div className="grid h-fit min-h-[200px] grid-cols-1 gap-5 py-4 md:grid-cols-2">
           {/* Uploader  */}
           <CustomField
             control={form.control}
@@ -322,7 +320,7 @@ export const TransformationForm = ({
                 {({ open }) => {
                   return (
                     // Original Image
-                    <div className="flex h-full flex-col gap-4">
+                    <div className="flex min-h-96 flex-col gap-4">
                       <div className="flex-between">
                         <h3 className="h3-bold text-dark-600">Original</h3>
                         <Button
@@ -346,7 +344,7 @@ export const TransformationForm = ({
                               height={1000}
                               src={image?.publicId}
                               alt="image"
-                              className="h-full w-full rounded-[10px] border bg-white object-contain p-2"
+                              className="h-fit w-full rounded-[10px] border bg-white object-contain p-2"
                               placeholder={dataUrl as PlaceholderValue}
                             />
                           </div>
@@ -375,7 +373,7 @@ export const TransformationForm = ({
           />
 
           {/* Transformed Image */}
-          <div className="flex min-h-[500px] flex-col gap-4">
+          <div className="flex min-h-96 flex-col gap-4">
             <div className="flex-between">
               <h3 className="h3-bold text-dark-600">Transformed</h3>
               <button
