@@ -15,7 +15,9 @@ const Checkout = ({
   amount: number;
   userId: string;
 }) => {
-  loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+  useEffect(() => {
+    loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+  }, []);
 
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -42,10 +44,10 @@ const Checkout = ({
   };
 
   return (
-    <form action={onCheckout} method="POST">
+    <form action={onCheckout}>
       <section>
         <Button
-          type="button"
+          type="submit"
           role="link"
           className="w-full rounded-full bg-purple-gradient bg-cover"
         >

@@ -49,43 +49,43 @@ export const Collection = ({
         ))}
       </ul>
 
-      {images.length > 6 && (
+      {images.length > 2 && (
         <Pagination className="mt-10">
           <PaginationContent className="flex w-full">
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                className="button w-36 bg-purple-gradient bg-cover text-white"
-              />
-            </PaginationItem>
+            {/* <PaginationItem> */}
+            <PaginationPrevious
+              href="#"
+              className="button w-36 bg-purple-gradient bg-cover text-white"
+            />
+            {/* </PaginationItem> */}
 
             <div className="flex-center w-full flex-1">
-              <PaginationItem>
-                <PaginationLink href="#" isActive className="rounded-full">
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" className="rounded-full">
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" className="rounded-full">
-                  3
-                </PaginationLink>
-              </PaginationItem>
+              {/* <PaginationItem> */}
+              <PaginationLink href="#" isActive className="rounded-full">
+                1
+              </PaginationLink>
+              {/* </PaginationItem> */}
+              {/* <PaginationItem> */}
+              <PaginationLink href="#" className="rounded-full">
+                2
+              </PaginationLink>
+              {/* </PaginationItem> */}
+              {/* <PaginationItem> */}
+              <PaginationLink href="#" className="rounded-full">
+                3
+              </PaginationLink>
+              {/* </PaginationItem> */}
               <PaginationItem>
                 <PaginationEllipsis />
               </PaginationItem>
             </div>
 
-            <PaginationItem>
-              <PaginationNext
-                href="#"
-                className="button w-36 bg-purple-gradient bg-cover text-white"
-              />
-            </PaginationItem>
+            {/* <PaginationItem> */}
+            <PaginationNext
+              href="#"
+              className="button w-36 bg-purple-gradient bg-cover text-white"
+            />
+            {/* </PaginationItem> */}
           </PaginationContent>
         </Pagination>
       )}
