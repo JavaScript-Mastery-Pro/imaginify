@@ -72,13 +72,13 @@ export const TransformationForm = ({
         }
       : defaultValues;
 
-  // Form
+  // FORM
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,
   });
 
-  // Submit Handler
+  // SUBMIT HANDLER
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setSubmitting(true);
 
@@ -104,7 +104,7 @@ export const TransformationForm = ({
         color: values.color,
       };
 
-      // Add Product
+      // Add Image
       if (action === "Add") {
         try {
           const newImage = await addImage({
@@ -123,7 +123,7 @@ export const TransformationForm = ({
         }
       }
 
-      // Update Event
+      // Update Image
       if (action === "Update") {
         if (!data) return router.back();
 
@@ -147,7 +147,7 @@ export const TransformationForm = ({
     setSubmitting(false);
   };
 
-  // HANDLE INPUT CHANGE
+  // INPUT CHANGE HANDLER
   const handleInputChange = (
     fieldName: string,
     value: string,
