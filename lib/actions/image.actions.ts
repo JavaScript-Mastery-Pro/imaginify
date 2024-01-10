@@ -48,7 +48,7 @@ export async function getAllImages({
 }: {
   limit?: number;
   page: number;
-  searchQuery: string;
+  searchQuery?: string;
 }) {
   cloudinary.config({
     cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
