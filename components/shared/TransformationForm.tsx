@@ -301,6 +301,7 @@ export const TransformationForm = ({
           />
         </div>
 
+        {/* SAVE BUTTON */}
         <div className="flex flex-col gap-4">
           <Button
             type="submit"
@@ -310,6 +311,7 @@ export const TransformationForm = ({
             {isSubmitting ? "Saving..." : "Save Transformation"}
           </Button>
 
+          {/* DELETE BUTTON */}
           {data && <DeleteConfirmation imageId={data._id} />}
         </div>
       </form>
