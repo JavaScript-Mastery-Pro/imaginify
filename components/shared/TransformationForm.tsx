@@ -129,6 +129,7 @@ export const TransformationForm = ({
 
           if (newImage) {
             form.reset();
+            setImage(data);
             router.push(`/transformations/${newImage._id}/update`);
           }
         } catch (error) {
@@ -239,7 +240,7 @@ export const TransformationForm = ({
               control={form.control}
               name="prompt"
               formLabel={
-                type === "remove" ? "Item to Remove" : "Item to Recolor"
+                type === "remove" ? "Object to Remove" : "Object to Recolor"
               }
               className="w-full"
               render={({ field }) => (

@@ -37,7 +37,7 @@ export const Search = () => {
   }, [router, searchParams, query]);
 
   return (
-    <div className="flex max-w-96 rounded-full border bg-white px-4">
+    <div className="flex w-full rounded-full border bg-white px-4 md:max-w-96">
       <Image
         src="/assets/icons/search.svg"
         alt="search"
