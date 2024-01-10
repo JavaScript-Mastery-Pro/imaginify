@@ -22,7 +22,7 @@ const Credits = async () => {
           {plans.map((plan) => (
             <li
               key={plan.name}
-              className="w-full rounded-[16px] border bg-white p-8"
+              className="w-full rounded-[16px] border-2 border-purple-200/20 bg-white p-8 shadow-xl shadow-purple-200/20 "
             >
               <div className="flex-center flex-col gap-3">
                 <Image src={plan.icon} alt="check" width={50} height={50} />

@@ -323,11 +323,11 @@ export const TransformationForm = ({
           />
 
           {/* Transformed Image */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 ">
             <div className="flex-between">
               <h3 className="h3-bold text-dark-600">Transformed</h3>
               <button
-                className="p-14-medium flex items-center gap-2 px-2"
+                className="p-14-medium flex items-center gap-2 px-2 "
                 onClick={(e) => downloadHandler(e)}
               >
                 <Image
@@ -345,16 +345,22 @@ export const TransformationForm = ({
                 {/* Todo: fix height issue */}
                 <CldImage
                   width={1000}
-                  height={type === "fill" ? image?.height : 100}
+                  height={
+                    type === "fill" && image?.aspectRatio
+                      ? aspectRatioOptions[
+                          image.aspectRatio as keyof typeof aspectRatioOptions
+                        ]?.height
+                      : 300
+                  }
                   src={image?.publicId}
                   alt="image"
                   placeholder={dataUrl as PlaceholderValue}
                   {...transformationConfig}
-                  className="h-full min-h-60 w-full rounded-[10px] border bg-white object-contain p-2"
+                  className="h-full min-h-60 w-full rounded-[10px] border border-dashed bg-purple-100 object-contain p-2"
                 />
               </>
             ) : (
-              <div className="flex-center p-14-medium h-60 cursor-pointer flex-col gap-5 rounded-[16px] border-dashed bg-white">
+              <div className="flex-center p-14-medium h-60 cursor-pointer flex-col gap-5 rounded-[16px] border-dashed bg-purple-100">
                 Transformed Image
               </div>
             )}

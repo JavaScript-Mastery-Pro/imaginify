@@ -28,31 +28,29 @@ export const MobileNav = () => {
               const isActive = link.route === pathname;
 
               return (
-                <>
-                  <li
-                    key={link.route}
-                    className={`${
-                      isActive && "gradient-text"
-                    } p-16-medium flex whitespace-nowrap text-dark-400`}
-                  >
-                    {link.nested ? (
-                      <ul className="flex flex-col gap-6">
-                        {link.nested.map((item) => (
-                          <li
-                            key={item.route}
-                            className={`${
-                              item.route === pathname && "gradient-text"
-                            } p-16-medium flex whitespace-nowrap text-dark-400`}
-                          >
-                            <Link href={item.route}>{item.label}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <Link href={link.route}>{link.label}</Link>
-                    )}
-                  </li>
-                </>
+                <li
+                  key={link.route}
+                  className={`${
+                    isActive && "gradient-text"
+                  } p-16-medium flex whitespace-nowrap text-dark-400`}
+                >
+                  {link.nested ? (
+                    <ul className="flex flex-col gap-6">
+                      {link.nested.map((item) => (
+                        <li
+                          key={item.route}
+                          className={`${
+                            item.route === pathname && "gradient-text"
+                          } p-16-medium flex whitespace-nowrap  text-dark-700`}
+                        >
+                          <Link href={item.route}>{item.label}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <Link href={link.route}>{link.label}</Link>
+                  )}
+                </li>
               );
             })}
           </ul>

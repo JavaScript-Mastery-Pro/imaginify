@@ -158,15 +158,15 @@
   }
 
   .dropdown-item {
-    @apply p-16-medium text-dark-400 cursor-pointer transition-all px-4 py-3 rounded-none outline-none hover:border-none focus-visible:ring-transparent hover:text-white hover:bg-purple-gradient hover:bg-cover focus-visible:outline-none !important;
+    @apply p-16-semibold text-dark-700 cursor-pointer transition-all px-4 py-3 rounded-none outline-none hover:border-none focus-visible:ring-transparent hover:text-white hover:bg-purple-gradient hover:bg-cover focus-visible:outline-none !important;
   }
 
   .input-field {
-    @apply rounded-full text-dark-600 p-16-semibold h-[44px] md:h-[54px] focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
+    @apply rounded-full border-purple-200/10 bg-purple-100 text-dark-600 p-16-semibold h-[44px] md:h-[54px]  focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
   }
 
   .search-field {
-    @apply rounded-full text-dark-600 p-14-medium w-full border-0 placeholder:text-dark-400 h-[44px] p-14-medium focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
+    @apply rounded-full bg-purple-100 text-dark-600 p-14-medium w-full border-0 placeholder:text-dark-400 h-[44px] p-14-medium focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
   }
 
   .submit-button {
@@ -174,7 +174,7 @@
   }
 
   .select-field {
-    @apply w-full rounded-full h-[44px] md:h-[54px] text-dark-600 p-16-semibold placeholder:text-dark-400/50 px-4 py-3 focus:ring-offset-0 focus-visible:ring-transparent focus:ring-transparent !important;
+    @apply w-full border-purple-200/10 bg-purple-100 rounded-full h-[44px] md:h-[54px] text-dark-600 p-16-semibold placeholder:text-dark-400/50 px-4 py-3 focus:ring-offset-0 focus-visible:ring-transparent focus:ring-transparent !important;
   }
 
   .select-item {

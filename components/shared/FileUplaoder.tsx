@@ -3,7 +3,6 @@ import { dataUrl } from "@/lib/utils";
 import { CldUploadWidget, CldImage } from "next-cloudinary";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import React from "react";
-import { Button } from "../ui/button";
 
 type FileUplaoderProps = {
   onValueChange: (value: string) => void;
@@ -40,17 +39,7 @@ export const FileUplaoder = ({
         return (
           // Original Image
           <div className="flex flex-col gap-4">
-            <div className="flex-between">
-              <h3 className="h3-bold text-dark-600">Original</h3>
-              <Button
-                type="button"
-                variant="secondary"
-                className="p-14-medium w-fit rounded-full border bg-purple-400/10 text-purple-500 transition-all hover:bg-purple-400/15"
-                onClick={() => open()}
-              >
-                Upload New
-              </Button>
-            </div>
+            <h3 className="h3-bold text-dark-600">Original</h3>
 
             {publicId ? (
               <>
@@ -63,22 +52,24 @@ export const FileUplaoder = ({
                     height={1000}
                     src={publicId}
                     alt="image"
-                    className="h-fit min-h-60 w-full rounded-[10px] border bg-white object-contain p-2"
+                    className="h-fit min-h-60 w-full rounded-[10px] border bg-purple-100 object-contain p-2"
                     placeholder={dataUrl as PlaceholderValue}
                   />
                 </div>
               </>
             ) : (
               <div
-                className="flex-center h-60 max-h-[500px] cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-white"
+                className="flex-center h-60 max-h-[500px] cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100"
                 onClick={() => open()}
               >
-                <Image
-                  src="/assets/icons/add.svg"
-                  alt="add image"
-                  width={50}
-                  height={50}
-                />
+                <div className="rounded-[16px] bg-white p-5 shadow-sm shadow-purple-200/50">
+                  <Image
+                    src="/assets/icons/add.svg"
+                    alt="add image"
+                    width={24}
+                    height={24}
+                  />
+                </div>
                 <p className="p-14-medium">Click here to upload image</p>
               </div>
             )}

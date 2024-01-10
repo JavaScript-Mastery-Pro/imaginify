@@ -55,6 +55,13 @@ declare type UpdateImageParams = {
   path: string;
 };
 
+declare type Query = {
+  author: string;
+  publicId?: {
+    $in: string[];
+  };
+};
+
 // ====== TRANSACTION PARAMS
 declare type CheckoutTransactionParams = {
   plan: string;

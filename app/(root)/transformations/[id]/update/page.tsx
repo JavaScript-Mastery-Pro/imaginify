@@ -11,6 +11,7 @@ const UpdateImage = async ({ params: { id } }: SearchParamProps) => {
 
   const user = await getUserById(userId);
   const image = await getImageById(id);
+
   const transformation =
     transformationTypes[image.transformationType as TransformationTypeKey];
 

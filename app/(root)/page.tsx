@@ -1,9 +1,11 @@
+import Image from "next/image";
+
 import { Collection } from "@/components/shared/Collection";
 import { getAllImages } from "@/lib/actions/image.actions";
-import Image from "next/image";
 
 const Home = async ({ searchParams }: SearchParamProps) => {
   const page = Number(searchParams?.page) || 1;
+
   const images = await getAllImages({ page });
 
   return (

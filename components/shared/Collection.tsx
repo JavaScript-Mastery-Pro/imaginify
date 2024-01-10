@@ -96,7 +96,7 @@ const Card = ({ image }: { image: IImage }) => {
     <li>
       <Link
         href={`/transformations/${image._id}/update`}
-        className="flex flex-1 cursor-pointer flex-col gap-5 rounded-[16px] bg-white p-4 shadow-sm hover:shadow-md"
+        className="flex flex-1 cursor-pointer flex-col gap-5 rounded-[16px] border-2 border-purple-200/15 bg-white p-4 shadow-xl shadow-purple-200/10 transition-all hover:shadow-purple-200/20"
       >
         <CldImage
           src={image.publicId}
@@ -107,7 +107,9 @@ const Card = ({ image }: { image: IImage }) => {
           {...image.config}
         />
         <div className="flex-between">
-          <p>{image.title}</p>
+          <p className="p-20-semibold mr-3 line-clamp-1 text-dark-600">
+            {image.title}
+          </p>
           <Image
             src={`/assets/icons/${
               transformationTypes[

@@ -4,23 +4,24 @@ import { auth } from "@clerk/nextjs";
 import { Header } from "@/components/shared/Header";
 import { Collection } from "@/components/shared/Collection";
 import { getUserById } from "@/lib/actions/user.actions";
-import { getAllImages } from "@/lib/actions/image.actions";
+import { getUserImages } from "@/lib/actions/image.actions";
 
 const Profile = async ({ searchParams }: SearchParamProps) => {
-  const searchQuery = (searchParams?.query as string) || "";
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
+
+  const searchQuery = (searchParams?.query as string) || "";
   const page = Number(searchParams?.page) || 1;
 
   const user = await getUserById(userId);
-  const images = await getAllImages({ page, searchQuery });
+  const images = await getUserImages({ page, searchQuery, userId });
 
   return (
     <>
       <Header title="Profile" />
 
       <section className="mt-4 flex flex-col gap-5 sm:flex-row md:mt-8 md:gap-10">
-        <div className="w-full rounded-[16px] bg-white p-5 md:px-6 md:py-8">
+        <div className="w-full rounded-[16px] border-2 border-purple-200/20 bg-white p-5 shadow-lg shadow-purple-200/10 md:px-6 md:py-8">
           <p className="p-14-medium md:p-16-medium">CREDITS AVAILABLE</p>
           <div className="mt-4 flex items-center gap-4">
             <Image
@@ -34,7 +35,7 @@ const Profile = async ({ searchParams }: SearchParamProps) => {
           </div>
         </div>
 
-        <div className="w-full rounded-[16px] bg-white p-5 md:px-6 md:py-8">
+        <div className="w-full rounded-[16px] border-2 border-purple-200/20 bg-white p-5 shadow-lg shadow-purple-200/10 md:px-6 md:py-8">
           <p className="p-14-medium md:p-16-medium">IMAGE MANIPULATION DONE</p>
           <div className="mt-4 flex items-center gap-4">
             <Image
