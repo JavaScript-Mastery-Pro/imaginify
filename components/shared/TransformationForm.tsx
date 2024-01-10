@@ -61,8 +61,6 @@ export const TransformationForm = ({
   const [isSubmitting, setSubmitting] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config);
 
-  console.log(transformationConfig);
-  console.log(image);
   const initialValues =
     data && action === "Update"
       ? {
