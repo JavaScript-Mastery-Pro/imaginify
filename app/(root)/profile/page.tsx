@@ -29,7 +29,7 @@ const Profile = async ({ searchParams }: SearchParamProps) => {
               height={50}
               className="h-9 w-9 md:h-12 md:w-12"
             />
-            <h2 className="h2-bold text-dark-600">${user.creditBalance}</h2>
+            <h2 className="h2-bold text-dark-600">{user.creditBalance}</h2>
           </div>
         </div>
 

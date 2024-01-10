@@ -3,9 +3,9 @@
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import Transaction from "../database/models/transaction.model";
-import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
+import { updateCredits } from "./user.actions";
 
 // CHECKOUT
 export async function checkoutOrder(transaction: CheckoutTransactionParams) {
@@ -50,12 +50,8 @@ export async function createTransaction(transaction: CreateTransactionParams) {
       buyer: transaction.buyerId,
     });
 
-    // Find the user and update their credit balance
-    const user = await User.findById(transaction.buyerId);
-    if (!user) throw new Error("User not found");
-
-    user.creditBalance += transaction.amount;
-    await user.save();
+    // Update their credit balance
+    await updateCredits(transaction.buyerId, transaction.credits);
 
     return JSON.parse(JSON.stringify(newTransaction));
   } catch (error) {
