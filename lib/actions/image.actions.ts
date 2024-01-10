@@ -73,7 +73,7 @@ export async function getAllImages({
     const resourcesIds = resources.map((file: any) => file.public_id);
 
     let query = {};
-    if (resourcesIds) {
+    if (searchQuery) {
       query = {
         publicId: {
           $in: resourcesIds,
@@ -90,12 +90,13 @@ export async function getAllImages({
       .skip(skipAmount)
       .limit(limit);
 
-    const imagesCount = await Image.find(query).countDocuments();
+    const totalImages = await Image.find(query).countDocuments();
+    const savedImages = await Image.find().countDocuments();
 
     return {
       data: JSON.parse(JSON.stringify(images)),
-      totalPages: Math.ceil(imagesCount / limit),
-      totalImages: imagesCount,
+      totalPages: Math.ceil(totalImages / limit),
+      savedImages,
     };
   } catch (error) {
     handleError(error);

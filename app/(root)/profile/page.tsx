@@ -15,6 +15,8 @@ const Profile = async ({ searchParams }: SearchParamProps) => {
   const user = await getUserById(userId);
   const images = await getAllImages({ page, searchQuery });
 
+  console.log("images", images);
+
   return (
     <>
       <Header title="Profile" />
@@ -44,7 +46,7 @@ const Profile = async ({ searchParams }: SearchParamProps) => {
               height={50}
               className="h-9 w-9 md:h-12 md:w-12"
             />
-            <h2 className="h2-bold text-dark-600">{images?.totalImages}</h2>
+            <h2 className="h2-bold text-dark-600">{images?.savedImages}</h2>
           </div>
         </div>
       </section>

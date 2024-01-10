@@ -101,8 +101,8 @@ const Card = ({ image }: { image: IImage }) => {
         <CldImage
           src={image.publicId}
           alt="logo"
-          width={200}
-          height={200}
+          width={1000}
+          height={1000}
           className="h-48 w-full rounded-[10px] object-cover"
           {...image.config}
         />
