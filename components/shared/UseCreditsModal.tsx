@@ -15,7 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deductCredits } from "@/lib/actions/user.actions";
+import { updateCredits } from "@/lib/actions/user.actions";
 
 export const UseCreditsModal = ({ userId }: { userId: string }) => {
   const [isPending, startTransition] = useTransition();
@@ -74,7 +74,7 @@ export const UseCreditsModal = ({ userId }: { userId: string }) => {
             onClick={() =>
               startTransition(async () => {
                 setIsOpen(false);
-                await deductCredits(userId);
+                await updateCredits(userId);
               })
             }
           >

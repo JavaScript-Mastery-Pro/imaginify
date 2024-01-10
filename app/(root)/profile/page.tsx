@@ -43,13 +43,17 @@ const Profile = async ({ searchParams }: SearchParamProps) => {
               height={50}
               className="h-9 w-9 md:h-12 md:w-12"
             />
-            <h2 className="h2-bold text-dark-600">{images?.data.length}</h2>
+            <h2 className="h2-bold text-dark-600">{images?.totalImages}</h2>
           </div>
         </div>
       </section>
 
       <section className="mt-8 md:mt-12">
-        <Collection images={images?.data} />
+        <Collection
+          images={images?.data}
+          totalPages={images?.totalPages}
+          page={page}
+        />
       </section>
     </>
   );

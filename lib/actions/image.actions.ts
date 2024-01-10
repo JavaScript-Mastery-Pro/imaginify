@@ -41,7 +41,7 @@ export async function addImage({ image, userId, path }: AddImageParams) {
 
 // GET ALL
 export async function getAllImages({
-  limit = 5,
+  limit = 3,
   page = 1,
 }: {
   limit?: number;
@@ -64,6 +64,7 @@ export async function getAllImages({
     return {
       data: JSON.parse(JSON.stringify(images)),
       totalPages: Math.ceil(imagesCount / limit),
+      totalImages: imagesCount,
     };
   } catch (error) {
     handleError(error);

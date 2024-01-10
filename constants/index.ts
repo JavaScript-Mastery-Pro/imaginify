@@ -43,7 +43,7 @@ export const headerLinks = [
 export const plans = [
   {
     _id: 1,
-    name: "Free plan",
+    name: "Free",
     icon: "/assets/icons/free-plan.svg",
     price: 0,
     credits: 10,
@@ -68,10 +68,10 @@ export const plans = [
   },
   {
     _id: 2,
-    name: "Pro plan",
+    name: "Pro Package",
     icon: "/assets/icons/free-plan.svg",
     price: 40,
-    credits: 220,
+    credits: 120,
     inclusions: [
       {
         label: "120 Credits",
@@ -93,7 +93,7 @@ export const plans = [
   },
   {
     _id: 3,
-    name: "Premium plan",
+    name: "Premium Package",
     icon: "/assets/icons/free-plan.svg",
     price: 199,
     credits: 2000,

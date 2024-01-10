@@ -4,6 +4,7 @@ import { SignedIn, auth } from "@clerk/nextjs";
 import { plans } from "@/constants";
 import { Header } from "@/components/shared/Header";
 import Checkout from "@/components/shared/Checkout";
+import { Button } from "@/components/ui/button";
 
 const Credits = async () => {
   const { sessionClaims } = auth();
@@ -52,26 +53,23 @@ const Credits = async () => {
                 ))}
               </ul>
 
-              <SignedIn>
-                <Checkout
-                  plan={plan.name}
-                  amount={plan.price}
-                  userId={userId}
-                />
-              </SignedIn>
-
-              {/* {user.planId === plan._id ? (
+              {plan.name === "Free" ? (
                 <Button
                   variant="outline"
-                  className="w-full rounded-full bg-purple-100 bg-cover text-dark-600"
+                  className="w-full rounded-full bg-purple-100 bg-cover text-purple-500 hover:text-purple-500"
                 >
-                  Active Plan
+                  Free Consumable
                 </Button>
               ) : (
-                <Button className="w-full rounded-full bg-purple-gradient bg-cover">
-                  Get Started
-                </Button>
-              )} */}
+                <SignedIn>
+                  <Checkout
+                    plan={plan.name}
+                    amount={plan.price}
+                    credits={plan.credits}
+                    buyerId={userId}
+                  />
+                </SignedIn>
+              )}
             </li>
           ))}
         </ul>

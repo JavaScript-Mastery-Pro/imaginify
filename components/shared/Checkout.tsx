@@ -5,15 +5,18 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import { Button } from "../ui/button";
 import { checkoutOrder } from "@/lib/actions/transaction.actions";
+import { updateCredits } from "@/lib/actions/user.actions";
 
 const Checkout = ({
   plan,
   amount,
-  userId,
+  credits,
+  buyerId,
 }: {
   plan: string;
   amount: number;
-  userId: string;
+  credits: number;
+  buyerId: string;
 }) => {
   useEffect(() => {
     loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -25,10 +28,15 @@ const Checkout = ({
     if (query.get("success")) {
       console.log("Order placed! You will receive an email confirmation.");
 
-      // todo: updateCredits
-      // await updateCredits(userId, amount);
+      const updateUserCredits = async () => {
+        const updatedUserInfo = await updateCredits(buyerId, credits);
 
-      // todo: show a toast
+        if (updatedUserInfo) {
+          console.log("User credits updated!");
+          // todo: show a toast
+        }
+      };
+      updateUserCredits();
     }
 
     if (query.get("canceled")) {
@@ -44,7 +52,8 @@ const Checkout = ({
     const transaction = {
       plan,
       amount,
-      buyerId: userId,
+      credits,
+      buyerId,
     };
 
     await checkoutOrder(transaction);
@@ -66,5 +75,3 @@ const Checkout = ({
 };
 
 export default Checkout;
-
-// credit +10 -1 +100

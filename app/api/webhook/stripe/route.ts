@@ -28,6 +28,7 @@ export async function POST(request: Request) {
       stripeId: id,
       amount: amount_total ? amount_total / 100 : 0,
       plan: metadata?.plan || "",
+      credits: Number(metadata?.credits) || 0,
       buyerId: metadata?.buyerId || "",
       createdAt: new Date(),
     };

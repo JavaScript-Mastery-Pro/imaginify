@@ -20,7 +20,12 @@ const Home = async ({ searchParams }: SearchParamProps) => {
       </section>
 
       <section className="sm:mt-12">
-        <Collection hasSearch={false} images={images?.data} />
+        <Collection
+          hasSearch={false}
+          images={images?.data}
+          totalPages={images?.totalPages}
+          page={page}
+        />
       </section>
     </>
   );
