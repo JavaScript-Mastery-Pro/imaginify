@@ -30,6 +30,9 @@ const TransactionSchema = new Schema({
   plan: {
     type: String,
   },
+  credits: {
+    type: Number,
+  },
   buyer: {
     type: Schema.Types.ObjectId,
     ref: "User",

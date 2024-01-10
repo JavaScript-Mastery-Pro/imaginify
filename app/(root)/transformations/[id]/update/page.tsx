@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 import { Header } from "@/components/shared/Header";
-import { TransformationForm } from "@/components/shared/Form";
+import { TransformationForm } from "@/components/shared/TransformationForm";
 import { getImageById } from "@/lib/actions/image.actions";
 import { transformationTypes } from "@/constants";
 import { getUserById } from "@/lib/actions/user.actions";

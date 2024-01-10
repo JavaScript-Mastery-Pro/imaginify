@@ -9,7 +9,7 @@ import {
   FormLabel,
 } from "../ui/form";
 import { Control } from "react-hook-form";
-import { formSchema } from "./Form";
+import { formSchema } from "./TransformationForm";
 
 type CustomFieldProps = {
   control: Control<z.infer<typeof formSchema>> | undefined;

@@ -3,22 +3,16 @@
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import Transaction from "../database/models/transaction.model";
+import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
 
 // CHECKOUT
 export async function checkoutOrder(transaction: CheckoutTransactionParams) {
-  console.log("transaction", transaction, process.env.STRIPE_SECRET_KEY);
-
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
   const amount = Number(transaction.amount) * 100;
 
-  /**
-   * Create a new checkout session
-   * https://stripe.com/docs/api/checkout/sessions/create
-   * https://stripe.com/docs/payments/checkout/accept-a-payment#create-checkout-session
-   */
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -34,6 +28,7 @@ export async function checkoutOrder(transaction: CheckoutTransactionParams) {
     ],
     metadata: {
       plan: transaction.plan,
+      credits: transaction.credits,
       buyerId: transaction.buyerId,
     },
     mode: "payment",
@@ -54,6 +49,13 @@ export async function createTransaction(transaction: CreateTransactionParams) {
       ...transaction,
       buyer: transaction.buyerId,
     });
+
+    // Find the user and update their credit balance
+    const user = await User.findById(transaction.buyerId);
+    if (!user) throw new Error("User not found");
+
+    user.creditBalance += transaction.amount;
+    await user.save();
 
     return JSON.parse(JSON.stringify(newTransaction));
   } catch (error) {

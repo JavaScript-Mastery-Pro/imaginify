@@ -47,13 +47,13 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
 }
 
 // USE CREDITS
-export async function deductCredits(userId: string, credit?: number) {
+export async function updateCredits(userId: string, credit: number = -1) {
   try {
     await connectToDatabase();
 
     const updatedUserCredits = await User.findOneAndUpdate(
       { _id: userId },
-      { $inc: { creditBalance: credit ?? -1 } },
+      { $inc: { creditBalance: credit } },
       {
         new: true,
       }
@@ -82,10 +82,9 @@ export async function deleteUser(clerkId: string) {
 
     // Unlink relationships
     await Promise.all([
-      // Update the 'events' collection to remove references to the user
       Image.updateMany(
         { _id: { $in: userToDelete.events } },
-        { $pull: { organizer: userToDelete._id } }
+        { $pull: { author: userToDelete._id } }
       ),
     ]);
 
