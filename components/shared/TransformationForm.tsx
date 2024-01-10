@@ -181,7 +181,7 @@ export const TransformationForm = ({
   return (
     <Form {...form}>
       {/* {creditBalance > 5 ? (
-        <UseCreditsModal userId={userId} />
+        <UseCreditsModal userId={userId} creditBalance={creditBalance} />
       ) : (
         <InsufficientCreditsModal />
       )} */}
