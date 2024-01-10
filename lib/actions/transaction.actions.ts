@@ -1,3 +1,5 @@
+"use server";
+
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import Transaction from "../database/models/transaction.model";
@@ -6,10 +8,17 @@ import { handleError } from "../utils";
 
 // CHECKOUT
 export async function checkoutOrder(transaction: CheckoutTransactionParams) {
+  console.log("transaction", transaction, process.env.STRIPE_SECRET_KEY);
+
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
   const amount = Number(transaction.amount) * 100;
 
+  /**
+   * Create a new checkout session
+   * https://stripe.com/docs/api/checkout/sessions/create
+   * https://stripe.com/docs/payments/checkout/accept-a-payment#create-checkout-session
+   */
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -40,6 +49,7 @@ export async function createTransaction(transaction: CreateTransactionParams) {
   try {
     await connectToDatabase();
 
+    // Create new transaction with buyer id
     const newTransaction = await Transaction.create({
       ...transaction,
       buyer: transaction.buyerId,

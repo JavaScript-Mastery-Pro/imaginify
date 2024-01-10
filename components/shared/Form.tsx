@@ -61,6 +61,7 @@ type TransformationFormProps = {
 };
 
 // COMPONENT
+// Todo: use debounce method to prevent multiple calls to cloudinary when user is typing in the input field. Call cloudinary when user stops typing after few seconds.
 export const TransformationForm = ({
   action,
   data,
@@ -297,6 +298,7 @@ export const TransformationForm = ({
             name="publicId"
             className="flex h-full w-full flex-col"
             render={({ field }) => (
+              // Todo: Move to a separate component
               <CldUploadWidget
                 {...field}
                 uploadPreset="imaginify"
@@ -392,6 +394,7 @@ export const TransformationForm = ({
 
             {image ? (
               <>
+                {/* Todo: fix height issue */}
                 <CldImage
                   width={1000}
                   height={image?.height || 1000}

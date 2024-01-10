@@ -15,19 +15,28 @@ const Checkout = ({
   amount: number;
   userId: string;
 }) => {
-  loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+  useEffect(() => {
+    loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+  }, []);
 
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
       console.log("Order placed! You will receive an email confirmation.");
+
+      // todo: updateCredits
+      // await updateCredits(userId, amount);
+
+      // todo: show a toast
     }
 
     if (query.get("canceled")) {
       console.log(
         "Order canceled -- continue to shop around and checkout when you're ready."
       );
+
+      // todo: show a toast
     }
   }, []);
 
@@ -42,10 +51,10 @@ const Checkout = ({
   };
 
   return (
-    <form action={onCheckout} method="POST">
+    <form action={onCheckout}>
       <section>
         <Button
-          type="button"
+          type="submit"
           role="link"
           className="w-full rounded-full bg-purple-gradient bg-cover"
         >
@@ -57,3 +66,5 @@ const Checkout = ({
 };
 
 export default Checkout;
+
+// credit +10 -1 +100
