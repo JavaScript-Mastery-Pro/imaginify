@@ -39,7 +39,7 @@ export const FileUplaoder = ({
       {({ open }) => {
         return (
           // Original Image
-          <div className="flex min-h-96 flex-col gap-4">
+          <div className="flex flex-col gap-4">
             <div className="flex-between">
               <h3 className="h3-bold text-dark-600">Original</h3>
               <Button
@@ -63,14 +63,14 @@ export const FileUplaoder = ({
                     height={1000}
                     src={publicId}
                     alt="image"
-                    className="h-fit w-full rounded-[10px] border bg-white object-contain p-2"
+                    className="h-fit min-h-60 w-full rounded-[10px] border bg-white object-contain p-2"
                     placeholder={dataUrl as PlaceholderValue}
                   />
                 </div>
               </>
             ) : (
               <div
-                className="flex-center h-full max-h-[500px] cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-white"
+                className="flex-center h-60 max-h-[500px] cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-white"
                 onClick={() => open()}
               >
                 <Image
