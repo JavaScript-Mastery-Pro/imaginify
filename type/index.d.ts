@@ -62,6 +62,21 @@ declare type Query = {
   };
 };
 
+declare type Transformations = {
+  remove?: {
+    prompt: string;
+    removeShadow?: boolean;
+    multiple?: boolean;
+  };
+  restore?: boolean;
+  fillBackground?: boolean;
+  recolor?: {
+    prompt?: string;
+    to: string;
+    multiple?: boolean;
+  };
+};
+
 // ====== TRANSACTION PARAMS
 declare type CheckoutTransactionParams = {
   plan: string;

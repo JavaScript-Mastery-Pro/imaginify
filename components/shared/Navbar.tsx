@@ -27,8 +27,8 @@ export const Navbar = () => {
           <Image
             src="/assets/images/logo-text.svg"
             alt="logo"
-            width={150}
-            height={38}
+            width={152}
+            height={23}
           />
         </Link>
 

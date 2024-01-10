@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
+
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getCldImageUrl } from "next-cloudinary";
+import { CldImage, getCldImageUrl } from "next-cloudinary";
+import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 
 import { aspectRatioOptions, defaultValues } from "@/constants";
 import { Button } from "@/components/ui/button";
@@ -18,12 +21,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { IImage } from "@/lib/database/models/image.model";
 import { CustomField } from "./CustomField";
+import { dataUrl, download } from "@/lib/utils";
 import { addImage, updateImage } from "@/lib/actions/image.actions";
+import { IImage } from "@/lib/database/models/image.model";
 import { DeleteConfirmation } from "./DeleteConfirmation";
 import { MediaUploader } from "./MediaUploader";
-import TransformedImage from "./TransformedImage";
 
 // ZOD VALIDATION
 export const formSchema = z.object({
@@ -37,19 +40,31 @@ export const formSchema = z.object({
 // PROP TYPE
 type TransformationFormProps = {
   action: "Add" | "Update";
-  data?: IImage | null;
+  data?: IImage;
   userId: string;
   type: TransformationTypeKey;
   creditBalance: number;
-  config?: Transformations;
+  config?: {
+    height?: number;
+    remove?: {
+      prompt: string;
+      removeShadow?: boolean;
+      multiple?: boolean;
+    };
+    restore?: boolean;
+    fillBackground?: boolean;
+    recolor?: {
+      prompt?: string;
+      to: string;
+      multiple?: boolean;
+    };
+  };
 };
-
-type AspectRatioKey = keyof typeof aspectRatioOptions;
 
 // COMPONENT
 export const TransformationForm = ({
   action,
-  data = null,
+  data,
   userId,
   type,
   creditBalance,
@@ -59,6 +74,8 @@ export const TransformationForm = ({
   const [image, setImage] = useState<any>(data);
   const [isLoading, setIsLoading] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config);
+
+  console.log({ image });
 
   const initialValues =
     data && action === "Update"
@@ -86,7 +103,7 @@ export const TransformationForm = ({
         width: image?.width,
         height: image?.height,
         src: image?.publicId,
-        ...transformationConfig,
+        ...config,
       });
 
       const imageData = {
@@ -146,6 +163,22 @@ export const TransformationForm = ({
     setIsLoading(false);
   };
 
+  const downloadHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    download(
+      getCldImageUrl({
+        width: image?.width,
+        height: image?.height,
+        src: image?.publicId,
+        ...config,
+      }),
+      form.getValues().title
+    );
+  };
+
   return (
     <Form {...form}>
       {/* {creditBalance > 5 ? (
@@ -163,7 +196,6 @@ export const TransformationForm = ({
           render={({ field }) => <Input {...field} className="input-field" />}
         />
 
-        {/* ASPECT RATIO FIELD */}
         {type === "fill" && (
           <CustomField
             control={form.control}
@@ -173,15 +205,13 @@ export const TransformationForm = ({
             render={({ field }) => (
               <Select
                 onValueChange={(value) => {
-                  const imageSize = aspectRatioOptions[value as AspectRatioKey];
-
                   setImage((prevState: any) => ({
                     ...prevState,
-                    aspectRatio: imageSize.aspectRatio,
-                    width: imageSize.width,
-                    height: imageSize.height,
+                    height:
+                      aspectRatioOptions[
+                        value as keyof typeof aspectRatioOptions
+                      ].height,
                   }));
-
                   field.onChange(value);
                 }}
                 defaultValue={field.value}
@@ -189,11 +219,14 @@ export const TransformationForm = ({
                 <SelectTrigger className="select-field">
                   <SelectValue placeholder="" />
                 </SelectTrigger>
-
                 <SelectContent>
                   {Object.keys(aspectRatioOptions).map((key) => (
                     <SelectItem key={key} value={key} className="select-item">
-                      {aspectRatioOptions[key as AspectRatioKey].label}
+                      {
+                        aspectRatioOptions[
+                          key as keyof typeof aspectRatioOptions
+                        ].label
+                      }
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -203,8 +236,8 @@ export const TransformationForm = ({
         )}
 
         {(type === "remove" || type === "recolor") && (
-          /* PROMPT FIELD */
           <div className="flex gap-10">
+            {/* PROMPT */}
             <CustomField
               control={form.control}
               name="prompt"
@@ -239,7 +272,7 @@ export const TransformationForm = ({
             />
 
             {type === "recolor" && (
-              /* COLOR FIELD */
+              // COLOR
               <CustomField
                 control={form.control}
                 name="color"
@@ -275,7 +308,7 @@ export const TransformationForm = ({
         )}
 
         <div className="grid h-fit min-h-[200px] grid-cols-1 gap-5 py-4 md:grid-cols-2">
-          {/* MEDIA UPLOADER */}
+          {/* Uploader  */}
           <CustomField
             control={form.control}
             name="publicId"
@@ -289,13 +322,49 @@ export const TransformationForm = ({
             )}
           />
 
-          {/* TRANSFORMED IMAGE */}
-          <TransformedImage
-            image={image}
-            type={type}
-            title={form.getValues().title}
-            transformationConfig={transformationConfig}
-          />
+          {/* Transformed Image */}
+          <div className="flex flex-col gap-4 ">
+            <div className="flex-between">
+              <h3 className="h3-bold text-dark-600">Transformed</h3>
+              <button
+                className="p-14-medium flex items-center gap-2 px-2 "
+                onClick={(e) => downloadHandler(e)}
+              >
+                <Image
+                  src="/assets/icons/download.svg"
+                  alt="add image"
+                  width={20}
+                  height={20}
+                />
+                Download
+              </button>
+            </div>
+
+            {image ? (
+              <>
+                {/* Todo: fix height issue */}
+                <CldImage
+                  width={1000}
+                  height={
+                    type === "fill" && image?.aspectRatio
+                      ? aspectRatioOptions[
+                          image.aspectRatio as keyof typeof aspectRatioOptions
+                        ]?.height
+                      : 300
+                  }
+                  src={image?.publicId}
+                  alt="image"
+                  placeholder={dataUrl as PlaceholderValue}
+                  {...transformationConfig}
+                  className="h-full min-h-60 w-full rounded-[10px] border border-dashed bg-purple-100 object-contain p-2"
+                />
+              </>
+            ) : (
+              <div className="flex-center p-14-medium h-60 cursor-pointer flex-col gap-5 rounded-[16px] border-dashed bg-purple-100">
+                Transformed Image
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="flex flex-col gap-4">

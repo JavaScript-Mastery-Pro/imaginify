@@ -1,20 +1,18 @@
-import Image from "next/image";
-import { dataUrl } from "@/lib/utils";
-import { CldUploadWidget, CldImage } from "next-cloudinary";
-import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import React from "react";
+import Image from "next/image";
+import { CldImage, CldUploadWidget } from "next-cloudinary";
 
-type FileUplaoderProps = {
+type MediaUploaderProps = {
   onValueChange: (value: string) => void;
   setImage: React.Dispatch<any>;
   publicId: string;
 };
 
-export const FileUplaoder = ({
+export const MediaUploader = ({
   onValueChange,
   setImage,
   publicId,
-}: FileUplaoderProps) => {
+}: MediaUploaderProps) => {
   return (
     <CldUploadWidget
       uploadPreset="imaginify"
@@ -23,14 +21,14 @@ export const FileUplaoder = ({
       }}
       onSuccess={(result: any) => {
         if (result.event === "success") {
-          const imageDetails = {
+          setImage((prevState: any) => ({
+            ...prevState,
             publicId: result?.info?.public_id,
             width: result?.info?.width,
             height: result?.info?.height,
             secureURL: result?.info?.secure_url,
-          };
+          }));
 
-          setImage(imageDetails);
           onValueChange(result?.info?.public_id);
         }
       }}
@@ -52,14 +50,13 @@ export const FileUplaoder = ({
                     height={1000}
                     src={publicId}
                     alt="image"
-                    className="h-fit min-h-60 w-full rounded-[10px] border bg-purple-100 object-contain p-2"
-                    placeholder={dataUrl as PlaceholderValue}
+                    className="h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100 object-contain p-2"
                   />
                 </div>
               </>
             ) : (
               <div
-                className="flex-center h-60 max-h-[500px] cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100"
+                className="flex-center h-72 cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100"
                 onClick={() => open()}
               >
                 <div className="rounded-[16px] bg-white p-5 shadow-sm shadow-purple-200/50">
