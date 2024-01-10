@@ -1,8 +1,11 @@
+"use server";
+
 import { redirect } from "next/navigation";
 import Stripe from "stripe";
 import Transaction from "../database/models/transaction.model";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
+import { updateCredits } from "./user.actions";
 
 // CHECKOUT
 export async function checkoutOrder(transaction: CheckoutTransactionParams) {
@@ -25,6 +28,7 @@ export async function checkoutOrder(transaction: CheckoutTransactionParams) {
     ],
     metadata: {
       plan: transaction.plan,
+      credits: transaction.credits,
       buyerId: transaction.buyerId,
     },
     mode: "payment",
@@ -40,10 +44,14 @@ export async function createTransaction(transaction: CreateTransactionParams) {
   try {
     await connectToDatabase();
 
+    // Create new transaction with buyer id
     const newTransaction = await Transaction.create({
       ...transaction,
       buyer: transaction.buyerId,
     });
+
+    // Update their credit balance
+    await updateCredits(transaction.buyerId, transaction.credits);
 
     return JSON.parse(JSON.stringify(newTransaction));
   } catch (error) {

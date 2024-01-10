@@ -15,9 +15,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { deductCredits } from "@/lib/actions/user.actions";
+import { updateCredits } from "@/lib/actions/user.actions";
 
-export const UseCreditsModal = ({ userId }: { userId: string }) => {
+export const UseCreditsModal = ({
+  userId,
+  creditBalance,
+}: {
+  userId: string;
+  creditBalance: number;
+}) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +60,7 @@ export const UseCreditsModal = ({ userId }: { userId: string }) => {
             </AlertDialogCancel>
           </div>
           <AlertDialogTitle className="p-24-bold text-dark-600">
-            Remaining Credits: 21/220
+            Remaining Credits: {creditBalance}
           </AlertDialogTitle>
           <AlertDialogDescription className="p-16-regular py-3">
             Using this service will deduct
@@ -74,7 +80,7 @@ export const UseCreditsModal = ({ userId }: { userId: string }) => {
             onClick={() =>
               startTransition(async () => {
                 setIsOpen(false);
-                await deductCredits(userId);
+                await updateCredits(userId);
               })
             }
           >

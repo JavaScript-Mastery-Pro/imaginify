@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
@@ -8,23 +9,40 @@ import { Input } from "../ui/input";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
+import { formUrlQuery } from "@/lib/utils";
 import { transformationTypes } from "@/constants";
 import { IImage } from "@/lib/database/models/image.model";
+import { Button } from "../ui/button";
 
 export const Collection = ({
   hasSearch = true,
   images,
+  totalPages = 1,
+  page,
 }: {
-  hasSearch?: boolean;
   images: IImage[];
+  totalPages?: number;
+  page: number;
+  hasSearch?: boolean;
 }) => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const onClick = (action: string) => {
+    const pageValue = action === "next" ? Number(page) + 1 : Number(page) - 1;
+
+    const newUrl = formUrlQuery({
+      searchParams,
+      key: "page",
+      value: pageValue,
+    });
+
+    router.push(newUrl, { scroll: false });
+  };
+
   return (
     <>
       <div className="md:flex-between mb-6 flex flex-col gap-5 md:flex-row">
@@ -37,57 +55,40 @@ export const Collection = ({
         )}
       </div>
 
-      {images.length === 0 && (
-        <div className="flex-center h-60 w-full rounded-[10px] border border-dark-400/10 bg-white/20">
-          <p className="p-20-semibold">No Recent Edits</p>
-        </div>
-      )}
-
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {images.map((image) => (
           <Card image={image} key={image.id} />
         ))}
       </ul>
 
-      {images.length > 6 && (
+      {totalPages > 1 ? (
         <Pagination className="mt-10">
           <PaginationContent className="flex w-full">
-            <PaginationItem>
-              <PaginationPrevious
-                href="#"
-                className="button w-36 bg-purple-gradient bg-cover text-white"
-              />
-            </PaginationItem>
+            <Button
+              disabled={Number(page) <= 1}
+              className="button w-36 bg-purple-gradient bg-cover text-white"
+              onClick={() => onClick("prev")}
+            >
+              <PaginationPrevious className="hover:bg-transparent hover:text-white" />
+            </Button>
 
-            <div className="flex-center w-full flex-1">
-              <PaginationItem>
-                <PaginationLink href="#" isActive className="rounded-full">
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" className="rounded-full">
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" className="rounded-full">
-                  3
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            </div>
+            <p className="flex-center w-full flex-1">
+              {page} / {totalPages}
+            </p>
 
-            <PaginationItem>
-              <PaginationNext
-                href="#"
-                className="button w-36 bg-purple-gradient bg-cover text-white"
-              />
-            </PaginationItem>
+            <Button
+              className="button w-36 bg-purple-gradient bg-cover text-white "
+              onClick={() => onClick("next")}
+              disabled={Number(page) >= totalPages}
+            >
+              <PaginationNext className="hover:bg-transparent hover:text-white" />
+            </Button>
           </PaginationContent>
         </Pagination>
+      ) : (
+        <div className="flex-center h-60 w-full rounded-[10px] border border-dark-400/10 bg-white/20">
+          <p className="p-20-semibold">No Recent Edits</p>
+        </div>
       )}
     </>
   );
