@@ -24,6 +24,7 @@ import { addImage, updateImage } from "@/lib/actions/image.actions";
 import { DeleteConfirmation } from "./DeleteConfirmation";
 import { MediaUploader } from "./MediaUploader";
 import TransformedImage from "./TransformedImage";
+import { debounce } from "@/lib/utils";
 
 // ZOD VALIDATION
 export const formSchema = z.object({
@@ -57,9 +58,11 @@ export const TransformationForm = ({
 }: TransformationFormProps) => {
   const router = useRouter();
   const [image, setImage] = useState<any>(data);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config);
 
+  console.log(transformationConfig);
+  console.log(image);
   const initialValues =
     data && action === "Update"
       ? {
@@ -79,7 +82,7 @@ export const TransformationForm = ({
 
   // Submit Handler
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsLoading(true);
+    setSubmitting(true);
 
     if (data || image) {
       const transformationURL = getCldImageUrl({
@@ -143,7 +146,27 @@ export const TransformationForm = ({
       }
     }
 
-    setIsLoading(false);
+    setSubmitting(false);
+  };
+
+  // HANDLE INPUT CHANGE
+  const handleInputChange = (
+    fieldName: string,
+    value: string,
+    type: string,
+    onChangeField: (value: string) => void
+  ) => {
+    debounce(() => {
+      setTransformationConfig((prevState: any) => ({
+        ...prevState,
+        [type]: {
+          ...prevState?.[type],
+          [fieldName === "prompt" ? "prompt" : "to"]: value,
+        },
+      }));
+    }, 1000)();
+
+    return onChangeField(value);
   };
 
   return (
@@ -216,24 +239,14 @@ export const TransformationForm = ({
                 <Input
                   value={field.value}
                   className="input-field"
-                  onChange={(e) => {
-                    let timeoutId = null;
-                    if (timeoutId) clearTimeout(timeoutId);
-
-                    timeoutId = setTimeout(() => {
-                      setTransformationConfig(
-                        (prevState: typeof transformationConfig) => ({
-                          ...prevState,
-                          [type === "remove" ? "remove" : "recolor"]: {
-                            ...prevState?.[type],
-                            prompt: e.target.value,
-                          },
-                        })
-                      );
-                    }, 1500);
-
-                    field.onChange(e.target.value);
-                  }}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "prompt",
+                      e.target.value,
+                      type,
+                      field.onChange
+                    )
+                  }
                 />
               )}
             />
@@ -249,24 +262,14 @@ export const TransformationForm = ({
                   <Input
                     value={field.value}
                     className="input-field"
-                    onChange={(e) => {
-                      let timeoutId = null;
-                      if (timeoutId) clearTimeout(timeoutId);
-
-                      timeoutId = setTimeout(() => {
-                        setTransformationConfig(
-                          (prevState: typeof transformationConfig) => ({
-                            ...prevState,
-                            recolor: {
-                              ...prevState?.recolor,
-                              to: e.target.value,
-                            },
-                          })
-                        );
-                      }, 1500);
-
-                      field.onChange(e.target.value);
-                    }}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "color",
+                        e.target.value,
+                        "recolor",
+                        field.onChange
+                      )
+                    }
                   />
                 )}
               />
@@ -302,9 +305,9 @@ export const TransformationForm = ({
           <Button
             type="submit"
             className="submit-button capitalize"
-            disabled={isLoading}
+            disabled={isSubmitting}
           >
-            {isLoading ? "Saving..." : "Save Transformation"}
+            {isSubmitting ? "Saving..." : "Save Transformation"}
           </Button>
 
           {data && <DeleteConfirmation imageId={data._id} />}
