@@ -75,8 +75,6 @@ export const TransformationForm = ({
   const [isLoading, setIsLoading] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config);
 
-  console.log({ transformationConfig });
-
   const initialValues =
     data && action === "Update"
       ? {
@@ -204,7 +202,6 @@ export const TransformationForm = ({
             render={({ field }) => (
               <Select
                 onValueChange={(value) => {
-                  console.log(value);
                   setImage((prevState: any) => ({
                     ...prevState,
                     height:
@@ -258,7 +255,7 @@ export const TransformationForm = ({
                         (prevState: typeof transformationConfig) => ({
                           ...prevState,
                           [type === "remove" ? "remove" : "recolor"]: {
-                            ...prevState?.remove,
+                            ...prevState?.[type],
                             prompt: e.target.value,
                           },
                         })
@@ -296,8 +293,9 @@ export const TransformationForm = ({
                             },
                           })
                         );
-                        field.onChange(e.target.value);
                       }, 1500);
+
+                      field.onChange(e.target.value);
                     }}
                   />
                 )}

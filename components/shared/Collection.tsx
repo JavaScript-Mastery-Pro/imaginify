@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 
-import { Input } from "../ui/input";
 import {
   Pagination,
   PaginationContent,
@@ -16,6 +15,7 @@ import { formUrlQuery } from "@/lib/utils";
 import { transformationTypes } from "@/constants";
 import { IImage } from "@/lib/database/models/image.model";
 import { Button } from "../ui/button";
+import { Search } from "./Search";
 
 export const Collection = ({
   hasSearch = true,
@@ -28,14 +28,14 @@ export const Collection = ({
   page: number;
   hasSearch?: boolean;
 }) => {
-  const searchParams = useSearchParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const onClick = (action: string) => {
+  const onPageChange = (action: string) => {
     const pageValue = action === "next" ? Number(page) + 1 : Number(page) - 1;
 
     const newUrl = formUrlQuery({
-      searchParams,
+      searchParams: searchParams.toString(),
       key: "page",
       value: pageValue,
     });
@@ -47,27 +47,28 @@ export const Collection = ({
     <>
       <div className="md:flex-between mb-6 flex flex-col gap-5 md:flex-row">
         <h2 className="h2-bold text-dark-600">Recent Edits</h2>
-        {hasSearch && (
-          <Input
-            className="search-field p-14-medium w-full max-w-96 rounded-full border-0 placeholder:text-dark-400"
-            placeholder="Search title"
-          />
-        )}
+        {hasSearch && <Search />}
       </div>
 
-      <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-        {images.map((image) => (
-          <Card image={image} key={image.id} />
-        ))}
-      </ul>
+      {images.length > 0 ? (
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          {images.map((image) => (
+            <Card image={image} key={image.id} />
+          ))}
+        </ul>
+      ) : (
+        <div className="flex-center h-60 w-full rounded-[10px] border border-dark-400/10 bg-white/20">
+          <p className="p-20-semibold">No Images Found</p>
+        </div>
+      )}
 
-      {totalPages > 1 ? (
+      {totalPages > 1 && (
         <Pagination className="mt-10">
           <PaginationContent className="flex w-full">
             <Button
               disabled={Number(page) <= 1}
               className="button w-36 bg-purple-gradient bg-cover text-white"
-              onClick={() => onClick("prev")}
+              onClick={() => onPageChange("prev")}
             >
               <PaginationPrevious className="hover:bg-transparent hover:text-white" />
             </Button>
@@ -78,17 +79,13 @@ export const Collection = ({
 
             <Button
               className="button w-36 bg-purple-gradient bg-cover text-white "
-              onClick={() => onClick("next")}
+              onClick={() => onPageChange("next")}
               disabled={Number(page) >= totalPages}
             >
               <PaginationNext className="hover:bg-transparent hover:text-white" />
             </Button>
           </PaginationContent>
         </Pagination>
-      ) : (
-        <div className="flex-center h-60 w-full rounded-[10px] border border-dark-400/10 bg-white/20">
-          <p className="p-20-semibold">No Recent Edits</p>
-        </div>
       )}
     </>
   );

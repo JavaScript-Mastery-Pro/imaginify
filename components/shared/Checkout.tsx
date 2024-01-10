@@ -5,7 +5,6 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import { Button } from "../ui/button";
 import { checkoutOrder } from "@/lib/actions/transaction.actions";
-import { updateCredits } from "@/lib/actions/user.actions";
 
 const Checkout = ({
   plan,
@@ -28,15 +27,7 @@ const Checkout = ({
     if (query.get("success")) {
       console.log("Order placed! You will receive an email confirmation.");
 
-      const updateUserCredits = async () => {
-        const updatedUserInfo = await updateCredits(buyerId, credits);
-
-        if (updatedUserInfo) {
-          console.log("User credits updated!");
-          // todo: show a toast
-        }
-      };
-      updateUserCredits();
+      // todo: show a toast
     }
 
     if (query.get("canceled")) {

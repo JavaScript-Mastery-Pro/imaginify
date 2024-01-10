@@ -59,8 +59,6 @@ export async function updateCredits(userId: string, credit: number = -1) {
       }
     );
 
-    console.log({ updatedUserCredits });
-
     if (!updatedUserCredits) throw new Error("User credit update failed");
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (error) {

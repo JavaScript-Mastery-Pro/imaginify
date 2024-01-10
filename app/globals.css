@@ -166,7 +166,7 @@
   }
 
   .search-field {
-    @apply rounded-full text-dark-600 h-[44px] p-14-medium focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
+    @apply rounded-full text-dark-600 p-14-medium w-full border-0 placeholder:text-dark-400 h-[44px] p-14-medium focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
   }
 
   .submit-button {
@@ -179,10 +179,5 @@
 
   .select-item {
     @apply py-3 cursor-pointer;
-  }
-  /* =============== */
-
-  .text-destructive {
-    @apply text-red-300;
   }
 }

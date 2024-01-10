@@ -1,5 +1,6 @@
 "use server";
 
+import { v2 as cloudinary } from "cloudinary";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -43,23 +44,53 @@ export async function addImage({ image, userId, path }: AddImageParams) {
 export async function getAllImages({
   limit = 3,
   page = 1,
+  searchQuery = "",
 }: {
   limit?: number;
   page: number;
+  searchQuery: string;
 }) {
+  cloudinary.config({
+    cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true,
+  });
+
   try {
     await connectToDatabase();
+
+    let expression = "folder=imaginify";
+
+    if (searchQuery) {
+      expression += ` AND ${searchQuery}`;
+    }
+
+    const { resources } = await cloudinary.search
+      .expression(expression)
+      .execute();
+
+    const resourcesIds = resources.map((file: any) => file.public_id);
+
+    let query = {};
+    if (resourcesIds) {
+      query = {
+        publicId: {
+          $in: resourcesIds,
+        },
+      };
+    }
 
     // Calculate how many images to skip
     const skipAmount = (Number(page) - 1) * limit;
 
     // Find all images, sort by upvotes, skip and limit
-    const images = await populateUser(Image.find())
+    const images = await populateUser(Image.find(query))
       .sort({ updatedAt: -1 }) // Sort by highest upvotes
       .skip(skipAmount)
       .limit(limit);
 
-    const imagesCount = await Image.countDocuments();
+    const imagesCount = await Image.find(query).countDocuments();
 
     return {
       data: JSON.parse(JSON.stringify(images)),

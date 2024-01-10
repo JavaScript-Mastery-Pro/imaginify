@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -26,14 +26,9 @@ export const UseCreditsModal = ({
 }) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    setIsOpen(true);
-  }, []);
 
   return (
-    <AlertDialog open={isOpen}>
+    <AlertDialog defaultOpen>
       <AlertDialogTrigger asChild></AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -64,7 +59,7 @@ export const UseCreditsModal = ({
           </AlertDialogTitle>
           <AlertDialogDescription className="p-16-regular py-3">
             Using this service will deduct
-            <span className="p-16-semibold text-dark-600"> 5 credits</span> from
+            <span className="p-16-semibold text-dark-600"> 1 credit</span> from
             your remaining balance. Are you sure you want to proceed?
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -79,7 +74,6 @@ export const UseCreditsModal = ({
             className="button w-full bg-purple-gradient  bg-cover"
             onClick={() =>
               startTransition(async () => {
-                setIsOpen(false);
                 await updateCredits(userId);
               })
             }

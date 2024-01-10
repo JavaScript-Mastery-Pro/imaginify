@@ -7,12 +7,13 @@ import { getUserById } from "@/lib/actions/user.actions";
 import { getAllImages } from "@/lib/actions/image.actions";
 
 const Profile = async ({ searchParams }: SearchParamProps) => {
+  const searchQuery = (searchParams?.query as string) || "";
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
   const page = Number(searchParams?.page) || 1;
 
   const user = await getUserById(userId);
-  const images = await getAllImages({ page });
+  const images = await getAllImages({ page, searchQuery });
 
   return (
     <>

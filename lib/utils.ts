@@ -66,12 +66,6 @@ export const dataUrl = `data:image/svg+xml;base64,${toBase64(
   shimmer(600, 400)
 )}`;
 
-type FormUrlQueryParams = {
-  searchParams: URLSearchParams;
-  key: string;
-  value: string | number | null;
-};
-
 export const formUrlQuery = ({
   searchParams,
   key,
@@ -84,6 +78,25 @@ export const formUrlQuery = ({
   })}`;
 };
 
+export function removeKeysFromQuery({
+  searchParams,
+  keysToRemove,
+}: RemoveUrlQueryParams) {
+  const currentUrl = qs.parse(searchParams);
+
+  keysToRemove.forEach((key) => {
+    delete currentUrl[key];
+  });
+
+  // Remove null or undefined values
+  Object.keys(currentUrl).forEach(
+    (key) => currentUrl[key] == null && delete currentUrl[key]
+  );
+
+  return `${window.location.pathname}?${qs.stringify(currentUrl)}`;
+}
+
+// TODO DEBOUNCE
 export const debounce = (func: (...args: any[]) => void, delay: number) => {
   let timeoutId: NodeJS.Timeout | null;
   return (...args: any[]) => {

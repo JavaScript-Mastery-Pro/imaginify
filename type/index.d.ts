@@ -17,13 +17,6 @@ declare type UpdateUserParams = {
   photo: string;
 };
 
-declare type TransformationTypeKey = "fill" | "restore" | "recolor" | "remove";
-
-declare type SearchParamProps = {
-  params: { id: string; type: TransformationTypeKey };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 // ====== IMAGE PARAMS
 declare type AddImageParams = {
   image: {
@@ -77,4 +70,29 @@ declare type CreateTransactionParams = {
   plan: string;
   buyerId: string;
   createdAt: Date;
+};
+
+declare type TransformationTypeKey = "fill" | "restore" | "recolor" | "remove";
+
+// ====== URL QUERY PARAMS
+declare type FormUrlQueryParams = {
+  searchParams: string;
+  key: string;
+  value: string | number | null;
+};
+
+declare type UrlQueryParams = {
+  params: string;
+  key: string;
+  value: string | null;
+};
+
+declare type RemoveUrlQueryParams = {
+  searchParams: string;
+  keysToRemove: string[];
+};
+
+declare type SearchParamProps = {
+  params: { id: string; type: TransformationTypeKey };
+  searchParams: { [key: string]: string | string[] | undefined };
 };
