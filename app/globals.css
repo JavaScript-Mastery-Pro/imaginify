@@ -150,7 +150,7 @@
 
   /* =====  SHADCN OVERRIDES */
   .button {
-    @apply py-4 px-6 flex-center gap-3 rounded-full p-16-semibold;
+    @apply py-4 px-6 flex-center gap-3 rounded-full p-16-semibold focus-visible:ring-offset-0 focus-visible:ring-transparent !important;
   }
 
   .dropdown-content {
@@ -166,7 +166,7 @@
   }
 
   .search-field {
-    @apply p-16-medium border-0 bg-transparent text-dark-600 p-14-medium w-full placeholder:text-dark-400 h-[44px] p-14-medium focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
+    @apply border-0 bg-transparent text-dark-600 w-full placeholder:text-dark-400 h-[44px] p-16-medium focus-visible:ring-offset-0 p-3 focus-visible:ring-transparent !important;
   }
 
   .submit-button {
@@ -178,6 +178,6 @@
   }
 
   .select-item {
-    @apply py-3 cursor-pointer;
+    @apply py-3 cursor-pointer hover:bg-purple-100;
   }
 }

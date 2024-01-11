@@ -174,6 +174,8 @@ export const aspectRatioOptions = {
   },
 };
 
+export const creditFee = 1;
+
 export const defaultValues = {
   title: "",
   aspectRatio: "1:1",

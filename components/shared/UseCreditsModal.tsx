@@ -13,9 +13,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { updateCredits } from "@/lib/actions/user.actions";
+import { creditFee } from "@/constants";
 
 export const UseCreditsModal = ({
   userId,
@@ -25,11 +25,11 @@ export const UseCreditsModal = ({
   creditBalance: number;
 }) => {
   const [isPending, startTransition] = useTransition();
+
   const router = useRouter();
 
   return (
     <AlertDialog defaultOpen>
-      <AlertDialogTrigger asChild></AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <div className="mb-2 flex items-start justify-between">
@@ -42,7 +42,7 @@ export const UseCreditsModal = ({
             <AlertDialogCancel
               className="border-0 p-0 hover:bg-transparent"
               onClick={() => {
-                router.back();
+                router.push("/profile");
               }}
             >
               <Image
@@ -59,14 +59,16 @@ export const UseCreditsModal = ({
           </AlertDialogTitle>
           <AlertDialogDescription className="p-16-regular py-3">
             Using this service will deduct
-            <span className="p-16-semibold text-dark-600"> 1 credit</span> from
-            your remaining balance. Are you sure you want to proceed?
+            <span className="p-16-semibold text-dark-600">
+              {creditFee} credit
+            </span>
+            from your remaining balance. Are you sure you want to proceed?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
-            className="button w-full bg-purple-100 text-dark-400"
-            onClick={() => router.back()}
+            className="button w-full bg-purple-100 text-dark-400 hover:text-dark-400"
+            onClick={() => router.push("/profile")}
           >
             No, Cancel
           </AlertDialogCancel>
@@ -74,7 +76,7 @@ export const UseCreditsModal = ({
             className="button w-full bg-purple-gradient  bg-cover"
             onClick={() =>
               startTransition(async () => {
-                await updateCredits(userId);
+                await updateCredits(userId, creditFee);
               })
             }
           >

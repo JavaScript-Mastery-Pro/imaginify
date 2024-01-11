@@ -48,7 +48,7 @@ export const DeleteConfirmation = ({ imageId }: { imageId: string }) => {
             className="border bg-red-500 text-white hover:bg-red-600"
             onClick={() =>
               startTransition(async () => {
-                await deleteImage({ imageId });
+                await deleteImage(imageId);
               })
             }
           >

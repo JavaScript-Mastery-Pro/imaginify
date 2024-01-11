@@ -181,7 +181,7 @@ export async function updateImage({ userId, image, path }: UpdateImageParams) {
 }
 
 // DELETE
-export async function deleteImage({ imageId }: { imageId: string }) {
+export async function deleteImage(imageId: string) {
   try {
     await connectToDatabase();
 

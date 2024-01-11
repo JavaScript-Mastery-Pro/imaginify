@@ -1,3 +1,5 @@
+"use server";
+
 import User from "@/lib/database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
@@ -47,19 +49,21 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
 }
 
 // USE CREDITS
-export async function updateCredits(userId: string, credit: number = -1) {
+export async function updateCredits(userId: string, creditFee: number = 1) {
   try {
     await connectToDatabase();
 
     const updatedUserCredits = await User.findOneAndUpdate(
       { _id: userId },
-      { $inc: { creditBalance: credit } },
+      { $inc: { creditBalance: -creditFee } },
       {
         new: true,
       }
     );
 
     if (!updatedUserCredits) throw new Error("User credit update failed");
+    revalidatePath("/profile");
+
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (error) {
     handleError(error);

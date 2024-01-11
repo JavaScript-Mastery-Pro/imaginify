@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getCldImageUrl } from "next-cloudinary";
 
-import { aspectRatioOptions, defaultValues } from "@/constants";
+import { aspectRatioOptions, creditFee, defaultValues } from "@/constants";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,8 @@ import { DeleteConfirmation } from "./DeleteConfirmation";
 import { MediaUploader } from "./MediaUploader";
 import TransformedImage from "./TransformedImage";
 import { debounce } from "@/lib/utils";
+import { InsufficientCreditsModal } from "./InsufficientCreditsModal";
+import { UseCreditsModal } from "./UseCreditsModal";
 
 // ZOD VALIDATION
 export const formSchema = z.object({
@@ -169,13 +171,14 @@ export const TransformationForm = ({
 
   return (
     <Form {...form}>
-      {/* {creditBalance > 5 ? (
-        <UseCreditsModal userId={userId} creditBalance={creditBalance} />
-      ) : (
-        <InsufficientCreditsModal />
-      )} */}
-
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {creditBalance >= creditFee ? (
+          <UseCreditsModal userId={userId} creditBalance={creditBalance} />
+        ) : (
+          <InsufficientCreditsModal />
+        )}
+
+        {/* TITLE FIELD */}
         <CustomField
           control={form.control}
           name="title"

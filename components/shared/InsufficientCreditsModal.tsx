@@ -12,7 +12,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
 export const InsufficientCreditsModal = () => {
@@ -20,14 +19,13 @@ export const InsufficientCreditsModal = () => {
 
   return (
     <AlertDialog defaultOpen>
-      <AlertDialogTrigger asChild></AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <div className="flex-between">
             <p className="p-16-semibold text-dark-400">Insufficient Credits</p>
             <AlertDialogCancel
               className="border-0 p-0 hover:bg-transparent"
-              onClick={() => router.back()}
+              onClick={() => router.push("/profile")}
             >
               <Image
                 src="/assets/icons/close.svg"
@@ -58,13 +56,13 @@ export const InsufficientCreditsModal = () => {
         <AlertDialogFooter>
           <AlertDialogCancel
             className="button w-full bg-purple-100 text-dark-400"
-            onClick={() => router.back()}
+            onClick={() => router.push("/profile")}
           >
             No, Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             className="button w-full bg-purple-gradient  bg-cover"
-            onClick={() => router.push("/credit")}
+            onClick={() => router.push("/credits")}
           >
             Yes, Proceed
           </AlertDialogAction>
