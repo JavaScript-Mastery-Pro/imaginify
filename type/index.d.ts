@@ -55,13 +55,6 @@ declare type UpdateImageParams = {
   path: string;
 };
 
-declare type Query = {
-  author: string;
-  publicId?: {
-    $in: string[];
-  };
-};
-
 declare type Transformations = {
   remove?: {
     prompt: string;

@@ -8,6 +8,7 @@ type TransformedImageProps = {
   image: any;
   type: string;
   title: string;
+  disabled: boolean;
   transformationConfig: Transformations | undefined;
 };
 
@@ -15,6 +16,7 @@ const TransformedImage = ({
   image,
   type,
   title,
+  disabled,
   transformationConfig,
 }: TransformedImageProps) => {
   // DOWNLOAD HANDLER
@@ -39,7 +41,9 @@ const TransformedImage = ({
       <div className="flex-between ">
         <h3 className="h3-bold text-dark-600">Transformed</h3>
         <button
-          className="p-14-medium flex items-center gap-2 px-2 "
+          className={`${
+            disabled ? "hidden" : "flex"
+          } p-14-medium items-center gap-2 px-2`}
           onClick={(e) => downloadHandler(e)}
         >
           <Image

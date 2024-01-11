@@ -10,11 +10,10 @@ const Profile = async ({ searchParams }: SearchParamProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
 
-  const searchQuery = (searchParams?.query as string) || "";
   const page = Number(searchParams?.page) || 1;
 
   const user = await getUserById(userId);
-  const images = await getUserImages({ page, searchQuery, userId });
+  const images = await getUserImages({ page, userId });
 
   return (
     <>

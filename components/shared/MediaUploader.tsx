@@ -6,12 +6,14 @@ type MediaUploaderProps = {
   onValueChange: (value: string) => void;
   setImage: React.Dispatch<any>;
   publicId: string;
+  disabled: boolean;
 };
 
 export const MediaUploader = ({
   onValueChange,
   setImage,
   publicId,
+  disabled,
 }: MediaUploaderProps) => {
   return (
     <CldUploadWidget
@@ -42,8 +44,10 @@ export const MediaUploader = ({
             {publicId ? (
               <>
                 <div
-                  className="cursor-pointer overflow-hidden rounded-[10px]"
-                  onClick={() => open()}
+                  className={`${
+                    !disabled && "cursor-pointer"
+                  } overflow-hidden rounded-[10px]`}
+                  onClick={() => !disabled && open()}
                 >
                   <CldImage
                     width={1000}
@@ -57,7 +61,7 @@ export const MediaUploader = ({
             ) : (
               <div
                 className="flex-center flex h-72 cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20  shadow-inner"
-                onClick={() => open()}
+                onClick={() => !disabled && open()}
               >
                 <div className="rounded-[16px] bg-white  p-5 shadow-sm shadow-purple-200/50">
                   <Image

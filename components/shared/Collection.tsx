@@ -18,7 +18,7 @@ import { Button } from "../ui/button";
 import { Search } from "./Search";
 
 export const Collection = ({
-  hasSearch = true,
+  hasSearch = false,
   images,
   totalPages = 1,
   page,
