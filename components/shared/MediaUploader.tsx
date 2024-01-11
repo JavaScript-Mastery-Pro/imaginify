@@ -50,16 +50,16 @@ export const MediaUploader = ({
                     height={1000}
                     src={publicId}
                     alt="image"
-                    className="h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100 object-contain p-2"
+                    className="h-fit min-h-72 w-full  rounded-[10px] border border-dashed bg-purple-100 object-contain p-2"
                   />
                 </div>
               </>
             ) : (
               <div
-                className="flex-center h-72 cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100"
+                className="flex-center flex h-72 cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20  shadow-inner"
                 onClick={() => open()}
               >
-                <div className="rounded-[16px] bg-white p-5 shadow-sm shadow-purple-200/50">
+                <div className="rounded-[16px] bg-white  p-5 shadow-sm shadow-purple-200/50">
                   <Image
                     src="/assets/icons/add.svg"
                     alt="add image"

@@ -47,14 +47,14 @@ export const Navbar = () => {
                     key={link.route}
                     className={`${
                       isActive && "gradient-text"
-                    } flex-center p-16-medium whitespace-nowrap text-dark-700`}
+                    } flex-center p-16-semibold whitespace-nowrap text-dark-700`}
                   >
                     {link.nested ? (
                       <DropdownMenu>
                         <DropdownMenuTrigger
                           className={`${
                             isActiveFeature && "gradient-text"
-                          } flex items-center gap-2 py-5 capitalize`}
+                          } flex items-center gap-2 py-5 capitalize focus-visible:ring-transparent`}
                         >
                           AI Features
                           <Image

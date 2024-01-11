@@ -35,8 +35,8 @@ const TransformedImage = ({
   };
 
   return (
-    <div className="flex flex-col gap-4 ">
-      <div className="flex-between">
+    <div className="flex flex-col gap-4">
+      <div className="flex-between ">
         <h3 className="h3-bold text-dark-600">Transformed</h3>
         <button
           className="p-14-medium flex items-center gap-2 px-2 "
@@ -45,8 +45,9 @@ const TransformedImage = ({
           <Image
             src="/assets/icons/download.svg"
             alt="add image"
-            width={20}
-            height={20}
+            width={24}
+            height={24}
+            className="pb-1"
           />
           Download
         </button>
@@ -61,11 +62,11 @@ const TransformedImage = ({
             alt="image"
             placeholder={dataUrl as PlaceholderValue}
             {...transformationConfig}
-            className="h-full min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100 object-contain p-2"
+            className="h-full min-h-72 w-full rounded-[10px] border border-dashed bg-white object-contain p-2"
           />
         </>
       ) : (
-        <div className="flex-center p-14-medium h-72 cursor-pointer flex-col gap-5 rounded-[16px] border-dashed bg-purple-100">
+        <div className="flex-center p-14-medium h-72 flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20 shadow-inner">
           Transformed Image
         </div>
       )}

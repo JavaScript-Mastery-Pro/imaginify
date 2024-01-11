@@ -73,7 +73,7 @@ export const Collection = ({
               <PaginationPrevious className="hover:bg-transparent hover:text-white" />
             </Button>
 
-            <p className="flex-center w-full flex-1">
+            <p className="flex-center p-16-medium w-fit flex-1">
               {page} / {totalPages}
             </p>
 
