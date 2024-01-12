@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
 
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 export const Search = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -44,6 +43,7 @@ export const Search = () => {
         width={24}
         height={24}
       />
+
       <Input
         className="search-field"
         placeholder="Search"

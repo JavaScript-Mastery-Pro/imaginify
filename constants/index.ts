@@ -1,4 +1,4 @@
-export const sidebarLinks = [
+export const navLinks = [
   {
     label: "Home",
     route: "/",
@@ -170,8 +170,6 @@ export const aspectRatioOptions = {
   },
 };
 
-export const creditFee = 1;
-
 export const defaultValues = {
   title: "",
   aspectRatio: "1:1",
@@ -179,3 +177,5 @@ export const defaultValues = {
   prompt: "",
   publicId: "",
 };
+
+export const creditFee = 1;

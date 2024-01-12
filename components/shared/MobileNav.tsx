@@ -5,13 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { sidebarLinks } from "@/constants";
+import { navLinks } from "@/constants";
 
 export const MobileNav = () => {
   const pathname = usePathname();
 
   return (
     <nav className="flex-between h-16 w-full border-b border-purple-100 bg-white p-5 shadow-lg shadow-purple-100 md:hidden ">
+      {/* LOGO */}
       <Image
         src="/assets/images/logo-text.svg"
         alt="logo"
@@ -19,6 +20,7 @@ export const MobileNav = () => {
         height={28}
       />
 
+      {/* MENU ICON AS SHEET TRIGGER */}
       <Sheet>
         <SheetTrigger>
           <Image
@@ -39,7 +41,7 @@ export const MobileNav = () => {
             />
 
             <ul className="mt-8 flex w-full flex-col items-start gap-5">
-              {sidebarLinks.map((link) => {
+              {navLinks.map((link) => {
                 const isActive = link.route === pathname;
 
                 return (

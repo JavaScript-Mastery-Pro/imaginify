@@ -7,10 +7,10 @@ import { getUserById } from "@/lib/actions/user.actions";
 import { getUserImages } from "@/lib/actions/image.actions";
 
 const Profile = async ({ searchParams }: SearchParamProps) => {
+  const page = Number(searchParams?.page) || 1;
+
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
-
-  const page = Number(searchParams?.page) || 1;
 
   const user = await getUserById(userId);
   const images = await getUserImages({ page, userId });

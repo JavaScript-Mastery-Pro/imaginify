@@ -8,9 +8,9 @@ import { getUserById } from "@/lib/actions/user.actions";
 const AddImage = async ({ params: { type } }: SearchParamProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
-  const transformation = transformationTypes[type];
 
   const user = await getUserById(userId);
+  const transformation = transformationTypes[type];
 
   return (
     <>

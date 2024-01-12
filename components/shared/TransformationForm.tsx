@@ -24,8 +24,8 @@ import { addImage, updateImage } from "@/lib/actions/image.actions";
 import { DeleteConfirmation } from "./DeleteConfirmation";
 import { MediaUploader } from "./MediaUploader";
 import TransformedImage from "./TransformedImage";
-import { debounce } from "@/lib/utils";
 import { InsufficientCreditsModal } from "./InsufficientCreditsModal";
+import { debounce } from "@/lib/utils";
 
 // ZOD VALIDATION
 export const formSchema = z.object({
@@ -61,7 +61,7 @@ export const TransformationForm = ({
   const [image, setImage] = useState<any>(data);
   const [isSubmitting, setSubmitting] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config);
-
+  // Disable form if user is not the author of the image
   const disabled = action === "Update" && userId !== data?.author?._id;
 
   const initialValues =
@@ -307,9 +307,8 @@ export const TransformationForm = ({
           />
         </div>
 
-        {/* SAVE BUTTON */}
-        {}
         <div className={`${disabled ? "hidden" : "flex"} flex-col gap-4`}>
+          {/* SAVE BUTTON */}
           <Button
             type="submit"
             className="submit-button capitalize"
@@ -318,7 +317,7 @@ export const TransformationForm = ({
             {isSubmitting ? "Saving..." : "Save Transformation"}
           </Button>
 
-          {/* DELETE BUTTON */}
+          {/* DELETE BUTTON/CONFIRMATION */}
           {data && <DeleteConfirmation imageId={data._id} />}
         </div>
       </form>

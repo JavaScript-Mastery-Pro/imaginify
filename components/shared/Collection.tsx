@@ -1,9 +1,9 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
+import { useSearchParams, useRouter } from "next/navigation";
 
 import {
   Pagination,

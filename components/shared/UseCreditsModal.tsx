@@ -24,9 +24,8 @@ export const UseCreditsModal = ({
   userId: string;
   creditBalance: number;
 }) => {
-  const [isPending, startTransition] = useTransition();
-
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   return (
     <AlertDialog defaultOpen>

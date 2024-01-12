@@ -6,8 +6,7 @@ import { usePathname } from "next/navigation";
 import { SignedIn, UserButton, SignedOut } from "@clerk/nextjs";
 
 import { Button } from "../ui/button";
-
-import { sidebarLinks } from "@/constants";
+import { navLinks } from "@/constants";
 
 export const Sidebar = () => {
   const pathname = usePathname();
@@ -29,7 +28,7 @@ export const Sidebar = () => {
         <nav className="h-full flex-col justify-between md:flex md:gap-4">
           <SignedIn>
             <ul className="hidden w-full flex-col items-start gap-2 md:flex">
-              {sidebarLinks.slice(0, 5).map((link) => {
+              {navLinks.slice(0, 5).map((link) => {
                 const isActive = link.route === pathname;
 
                 return (
@@ -58,7 +57,7 @@ export const Sidebar = () => {
             </ul>
 
             <ul className="hidden w-full flex-col items-start gap-2 md:flex">
-              {sidebarLinks.slice(5).map((link) => {
+              {navLinks.slice(5).map((link) => {
                 const isActive = link.route === pathname;
 
                 return (

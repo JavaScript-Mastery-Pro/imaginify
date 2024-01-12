@@ -3,6 +3,7 @@
 
 import React, { useTransition } from "react";
 import Image from "next/image";
+
 import { useToast } from "@/components/ui/use-toast";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { updateCredits } from "@/lib/actions/user.actions";
@@ -26,6 +27,7 @@ export const MediaUploader = ({
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
+  // UPLOAD SUCCESS HANDLER
   const onUploadSuccess = (result: any) => {
     setImage((prevState: any) => ({
       ...prevState,
@@ -74,6 +76,7 @@ export const MediaUploader = ({
 
             {publicId ? (
               <>
+                {/* RENDER UPLOADED IMAGE */}
                 <div
                   className={`${
                     !disabled && "cursor-pointer"
@@ -90,6 +93,7 @@ export const MediaUploader = ({
                 </div>
               </>
             ) : (
+              // RENDER UPLOAD CTA
               <div
                 className="flex-center flex h-72 cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20  shadow-inner"
                 onClick={() => !disabled && open()}

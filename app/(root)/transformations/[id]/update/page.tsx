@@ -1,4 +1,5 @@
 import { auth } from "@clerk/nextjs";
+
 import { Header } from "@/components/shared/Header";
 import { TransformationForm } from "@/components/shared/TransformationForm";
 import { getImageById } from "@/lib/actions/image.actions";

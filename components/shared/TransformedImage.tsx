@@ -40,6 +40,8 @@ const TransformedImage = ({
     <div className="flex flex-col gap-4">
       <div className="flex-between ">
         <h3 className="h3-bold text-dark-600">Transformed</h3>
+
+        {/* DOWNLOAD BUTTON */}
         <button
           className={`${
             disabled ? "hidden" : "flex"
@@ -57,6 +59,7 @@ const TransformedImage = ({
         </button>
       </div>
 
+      {/* TRANSFORMED IMAGE */}
       {image?.publicId ? (
         <>
           <CldImage
@@ -70,6 +73,7 @@ const TransformedImage = ({
           />
         </>
       ) : (
+        // TRANSFORMED IMAGE PLACEHOLDER
         <div className="flex-center p-14-medium h-72 flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20 shadow-inner">
           Transformed Image
         </div>
