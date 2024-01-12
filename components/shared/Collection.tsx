@@ -31,6 +31,7 @@ export const Collection = ({
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // PAGINATION HANDLER
   const onPageChange = (action: string) => {
     const pageValue = action === "next" ? Number(page) + 1 : Number(page) - 1;
 
@@ -51,7 +52,7 @@ export const Collection = ({
       </div>
 
       {images.length > 0 ? (
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {images.map((image) => (
             <Card image={image} key={image.id} />
           ))}

@@ -8,6 +8,8 @@ import { handleError } from "@/lib//utils";
 import User from "@/lib/database/models/user.model";
 import Image from "../database/models/image.model";
 import { connectToDatabase } from "@/lib/database/mongoose";
+import { creditFee } from "@/constants";
+import { updateCredits } from "./user.actions";
 
 // POPULATE USER
 const populateUser = (query: any) => {
@@ -22,16 +24,19 @@ const populateUser = (query: any) => {
 export async function addImage({ image, userId, path }: AddImageParams) {
   try {
     await connectToDatabase();
-    // Find author by id
+
     const author = await User.findById(userId);
-    // If author not found, throw error
+
     if (!author) throw new Error("Author not found");
 
-    // Create new image with author id
     const newImage = await Image.create({
       ...image,
       author: author._id,
     });
+
+    if (newImage) {
+      await updateCredits(userId, creditFee);
+    }
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(newImage));
@@ -144,7 +149,6 @@ export async function getImageById(imageId: string) {
     await connectToDatabase();
 
     const image = await populateUser(Image.findById(imageId));
-
     if (!image) throw new Error("Image not found");
 
     return JSON.parse(JSON.stringify(image));
@@ -169,6 +173,10 @@ export async function updateImage({ userId, image, path }: UpdateImageParams) {
       image,
       { new: true }
     );
+
+    if (updatedImage) {
+      await updateCredits(userId, creditFee);
+    }
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(updatedImage));

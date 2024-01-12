@@ -66,7 +66,7 @@ const TransformedImage = ({
             alt="image"
             placeholder={dataUrl as PlaceholderValue}
             {...transformationConfig}
-            className="h-full min-h-72 w-full rounded-[10px] border border-dashed bg-white object-contain p-2"
+            className="h-full min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-contain p-2"
           />
         </>
       ) : (

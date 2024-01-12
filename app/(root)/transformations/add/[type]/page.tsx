@@ -16,7 +16,7 @@ const AddImage = async ({ params: { type } }: SearchParamProps) => {
     <>
       <Header title={transformation.title} subTitle={transformation.subTitle} />
 
-      <section className="mt-14">
+      <section className="mt-10">
         <TransformationForm
           action="Add"
           userId={userId}

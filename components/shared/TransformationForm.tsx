@@ -26,7 +26,6 @@ import { MediaUploader } from "./MediaUploader";
 import TransformedImage from "./TransformedImage";
 import { debounce } from "@/lib/utils";
 import { InsufficientCreditsModal } from "./InsufficientCreditsModal";
-import { UseCreditsModal } from "./UseCreditsModal";
 
 // ZOD VALIDATION
 export const formSchema = z.object({
@@ -64,7 +63,6 @@ export const TransformationForm = ({
   const [transformationConfig, setTransformationConfig] = useState(config);
 
   const disabled = action === "Update" && userId !== data?.author?._id;
-  console.log({ disabled });
 
   const initialValues =
     data && action === "Update"
@@ -174,13 +172,8 @@ export const TransformationForm = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        {!disabled &&
-          (creditBalance >= creditFee ? (
-            <UseCreditsModal userId={userId} creditBalance={creditBalance} />
-          ) : (
-            <InsufficientCreditsModal />
-          ))}
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        {!disabled && creditBalance < creditFee && <InsufficientCreditsModal />}
 
         {/* TITLE FIELD */}
         <CustomField
@@ -235,7 +228,7 @@ export const TransformationForm = ({
 
         {(type === "remove" || type === "recolor") && (
           /* PROMPT FIELD */
-          <div className="flex gap-10">
+          <div className="flex flex-col gap-5 lg:flex-row lg:gap-10">
             <CustomField
               control={form.control}
               name="prompt"
@@ -299,6 +292,7 @@ export const TransformationForm = ({
                 onValueChange={field.onChange}
                 setImage={setImage}
                 publicId={field.value}
+                userId={userId}
               />
             )}
           />

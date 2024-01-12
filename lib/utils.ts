@@ -46,7 +46,7 @@ const toBase64 = (str: string) =>
     : window.btoa(str);
 
 export const dataUrl = `data:image/svg+xml;base64,${toBase64(
-  shimmer(600, 400)
+  shimmer(1000, 1000)
 )}`;
 // ==== End
 

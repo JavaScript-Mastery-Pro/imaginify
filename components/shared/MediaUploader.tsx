@@ -1,11 +1,18 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+"use client";
+
+import React, { useTransition } from "react";
 import Image from "next/image";
+import { useToast } from "@/components/ui/use-toast";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
+import { updateCredits } from "@/lib/actions/user.actions";
+import { creditFee } from "@/constants";
 
 type MediaUploaderProps = {
   onValueChange: (value: string) => void;
   setImage: React.Dispatch<any>;
   publicId: string;
+  userId: string;
   disabled: boolean;
 };
 
@@ -13,27 +20,51 @@ export const MediaUploader = ({
   onValueChange,
   setImage,
   publicId,
+  userId,
   disabled,
 }: MediaUploaderProps) => {
+  const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
+
+  const onUploadSuccess = (result: any) => {
+    setImage((prevState: any) => ({
+      ...prevState,
+      publicId: result?.info?.public_id,
+      width: result?.info?.width,
+      height: result?.info?.height,
+      secureURL: result?.info?.secure_url,
+    }));
+
+    onValueChange(result?.info?.public_id);
+
+    startTransition(async () => {
+      await updateCredits(userId, creditFee);
+    });
+
+    toast({
+      title: "Successfully uploaded!",
+      description: "1 credit was deducted from your account",
+      duration: 5000,
+      className: "success-toast",
+    });
+  };
+
   return (
     <CldUploadWidget
       uploadPreset="imaginify"
       options={{
         multiple: false,
+        resourceType: "image",
       }}
-      onSuccess={(result: any) => {
-        if (result.event === "success") {
-          setImage((prevState: any) => ({
-            ...prevState,
-            publicId: result?.info?.public_id,
-            width: result?.info?.width,
-            height: result?.info?.height,
-            secureURL: result?.info?.secure_url,
-          }));
-
-          onValueChange(result?.info?.public_id);
-        }
-      }}
+      onSuccess={onUploadSuccess}
+      onError={() =>
+        toast({
+          title: "Something's wrong while uploading!",
+          description: "Please try again",
+          duration: 5000,
+          className: "error-toast",
+        })
+      }
     >
       {({ open }) => {
         return (
@@ -54,7 +85,7 @@ export const MediaUploader = ({
                     height={1000}
                     src={publicId}
                     alt="image"
-                    className="h-fit min-h-72 w-full  rounded-[10px] border border-dashed bg-purple-100 object-contain p-2"
+                    className="h-fit min-h-72 w-full  rounded-[10px] border border-dashed bg-purple-100/20 object-contain p-2"
                   />
                 </div>
               </>

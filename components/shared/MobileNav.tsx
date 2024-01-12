@@ -5,57 +5,58 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { headerLinks } from "@/constants";
+import { sidebarLinks } from "@/constants";
 
 export const MobileNav = () => {
   const pathname = usePathname();
 
   return (
-    <div className="flex-center md:hidden ">
+    <nav className="flex-between h-16 w-full border-b border-purple-100 bg-white p-5 shadow-lg shadow-purple-100 md:hidden ">
+      <Image
+        src="/assets/images/logo-text.svg"
+        alt="logo"
+        width={180}
+        height={28}
+      />
+
       <Sheet>
         <SheetTrigger>
           <Image
             src="/assets/icons/menu.svg"
             alt="menu"
-            width={30}
-            height={30}
+            width={32}
+            height={32}
             className="cursor-pointer"
           />
         </SheetTrigger>
-        <SheetContent>
-          <ul className="mt-4 flex w-full flex-col items-start gap-6">
-            {headerLinks.map((link) => {
-              const isActive = link.route === pathname;
+        <SheetContent className="sheet-content sm:w-64">
+          <>
+            <Image
+              src="/assets/images/logo-text.svg"
+              alt="logo"
+              width={152}
+              height={23}
+            />
 
-              return (
-                <li
-                  key={link.route}
-                  className={`${
-                    isActive && "gradient-text"
-                  } p-16-medium flex whitespace-nowrap text-dark-400`}
-                >
-                  {link.nested ? (
-                    <ul className="flex flex-col gap-6">
-                      {link.nested.map((item) => (
-                        <li
-                          key={item.route}
-                          className={`${
-                            item.route === pathname && "gradient-text"
-                          } p-16-medium flex whitespace-nowrap  text-dark-700`}
-                        >
-                          <Link href={item.route}>{item.label}</Link>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
+            <ul className="mt-8 flex w-full flex-col items-start gap-5">
+              {sidebarLinks.map((link) => {
+                const isActive = link.route === pathname;
+
+                return (
+                  <li
+                    key={link.route}
+                    className={`${
+                      isActive && "gradient-text"
+                    } p-18-semibold flex whitespace-nowrap text-dark-700`}
+                  >
                     <Link href={link.route}>{link.label}</Link>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
         </SheetContent>
       </Sheet>
-    </div>
+    </nav>
   );
 };
