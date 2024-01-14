@@ -1,30 +1,30 @@
-/* eslint-disable no-unused-vars */
 "use client";
 
-import React, { useTransition } from "react";
+import React from "react";
 import Image from "next/image";
 
 import { useToast } from "@/components/ui/use-toast";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
-import { updateCredits } from "@/lib/actions/user.actions";
-import { creditFee } from "@/constants";
+import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
+import { dataUrl, getImageSize } from "@/lib/utils";
 
 type MediaUploaderProps = {
   onValueChange: (value: string) => void;
   setImage: React.Dispatch<any>;
   publicId: string;
-  userId: string;
   disabled: boolean;
+  image: any;
+  type: string;
 };
 
 export const MediaUploader = ({
   onValueChange,
   setImage,
   publicId,
-  userId,
   disabled,
+  image,
+  type,
 }: MediaUploaderProps) => {
-  const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
   // UPLOAD SUCCESS HANDLER
@@ -38,10 +38,6 @@ export const MediaUploader = ({
     }));
 
     onValueChange(result?.info?.public_id);
-
-    startTransition(async () => {
-      await updateCredits(userId, creditFee);
-    });
 
     toast({
       title: "Successfully uploaded!",
@@ -84,10 +80,11 @@ export const MediaUploader = ({
                   onClick={() => !disabled && open()}
                 >
                   <CldImage
-                    width={1000}
-                    height={1000}
+                    width={getImageSize(type, image, "width")}
+                    height={getImageSize(type, image, "height")}
                     src={publicId}
                     alt="image"
+                    placeholder={dataUrl as PlaceholderValue}
                     className="h-fit min-h-72 w-full  rounded-[10px] border border-dashed bg-purple-100/20 object-contain p-2"
                   />
                 </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 import { dataUrl, download, getImageSize } from "@/lib/utils";
@@ -5,19 +7,23 @@ import { CldImage, getCldImageUrl } from "next-cloudinary";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 
 type TransformedImageProps = {
+  disabled: boolean;
   image: any;
   type: string;
   title: string;
-  disabled: boolean;
-  transformationConfig: Transformations | undefined;
+  transformationConfig: Transformations | null;
+  isTransforming: boolean;
+  setIsTransforming: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const TransformedImage = ({
+  disabled,
   image,
   type,
   title,
-  disabled,
   transformationConfig,
+  isTransforming,
+  setIsTransforming,
 }: TransformedImageProps) => {
   // DOWNLOAD HANDLER
   const downloadHandler = (
@@ -60,21 +66,38 @@ const TransformedImage = ({
       </div>
 
       {/* TRANSFORMED IMAGE */}
-      {image?.publicId ? (
-        <>
+      {image?.publicId && transformationConfig ? (
+        <div className="relative">
           <CldImage
             width={getImageSize(type, image, "width")}
             height={getImageSize(type, image, "height")}
             src={image?.publicId}
             alt="image"
             placeholder={dataUrl as PlaceholderValue}
+            onLoad={() => {
+              setIsTransforming(false);
+            }}
+            onError={() => {
+              setIsTransforming(false);
+            }}
             {...transformationConfig}
             className="h-full min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-contain p-2"
           />
-        </>
+
+          {isTransforming && (
+            <div className="flex-center absolute left-[50%] top-[50%] h-full w-full -translate-x-1/2 -translate-y-1/2 border bg-dark-700/30">
+              <Image
+                src="/assets/icons/spinner.svg"
+                width={50}
+                height={50}
+                alt="spinner"
+              />
+            </div>
+          )}
+        </div>
       ) : (
         // TRANSFORMED IMAGE PLACEHOLDER
-        <div className="flex-center p-14-medium h-72 flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20 shadow-inner">
+        <div className="flex-center p-14-medium h-full min-h-72 flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20 shadow-inner">
           Transformed Image
         </div>
       )}

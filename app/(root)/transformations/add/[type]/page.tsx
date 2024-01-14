@@ -22,7 +22,6 @@ const AddImage = async ({ params: { type } }: SearchParamProps) => {
           userId={userId}
           type={transformation.type as TransformationTypeKey}
           creditBalance={user.creditBalance}
-          config={transformation.config}
         />
       </section>
     </>

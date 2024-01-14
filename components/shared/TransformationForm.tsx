@@ -1,13 +1,19 @@
+/* eslint-disable no-unused-vars */
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getCldImageUrl } from "next-cloudinary";
 
-import { aspectRatioOptions, creditFee, defaultValues } from "@/constants";
+import {
+  aspectRatioOptions,
+  creditFee,
+  defaultValues,
+  transformationTypes,
+} from "@/constants";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -25,6 +31,7 @@ import { DeleteConfirmation } from "./DeleteConfirmation";
 import { MediaUploader } from "./MediaUploader";
 import TransformedImage from "./TransformedImage";
 import { InsufficientCreditsModal } from "./InsufficientCreditsModal";
+import { updateCredits } from "@/lib/actions/user.actions";
 import { debounce } from "@/lib/utils";
 
 // ZOD VALIDATION
@@ -39,11 +46,11 @@ export const formSchema = z.object({
 // PROP TYPE
 type TransformationFormProps = {
   action: "Add" | "Update";
-  data?: IImage | null;
   userId: string;
   type: TransformationTypeKey;
   creditBalance: number;
-  config?: Transformations;
+  data?: IImage | null;
+  config?: Transformations | null;
 };
 
 type AspectRatioKey = keyof typeof aspectRatioOptions;
@@ -55,12 +62,17 @@ export const TransformationForm = ({
   userId,
   type,
   creditBalance,
-  config,
+  config = null,
 }: TransformationFormProps) => {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [image, setImage] = useState<any>(data);
   const [isSubmitting, setSubmitting] = useState(false);
   const [transformationConfig, setTransformationConfig] = useState(config);
+  const [newTransformation, setNewTransformation] = useState(config);
+  const [isTransforming, setIsTransforming] = useState(false);
+  const transformationType = transformationTypes[type];
+
   // Disable form if user is not the author of the image
   const disabled = action === "Update" && userId !== data?.author?._id;
 
@@ -150,6 +162,20 @@ export const TransformationForm = ({
     setSubmitting(false);
   };
 
+  // TRANSFORM HANDLER
+  const onTransformHandler = async () => {
+    setIsTransforming(true);
+
+    setTransformationConfig((prevState) => ({
+      ...prevState,
+      ...newTransformation,
+    }));
+
+    startTransition(async () => {
+      await updateCredits(userId, creditFee);
+    });
+  };
+
   // INPUT CHANGE HANDLER
   const handleInputChange = (
     fieldName: string,
@@ -158,7 +184,7 @@ export const TransformationForm = ({
     onChangeField: (value: string) => void
   ) => {
     debounce(() => {
-      setTransformationConfig((prevState: any) => ({
+      setNewTransformation((prevState: any) => ({
         ...prevState,
         [type]: {
           ...prevState?.[type],
@@ -206,12 +232,13 @@ export const TransformationForm = ({
                     height: imageSize.height,
                   }));
 
+                  setNewTransformation(transformationType.config);
+
                   field.onChange(value);
                 }}
-                defaultValue={field.value}
               >
                 <SelectTrigger className="select-field">
-                  <SelectValue placeholder="" />
+                  <SelectValue placeholder="Select size" />
                 </SelectTrigger>
 
                 <SelectContent>
@@ -292,7 +319,8 @@ export const TransformationForm = ({
                 onValueChange={field.onChange}
                 setImage={setImage}
                 publicId={field.value}
-                userId={userId}
+                image={image}
+                type={type}
               />
             )}
           />
@@ -303,18 +331,29 @@ export const TransformationForm = ({
             image={image}
             type={type}
             title={form.getValues().title}
+            isTransforming={isTransforming}
+            setIsTransforming={setIsTransforming}
             transformationConfig={transformationConfig}
           />
         </div>
 
         <div className={`${disabled ? "hidden" : "flex"} flex-col gap-4`}>
+          <Button
+            type="button"
+            className="submit-button capitalize"
+            disabled={isTransforming || disabled}
+            onClick={onTransformHandler}
+          >
+            {isTransforming ? "Transforming..." : "Apply Transformation"}
+          </Button>
+
           {/* SAVE BUTTON */}
           <Button
             type="submit"
             className="submit-button capitalize"
             disabled={isSubmitting || disabled}
           >
-            {isSubmitting ? "Saving..." : "Save Transformation"}
+            {isSubmitting ? "Saving..." : "Save"}
           </Button>
 
           {/* DELETE BUTTON/CONFIRMATION */}

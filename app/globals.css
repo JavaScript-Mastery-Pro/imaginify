@@ -79,7 +79,7 @@
 @layer utilities {
   /* ===== UTILITIES */
   .wrapper {
-    @apply max-w-5xl lg:mx-auto px-5 md:px-10 xl:px-0 w-full text-dark-400 p-16-regular;
+    @apply max-w-5xl mx-auto px-5 md:px-10 xl:px-0 w-full text-dark-400 p-16-regular;
   }
 
   .gradient-text {
@@ -96,9 +96,9 @@
   }
 
   /* ===== TYPOGRAPHY */
-  /* 48 */
+  /* 44 */
   .h1-semibold {
-    @apply text-[36px] font-semibold md:text-[48px] leading-[56px];
+    @apply text-[36px] font-semibold sm:text-[44px] leading-[120%] sm:leading-[56px];
   }
 
   /* 36 */
@@ -145,7 +145,7 @@
 
   /* 14 */
   .p-14-medium {
-    @apply font-medium text-[14px] leading-[100%];
+    @apply font-medium text-[14px] leading-[120%];
   }
 
   /* 10 */
@@ -199,11 +199,11 @@
   }
 
   .success-toast {
-    @apply bg-green-100/50 text-green-900;
+    @apply bg-green-100 text-green-900;
   }
 
   .error-toast {
-    @apply bg-red-100/50 text-red-900;
+    @apply bg-red-100 text-red-900;
   }
 }
 

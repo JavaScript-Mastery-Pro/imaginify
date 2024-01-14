@@ -8,8 +8,6 @@ import { handleError } from "@/lib//utils";
 import User from "@/lib/database/models/user.model";
 import Image from "../database/models/image.model";
 import { connectToDatabase } from "@/lib/database/mongoose";
-import { creditFee } from "@/constants";
-import { updateCredits } from "./user.actions";
 
 // POPULATE USER
 const populateUser = (query: any) => {
@@ -34,9 +32,6 @@ export async function addImage({ image, userId, path }: AddImageParams) {
       author: author._id,
     });
 
-    if (newImage) {
-      await updateCredits(userId, creditFee);
-    }
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(newImage));
@@ -131,12 +126,10 @@ export async function getUserImages({
       .limit(limit);
 
     const totalImages = await Image.find({ author: userId }).countDocuments();
-    const savedImages = await Image.find().countDocuments();
 
     return {
       data: JSON.parse(JSON.stringify(images)),
       totalPages: Math.ceil(totalImages / limit),
-      savedImages,
     };
   } catch (error) {
     handleError(error);
@@ -174,9 +167,6 @@ export async function updateImage({ userId, image, path }: UpdateImageParams) {
       { new: true }
     );
 
-    if (updatedImage) {
-      await updateCredits(userId, creditFee);
-    }
     revalidatePath(path);
 
     return JSON.parse(JSON.stringify(updatedImage));

@@ -68,7 +68,7 @@ export const Collection = ({
           <PaginationContent className="flex w-full">
             <Button
               disabled={Number(page) <= 1}
-              className="button w-36 bg-purple-gradient bg-cover text-white"
+              className="button w-32 bg-purple-gradient bg-cover text-white"
               onClick={() => onPageChange("prev")}
             >
               <PaginationPrevious className="hover:bg-transparent hover:text-white" />
@@ -79,7 +79,7 @@ export const Collection = ({
             </p>
 
             <Button
-              className="button w-36 bg-purple-gradient bg-cover text-white "
+              className="button w-32 bg-purple-gradient bg-cover text-white "
               onClick={() => onPageChange("next")}
               disabled={Number(page) >= totalPages}
             >

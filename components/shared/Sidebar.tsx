@@ -12,7 +12,7 @@ export const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden h-screen w-72 bg-white p-5 shadow-md shadow-purple-200/50 md:flex">
+    <aside className="hidden h-screen w-72 bg-white p-5 shadow-md shadow-purple-200/50 lg:flex">
       <div className="flex h-full w-full flex-col gap-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 md:py-2">

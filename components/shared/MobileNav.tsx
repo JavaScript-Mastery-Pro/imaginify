@@ -11,7 +11,7 @@ export const MobileNav = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex-between h-16 w-full border-b border-purple-100 bg-white p-5 shadow-lg shadow-purple-100 md:hidden ">
+    <nav className="flex-between h-16 w-full border-b border-purple-100 bg-white p-5 shadow-lg shadow-purple-100 lg:hidden ">
       {/* LOGO */}
       <Image
         src="/assets/images/logo-text.svg"
