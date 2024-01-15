@@ -80,7 +80,7 @@ const TransformedImage = ({
             onError={() => {
               setIsTransforming(false);
             }}
-            {...transformationConfig}
+            {...transformationConfig} // Image transformations
             className="h-full min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-contain p-2"
           />
 

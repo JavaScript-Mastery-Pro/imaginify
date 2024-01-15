@@ -66,15 +66,14 @@ export const TransformationForm = ({
 }: TransformationFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [image, setImage] = useState<any>(data);
-  const [isSubmitting, setSubmitting] = useState(false);
-  const [transformationConfig, setTransformationConfig] = useState(config);
-  const [newTransformation, setNewTransformation] = useState(config);
-  const [isTransforming, setIsTransforming] = useState(false);
-  const transformationType = transformationTypes[type];
+  const transformationType = transformationTypes[type]; // Holds the transformation config type what will be filled in the form
+  const disabled = action === "Update" && userId !== data?.author?._id; // Disable state holder if user is not authorized to update the image
 
-  // Disable form if user is not the author of the image
-  const disabled = action === "Update" && userId !== data?.author?._id;
+  const [image, setImage] = useState<any>(data); // Holds the uploaded image data
+  const [newTransformation, setNewTransformation] = useState(config); // Temporarily holds the transformation changes which will be applied after clickng the apply button
+  const [transformationConfig, setTransformationConfig] = useState(config); // Holds the final transformation config that will be applied to the image
+  const [isTransforming, setIsTransforming] = useState(false); // Loading state on image transformation
+  const [isSubmitting, setSubmitting] = useState(false); // Loading state on image save
 
   const initialValues =
     data && action === "Update"
@@ -162,22 +161,8 @@ export const TransformationForm = ({
     setSubmitting(false);
   };
 
-  // TRANSFORM HANDLER
-  const onTransformHandler = async () => {
-    setIsTransforming(true);
-
-    setTransformationConfig((prevState) => ({
-      ...prevState,
-      ...newTransformation,
-    }));
-
-    startTransition(async () => {
-      await updateCredits(userId, creditFee);
-    });
-  };
-
   // INPUT CHANGE HANDLER
-  const handleInputChange = (
+  const onInputChangeHandler = (
     fieldName: string,
     value: string,
     type: string,
@@ -194,6 +179,39 @@ export const TransformationForm = ({
     }, 1000)();
 
     return onChangeField(value);
+  };
+
+  // SELECT FIELD HANDLER
+  const onSelectFieldHandler = (
+    value: string,
+    onChangeField: (value: string) => void
+  ) => {
+    const imageSize = aspectRatioOptions[value as AspectRatioKey];
+
+    setImage((prevState: any) => ({
+      ...prevState,
+      aspectRatio: imageSize.aspectRatio,
+      width: imageSize.width,
+      height: imageSize.height,
+    }));
+
+    setNewTransformation(transformationType.config);
+
+    return onChangeField(value);
+  };
+
+  // TRANSFORM IMAGE HANDLER
+  const onTransformHandler = async () => {
+    setIsTransforming(true);
+
+    setTransformationConfig((prevState) => ({
+      ...prevState,
+      ...newTransformation,
+    }));
+
+    startTransition(async () => {
+      await updateCredits(userId, creditFee);
+    });
   };
 
   return (
@@ -222,20 +240,9 @@ export const TransformationForm = ({
             render={({ field }) => (
               <Select
                 disabled={disabled}
-                onValueChange={(value) => {
-                  const imageSize = aspectRatioOptions[value as AspectRatioKey];
-
-                  setImage((prevState: any) => ({
-                    ...prevState,
-                    aspectRatio: imageSize.aspectRatio,
-                    width: imageSize.width,
-                    height: imageSize.height,
-                  }));
-
-                  setNewTransformation(transformationType.config);
-
-                  field.onChange(value);
-                }}
+                onValueChange={(value) =>
+                  onSelectFieldHandler(value, field.onChange)
+                }
               >
                 <SelectTrigger className="select-field">
                   <SelectValue placeholder="Select size" />
@@ -269,7 +276,7 @@ export const TransformationForm = ({
                   value={field.value}
                   className="input-field"
                   onChange={(e) =>
-                    handleInputChange(
+                    onInputChangeHandler(
                       "prompt",
                       e.target.value,
                       type,
@@ -293,7 +300,7 @@ export const TransformationForm = ({
                     value={field.value}
                     className="input-field"
                     onChange={(e) =>
-                      handleInputChange(
+                      onInputChangeHandler(
                         "color",
                         e.target.value,
                         "recolor",
