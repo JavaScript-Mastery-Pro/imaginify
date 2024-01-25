@@ -42,7 +42,7 @@ export async function addImage({ image, userId, path }: AddImageParams) {
 
 // GET ALL
 export async function getAllImages({
-  limit = 10,
+  limit = 9,
   page = 1,
   searchQuery = "",
 }: {
@@ -105,7 +105,7 @@ export async function getAllImages({
 
 // GET IMAGES BY USER
 export async function getUserImages({
-  limit = 10,
+  limit = 9,
   page = 1,
   userId,
 }: {
