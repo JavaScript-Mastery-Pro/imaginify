@@ -18,11 +18,11 @@ const Credits = async () => {
       />
 
       <section>
-        <ul className="mt-11 flex flex-col gap-5 md:flex-row md:gap-9">
+        <ul className="mt-11 grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-9 xl:grid-cols-3">
           {plans.map((plan) => (
             <li
               key={plan.name}
-              className="w-full rounded-[16px] border-2 border-purple-200/20 bg-white p-8 shadow-xl shadow-purple-200/20 "
+              className="w-full rounded-[16px] border-2 border-purple-200/20 bg-white p-8 shadow-xl shadow-purple-200/20 lg:max-w-none "
             >
               <div className="flex-center flex-col gap-3">
                 <Image src={plan.icon} alt="check" width={50} height={50} />

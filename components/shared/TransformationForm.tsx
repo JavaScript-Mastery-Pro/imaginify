@@ -70,7 +70,9 @@ export const TransformationForm = ({
   const disabled = action === "Update" && userId !== data?.author?._id; // Disable state holder if user is not authorized to update the image
 
   const [image, setImage] = useState<any>(data); // Holds the uploaded image data
-  const [newTransformation, setNewTransformation] = useState(config); // Temporarily holds the transformation changes which will be applied after clickng the apply button
+  const [newTransformation, setNewTransformation] = useState(
+    transformationType.config
+  ); // Temporarily holds the transformation changes which will be applied after clickng the apply button
   const [transformationConfig, setTransformationConfig] = useState(config); // Holds the final transformation config that will be applied to the image
   const [isTransforming, setIsTransforming] = useState(false); // Loading state on image transformation
   const [isSubmitting, setSubmitting] = useState(false); // Loading state on image save
@@ -344,7 +346,9 @@ export const TransformationForm = ({
           />
         </div>
 
+        {/* BUTTONS */}
         <div className={`${disabled ? "hidden" : "flex"} flex-col gap-4`}>
+          {/* APPLY TRANSFORMATION BUTTON */}
           <Button
             type="button"
             className="submit-button capitalize"
@@ -360,7 +364,7 @@ export const TransformationForm = ({
             className="submit-button capitalize"
             disabled={isSubmitting || disabled}
           >
-            {isSubmitting ? "Saving..." : "Save"}
+            {isSubmitting ? "Saving..." : "Save Image"}
           </Button>
 
           {/* DELETE BUTTON/CONFIRMATION */}
