@@ -28,6 +28,7 @@ export const Sidebar = () => {
         <nav className="h-full flex-col justify-between md:flex md:gap-4">
           <SignedIn>
             <ul className="hidden w-full flex-col items-start gap-2 md:flex">
+              {/* Render up to Object recolor */}
               {navLinks.slice(0, 5).map((link) => {
                 const isActive = link.route === pathname;
 
@@ -57,6 +58,7 @@ export const Sidebar = () => {
             </ul>
 
             <ul className="hidden w-full flex-col items-start gap-2 md:flex">
+              {/* Render from profile to credits navLinks */}
               {navLinks.slice(5).map((link) => {
                 const isActive = link.route === pathname;
 

@@ -1,17 +1,4 @@
-import { Schema, model, models, Document } from "mongoose";
-
-export interface IOrder extends Document {
-  _id: String;
-  createdAt: Date;
-  stripeId: string;
-  amount: string;
-  plan: string;
-  buyer: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-  };
-}
+import { Schema, model, models } from "mongoose";
 
 const TransactionSchema = new Schema({
   createdAt: {

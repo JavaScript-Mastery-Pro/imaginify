@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import mongoose, { Mongoose } from "mongoose";
 
 const MONGODB_URL = process.env.MONGODB_URL;
@@ -8,14 +7,6 @@ interface MongooseConnection {
   promise: Promise<Mongoose> | null;
 }
 
-declare global {
-  namespace NodeJS {
-    interface Global {
-      mongoose: MongooseConnection;
-    }
-  }
-}
-
 let cached: MongooseConnection = (global as any).mongoose;
 
 if (!cached) {
@@ -23,25 +14,18 @@ if (!cached) {
 }
 
 export async function connectToDatabase(): Promise<Mongoose> {
-  if (cached.conn) {
-    return cached.conn;
-  }
+  if (cached.conn) return cached.conn;
 
-  if (!MONGODB_URL) {
-    throw new Error("Missing MongoDB URL");
-  }
+  if (!MONGODB_URL) throw new Error("Missing MongoDB URL");
 
-  if (!cached.promise) {
-    const opts = {
+  cached.promise =
+    cached.promise ||
+    mongoose.connect(MONGODB_URL, {
       dbName: "imaginify",
       bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGODB_URL, opts).then((mongoose) => {
-      return mongoose;
     });
-  }
 
   cached.conn = await cached.promise;
+
   return cached.conn;
 }
