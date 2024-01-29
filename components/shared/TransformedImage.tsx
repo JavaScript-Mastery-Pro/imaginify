@@ -7,7 +7,6 @@ import { CldImage, getCldImageUrl } from "next-cloudinary";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 
 type TransformedImageProps = {
-  disabled: boolean;
   image: any;
   type: string;
   title: string;
@@ -17,7 +16,6 @@ type TransformedImageProps = {
 };
 
 const TransformedImage = ({
-  disabled,
   image,
   type,
   title,
@@ -49,9 +47,7 @@ const TransformedImage = ({
 
         {/* DOWNLOAD BUTTON */}
         <button
-          className={`${
-            disabled ? "hidden" : "flex"
-          } p-14-medium items-center gap-2 px-2`}
+          className={"p-14-medium flex items-center gap-2 px-2"}
           onClick={(e) => downloadHandler(e)}
         >
           <Image

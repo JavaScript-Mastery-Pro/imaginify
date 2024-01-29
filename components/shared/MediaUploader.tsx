@@ -12,7 +12,7 @@ type MediaUploaderProps = {
   onValueChange: (value: string) => void;
   setImage: React.Dispatch<any>;
   publicId: string;
-  disabled: boolean;
+  isAuthorized: boolean;
   image: any;
   type: string;
 };
@@ -21,7 +21,7 @@ export const MediaUploader = ({
   onValueChange,
   setImage,
   publicId,
-  disabled,
+  isAuthorized,
   image,
   type,
 }: MediaUploaderProps) => {
@@ -75,9 +75,9 @@ export const MediaUploader = ({
                 {/* RENDER UPLOADED IMAGE */}
                 <div
                   className={`${
-                    !disabled && "cursor-pointer"
+                    isAuthorized && "cursor-pointer"
                   } overflow-hidden rounded-[10px]`}
-                  onClick={() => !disabled && open()}
+                  onClick={() => isAuthorized && open()}
                 >
                   <CldImage
                     width={getImageSize(type, image, "width")}
@@ -93,7 +93,7 @@ export const MediaUploader = ({
               // RENDER UPLOAD CTA
               <div
                 className="flex-center flex h-72 cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20  shadow-inner"
-                onClick={() => !disabled && open()}
+                onClick={() => isAuthorized && open()}
               >
                 <div className="rounded-[16px] bg-white  p-5 shadow-sm shadow-purple-200/50">
                   <Image

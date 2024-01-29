@@ -36,7 +36,6 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
 
           {/* TRANSFORMED IMAGE */}
           <TransformedImage
-            disabled={false}
             image={image}
             type={image.transformationType}
             title={image.title}

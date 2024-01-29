@@ -67,7 +67,7 @@ export const TransformationForm = ({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const transformationType = transformationTypes[type]; // Holds the transformation config type what will be filled in the form
-  const disabled = action === "Update" && userId !== data?.author?._id; // Disable state holder if user is not authorized to update the image
+  const isAuthorized = action === "Update" && userId === data?.author?._id; // Disable state holder if user is not authorized to update the image
 
   const [image, setImage] = useState<any>(data); // Holds the uploaded image data
   const [newTransformation, setNewTransformation] = useState(
@@ -219,7 +219,9 @@ export const TransformationForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-        {!disabled && creditBalance < creditFee && <InsufficientCreditsModal />}
+        {isAuthorized && creditBalance < creditFee && (
+          <InsufficientCreditsModal />
+        )}
 
         {/* TITLE FIELD */}
         <CustomField
@@ -227,9 +229,7 @@ export const TransformationForm = ({
           name="title"
           formLabel="Image Title"
           className="w-full"
-          render={({ field }) => (
-            <Input {...field} disabled={disabled} className="input-field" />
-          )}
+          render={({ field }) => <Input {...field} className="input-field" />}
         />
 
         {/* ASPECT RATIO FIELD */}
@@ -241,7 +241,6 @@ export const TransformationForm = ({
             className="w-full"
             render={({ field }) => (
               <Select
-                disabled={disabled}
                 onValueChange={(value) =>
                   onSelectFieldHandler(value, field.onChange)
                 }
@@ -274,7 +273,6 @@ export const TransformationForm = ({
               className="w-full"
               render={({ field }) => (
                 <Input
-                  disabled={disabled}
                   value={field.value}
                   className="input-field"
                   onChange={(e) =>
@@ -298,7 +296,6 @@ export const TransformationForm = ({
                 className="w-full"
                 render={({ field }) => (
                   <Input
-                    disabled={disabled}
                     value={field.value}
                     className="input-field"
                     onChange={(e) =>
@@ -324,7 +321,7 @@ export const TransformationForm = ({
             className="flex h-full w-full flex-col"
             render={({ field }) => (
               <MediaUploader
-                disabled={disabled}
+                isAuthorized={isAuthorized}
                 onValueChange={field.onChange}
                 setImage={setImage}
                 publicId={field.value}
@@ -336,7 +333,6 @@ export const TransformationForm = ({
 
           {/* TRANSFORMED IMAGE */}
           <TransformedImage
-            disabled={disabled}
             image={image}
             type={type}
             title={form.getValues().title}
@@ -347,12 +343,12 @@ export const TransformationForm = ({
         </div>
 
         {/* ACTIONS */}
-        <div className={`${disabled ? "hidden" : "flex"} flex-col gap-4`}>
+        <div className={`${!isAuthorized ? "hidden" : "flex"} flex-col gap-4`}>
           {/* APPLY TRANSFORMATION BUTTON */}
           <Button
             type="button"
             className="submit-button capitalize"
-            disabled={isTransforming || disabled}
+            disabled={isTransforming}
             onClick={onTransformHandler}
           >
             {isTransforming ? "Transforming..." : "Apply Transformation"}
@@ -362,7 +358,7 @@ export const TransformationForm = ({
           <Button
             type="submit"
             className="submit-button capitalize"
-            disabled={isSubmitting || disabled}
+            disabled={isSubmitting}
           >
             {isSubmitting ? "Saving..." : "Save Image"}
           </Button>
