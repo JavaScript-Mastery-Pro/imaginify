@@ -1,10 +1,10 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import User from "@/lib/database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
-import { revalidatePath } from "next/cache";
-import Image from "../database/models/image.model";
 
 // CREATE
 export async function createUser(user: CreateUserParams) {
@@ -81,14 +81,6 @@ export async function deleteUser(clerkId: string) {
     if (!userToDelete) {
       throw new Error("User not found");
     }
-
-    // Unlink relationships
-    await Promise.all([
-      Image.updateMany(
-        { _id: { $in: userToDelete.events } },
-        { $pull: { author: userToDelete._id } }
-      ),
-    ]);
 
     // Delete user
     const deletedUser = await User.findByIdAndDelete(userToDelete._id);
