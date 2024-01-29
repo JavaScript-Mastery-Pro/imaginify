@@ -96,7 +96,7 @@ const Card = ({ image }: { image: IImage }) => {
   return (
     <li>
       <Link
-        href={`/transformations/${image._id}/update`}
+        href={`/transformations/${image._id}`}
         className="flex flex-1 cursor-pointer flex-col gap-5 rounded-[16px] border-2 border-purple-200/15 bg-white p-4 shadow-xl shadow-purple-200/10 transition-all hover:shadow-purple-200/20"
       >
         <CldImage

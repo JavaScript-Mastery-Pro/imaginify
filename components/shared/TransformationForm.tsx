@@ -346,7 +346,7 @@ export const TransformationForm = ({
           />
         </div>
 
-        {/* BUTTONS */}
+        {/* ACTIONS */}
         <div className={`${disabled ? "hidden" : "flex"} flex-col gap-4`}>
           {/* APPLY TRANSFORMATION BUTTON */}
           <Button

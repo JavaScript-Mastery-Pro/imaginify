@@ -13,7 +13,7 @@ type TransformedImageProps = {
   title: string;
   transformationConfig: Transformations | null;
   isTransforming: boolean;
-  setIsTransforming: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTransforming?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const TransformedImage = ({
@@ -75,10 +75,10 @@ const TransformedImage = ({
             alt="image"
             placeholder={dataUrl as PlaceholderValue}
             onLoad={() => {
-              setIsTransforming(false);
+              setIsTransforming && setIsTransforming(false);
             }}
             onError={() => {
-              setIsTransforming(false);
+              setIsTransforming && setIsTransforming(false);
             }}
             {...transformationConfig} // Image transformations
             className="h-full min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-contain p-2"
