@@ -19,18 +19,20 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
     <>
       <Header title={image.title} />
 
-      <section className="flex flex-col gap-2 px-2 md:flex-row md:gap-4">
-        <div className="flex gap-2">
-          <p className="p-16-semibold">Transformation:</p>
-          <p className=" capitalize">{image.transformationType}</p>
+      <section className="mt-5 flex flex-wrap gap-4">
+        <div className="p-14-medium md:p-16-medium flex gap-2">
+          <p className="text-dark-600">Transformation:</p>
+          <p className=" capitalize text-purple-400">
+            {image.transformationType}
+          </p>
         </div>
 
         {image.prompt && (
           <>
             <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-            <div className="flex gap-2">
-              <p className="p-16-semibold">Prompt:</p>
-              <p className=" capitalize">{image.prompt}</p>
+            <div className="p-14-medium md:p-16-medium flex gap-2 ">
+              <p className="text-dark-600">Prompt:</p>
+              <p className=" capitalize text-purple-400">{image.prompt}</p>
             </div>
           </>
         )}
@@ -38,9 +40,9 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
         {image.color && (
           <>
             <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-            <div className="flex gap-2">
-              <p className="p-16-semibold">Color:</p>
-              <p className=" capitalize">{image.color}</p>
+            <div className="p-14-medium md:p-16-medium flex gap-2">
+              <p className="text-dark-600">Color:</p>
+              <p className=" capitalize text-purple-400">{image.color}</p>
             </div>
           </>
         )}
@@ -48,15 +50,15 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
         {image.aspectRatio && (
           <>
             <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-            <div className="flex gap-2">
-              <p className="p-16-semibold">Aspect Ratio:</p>
-              <p className=" capitalize">{image.aspectRatio}</p>
+            <div className="p-14-medium md:p-16-medium flex gap-2">
+              <p className="text-dark-600">Aspect Ratio:</p>
+              <p className=" capitalize text-purple-400">{image.aspectRatio}</p>
             </div>
           </>
         )}
       </section>
 
-      <section className="mt-10 border-t border-dark-400/10">
+      <section className="mt-10 border-t border-dark-400/15">
         <div className="grid h-fit min-h-[200px] grid-cols-1 gap-5 py-8 md:grid-cols-2">
           {/* MEDIA UPLOADER */}
           <div className="flex flex-col gap-4">
@@ -83,7 +85,7 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
         </div>
 
         {userId === image.author._id && (
-          <div className="mt-8 space-y-4">
+          <div className="mt-4 space-y-4">
             <Button asChild type="button" className="submit-button capitalize">
               <Link href={`/transformations/${image._id}/update`}>
                 Update Image
