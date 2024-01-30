@@ -25,6 +25,11 @@ export const navLinks = [
     icon: "/assets/icons/camera.svg",
   },
   {
+    label: "Background Remove",
+    route: "/transformations/add/removeBackground",
+    icon: "/assets/icons/camera.svg",
+  },
+  {
     label: "Profile",
     route: "/profile",
     icon: "/assets/icons/profile.svg",
@@ -121,6 +126,13 @@ export const transformationTypes = {
     subTitle: "Refine images by removing noise and imperfections",
     config: { restore: true },
     icon: "image.svg",
+  },
+  removeBackground: {
+    type: "removeBackground",
+    title: "Background Remove",
+    subTitle: "Removes the background of the image using AI",
+    config: { removeBackground: true },
+    icon: "scan.svg",
   },
   fill: {
     type: "fill",

@@ -56,18 +56,19 @@ declare type UpdateImageParams = {
 };
 
 declare type Transformations = {
+  restore?: boolean;
+  fillBackground?: boolean;
   remove?: {
     prompt: string;
     removeShadow?: boolean;
     multiple?: boolean;
   };
-  restore?: boolean;
-  fillBackground?: boolean;
   recolor?: {
     prompt?: string;
     to: string;
     multiple?: boolean;
   };
+  removeBackground?: boolean;
 };
 
 // ====== TRANSACTION PARAMS
@@ -87,7 +88,12 @@ declare type CreateTransactionParams = {
   createdAt: Date;
 };
 
-declare type TransformationTypeKey = "fill" | "restore" | "recolor" | "remove";
+declare type TransformationTypeKey =
+  | "restore"
+  | "fill"
+  | "remove"
+  | "recolor"
+  | "removeBackground";
 
 // ====== URL QUERY PARAMS
 declare type FormUrlQueryParams = {

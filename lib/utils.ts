@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-prototype-builtins */
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import qs from "qs";
@@ -126,4 +128,21 @@ export const download = (url: string, filename: string) => {
       a.click();
     })
     .catch((error) => console.log({ error }));
+};
+
+// DEEP MERGE OBJECTS
+export const deepMergeObjects = (obj1: any, obj2: any) => {
+  let output = { ...obj1 };
+
+  for (let key in obj2) {
+    if (obj2.hasOwnProperty(key)) {
+      if (typeof obj2[key] === "object" && obj2[key] !== null && obj1[key]) {
+        output[key] = deepMergeObjects(obj1[key], obj2[key]);
+      } else {
+        output[key] = obj2[key];
+      }
+    }
+  }
+
+  return output;
 };

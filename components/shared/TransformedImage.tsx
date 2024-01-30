@@ -12,6 +12,7 @@ type TransformedImageProps = {
   title: string;
   transformationConfig: Transformations | null;
   isTransforming: boolean;
+  hasDownload?: boolean;
   setIsTransforming?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -22,7 +23,9 @@ const TransformedImage = ({
   transformationConfig,
   isTransforming,
   setIsTransforming,
+  hasDownload = false,
 }: TransformedImageProps) => {
+  console.log("transformationConfig---", transformationConfig);
   // DOWNLOAD HANDLER
   const downloadHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -46,19 +49,21 @@ const TransformedImage = ({
         <h3 className="h3-bold text-dark-600">Transformed</h3>
 
         {/* DOWNLOAD BUTTON */}
-        <button
-          className={"p-14-medium flex items-center gap-2 px-2"}
-          onClick={(e) => downloadHandler(e)}
-        >
-          <Image
-            src="/assets/icons/download.svg"
-            alt="add image"
-            width={24}
-            height={24}
-            className="pb-1"
-          />
-          Download
-        </button>
+        {hasDownload && (
+          <button
+            className={"p-14-medium mt-2 flex items-center gap-2 px-2"}
+            onClick={(e) => downloadHandler(e)}
+          >
+            <Image
+              src="/assets/icons/download.svg"
+              alt="add image"
+              width={24}
+              height={24}
+              className="pb-[6px]"
+            />
+            Download
+          </button>
+        )}
       </div>
 
       {/* TRANSFORMED IMAGE */}
@@ -68,7 +73,7 @@ const TransformedImage = ({
             width={getImageSize(type, image, "width")}
             height={getImageSize(type, image, "height")}
             src={image?.publicId}
-            alt="image"
+            alt={image.title}
             placeholder={dataUrl as PlaceholderValue}
             onLoad={() => {
               setIsTransforming && setIsTransforming(false);
@@ -77,11 +82,11 @@ const TransformedImage = ({
               setIsTransforming && setIsTransforming(false);
             }}
             {...transformationConfig} // Image transformations
-            className="h-full min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-contain p-2"
+            className="h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2"
           />
 
           {isTransforming && (
-            <div className="flex-center absolute left-[50%] top-[50%] h-full w-full -translate-x-1/2 -translate-y-1/2 border bg-dark-700/30">
+            <div className="flex-center absolute left-[50%] top-[50%] size-full -translate-x-1/2 -translate-y-1/2 border bg-dark-700/30">
               <Image
                 src="/assets/icons/spinner.svg"
                 width={50}

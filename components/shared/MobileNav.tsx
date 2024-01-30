@@ -15,12 +15,14 @@ export const MobileNav = () => {
   return (
     <header className="flex-between fixed h-16 w-full border-b-4 border-purple-100 bg-white p-5 lg:hidden ">
       {/* LOGO */}
-      <Image
-        src="/assets/images/logo-text.svg"
-        alt="logo"
-        width={180}
-        height={28}
-      />
+      <Link href="/" className="flex items-center gap-2 md:py-2">
+        <Image
+          src="/assets/images/logo-text.svg"
+          alt="logo"
+          width={180}
+          height={28}
+        />
+      </Link>
 
       {/* MENU ICON AS SHEET TRIGGER */}
       <nav className="flex gap-2">

@@ -19,8 +19,45 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
     <>
       <Header title={image.title} />
 
-      <section className="mt-5">
-        <div className="grid h-fit min-h-[200px] grid-cols-1 gap-5 py-4 md:grid-cols-2">
+      <section className="flex flex-col gap-2 px-2 md:flex-row md:gap-4">
+        <div className="flex gap-2">
+          <p className="p-16-semibold">Transformation:</p>
+          <p className=" capitalize">{image.transformationType}</p>
+        </div>
+
+        {image.prompt && (
+          <>
+            <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
+            <div className="flex gap-2">
+              <p className="p-16-semibold">Prompt:</p>
+              <p className=" capitalize">{image.prompt}</p>
+            </div>
+          </>
+        )}
+
+        {image.color && (
+          <>
+            <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
+            <div className="flex gap-2">
+              <p className="p-16-semibold">Color:</p>
+              <p className=" capitalize">{image.color}</p>
+            </div>
+          </>
+        )}
+
+        {image.aspectRatio && (
+          <>
+            <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
+            <div className="flex gap-2">
+              <p className="p-16-semibold">Aspect Ratio:</p>
+              <p className=" capitalize">{image.aspectRatio}</p>
+            </div>
+          </>
+        )}
+      </section>
+
+      <section className="mt-10 border-t border-dark-400/10">
+        <div className="grid h-fit min-h-[200px] grid-cols-1 gap-5 py-8 md:grid-cols-2">
           {/* MEDIA UPLOADER */}
           <div className="flex flex-col gap-4">
             <h3 className="h3-bold text-dark-600">Original</h3>
@@ -30,7 +67,7 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
               height={getImageSize(image.transformationType, image, "height")}
               src={image.secureURL}
               alt="image"
-              className="h-fit min-h-72 w-full  rounded-[10px] border border-dashed bg-purple-100/20 object-contain p-2"
+              className="h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2"
             />
           </div>
 
@@ -41,47 +78,9 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
             title={image.title}
             isTransforming={false}
             transformationConfig={image.config}
+            hasDownload={true}
           />
         </div>
-
-        <section className="flex flex-col gap-2 md:flex-row md:gap-4">
-          <div className="flex gap-2">
-            <p>Transformation:</p>
-            <p className="p-16-semibold capitalize">
-              {image.transformationType}
-            </p>
-          </div>
-
-          {image.prompt && (
-            <>
-              <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-              <div className="flex gap-2">
-                <p>Prompt:</p>
-                <p className="p-16-semibold capitalize">{image.prompt}</p>
-              </div>
-            </>
-          )}
-
-          {image.color && (
-            <>
-              <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-              <div className="flex gap-2">
-                <p>Color:</p>
-                <p className="p-16-semibold capitalize">{image.color}</p>
-              </div>
-            </>
-          )}
-
-          {image.aspectRatio && (
-            <>
-              <p className="hidden text-dark-400/50 md:block">&#x25CF;</p>
-              <div className="flex gap-2">
-                <p>Aspect Ratio:</p>
-                <p className="p-16-semibold capitalize">{image.aspectRatio}</p>
-              </div>
-            </>
-          )}
-        </section>
 
         {userId === image.author._id && (
           <div className="mt-8 space-y-4">

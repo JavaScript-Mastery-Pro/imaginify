@@ -12,7 +12,6 @@ type MediaUploaderProps = {
   onValueChange: (value: string) => void;
   setImage: React.Dispatch<any>;
   publicId: string;
-  isAuthorized: boolean;
   image: any;
   type: string;
 };
@@ -21,7 +20,6 @@ export const MediaUploader = ({
   onValueChange,
   setImage,
   publicId,
-  isAuthorized,
   image,
   type,
 }: MediaUploaderProps) => {
@@ -74,10 +72,8 @@ export const MediaUploader = ({
               <>
                 {/* RENDER UPLOADED IMAGE */}
                 <div
-                  className={`${
-                    isAuthorized && "cursor-pointer"
-                  } overflow-hidden rounded-[10px]`}
-                  onClick={() => isAuthorized && open()}
+                  className="cursor-pointer overflow-hidden rounded-[10px]"
+                  onClick={() => open()}
                 >
                   <CldImage
                     width={getImageSize(type, image, "width")}
@@ -85,15 +81,15 @@ export const MediaUploader = ({
                     src={publicId}
                     alt="image"
                     placeholder={dataUrl as PlaceholderValue}
-                    className="h-fit min-h-72 w-full  rounded-[10px] border border-dashed bg-purple-100/20 object-contain p-2"
+                    className="h-fit min-h-72 w-full  rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2"
                   />
                 </div>
               </>
             ) : (
               // RENDER UPLOAD CTA
               <div
-                className="flex-center flex h-72 cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20  shadow-inner"
-                onClick={() => isAuthorized && open()}
+                className="flex-center flex h-72 cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20 shadow-inner"
+                onClick={() => open()}
               >
                 <div className="rounded-[16px] bg-white  p-5 shadow-sm shadow-purple-200/50">
                   <Image

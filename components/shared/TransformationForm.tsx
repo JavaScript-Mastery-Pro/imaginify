@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -27,12 +27,11 @@ import {
 import { IImage } from "@/lib/database/models/image.model";
 import { CustomField } from "./CustomField";
 import { addImage, updateImage } from "@/lib/actions/image.actions";
-import { DeleteConfirmation } from "./DeleteConfirmation";
 import { MediaUploader } from "./MediaUploader";
 import TransformedImage from "./TransformedImage";
 import { InsufficientCreditsModal } from "./InsufficientCreditsModal";
 import { updateCredits } from "@/lib/actions/user.actions";
-import { debounce } from "@/lib/utils";
+import { debounce, deepMergeObjects } from "@/lib/utils";
 
 // ZOD VALIDATION
 export const formSchema = z.object({
@@ -66,16 +65,21 @@ export const TransformationForm = ({
 }: TransformationFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const transformationType = transformationTypes[type]; // Holds the transformation config type what will be filled in the form
-  const isAuthorized = action === "Update" && userId === data?.author?._id; // Disable state holder if user is not authorized to update the image
+  const transformationType = transformationTypes[type]; // Holds the transformation config type what will be used to transform the image
+  const isAuthorizedToUpdate =
+    action === "Update" && userId === data?.author?._id; // Disable state holder if user is not authorized to update the image
 
   const [image, setImage] = useState<any>(data); // Holds the uploaded image data
-  const [newTransformation, setNewTransformation] = useState(
-    transformationType.config
-  ); // Temporarily holds the transformation changes which will be applied after clickng the apply button
+  const [newTransformation, setNewTransformation] =
+    useState<Transformations | null>(null); // Temporarily holds the transformation changes which will be applied after clickng the apply button
   const [transformationConfig, setTransformationConfig] = useState(config); // Holds the final transformation config that will be applied to the image
   const [isTransforming, setIsTransforming] = useState(false); // Loading state on image transformation
   const [isSubmitting, setSubmitting] = useState(false); // Loading state on image save
+
+  console.log({ config });
+  console.log({ image });
+  console.log({ newTransformation });
+  console.log({ transformationConfig });
 
   const initialValues =
     data && action === "Update"
@@ -132,7 +136,7 @@ export const TransformationForm = ({
           if (newImage) {
             form.reset();
             setImage(data);
-            router.push(`/transformations/${newImage._id}/update`);
+            router.push(`/transformations/${newImage._id}`);
           }
         } catch (error) {
           console.log(error);
@@ -153,7 +157,7 @@ export const TransformationForm = ({
             path: `/transformations/${data._id}`,
           });
 
-          if (updatedImage) router.push("/profile");
+          if (updatedImage) router.push(`/transformations/${updatedImage._id}`);
         } catch (error) {
           console.log(error);
         }
@@ -206,20 +210,27 @@ export const TransformationForm = ({
   const onTransformHandler = async () => {
     setIsTransforming(true);
 
-    setTransformationConfig((prevState) => ({
-      ...prevState,
-      ...newTransformation,
-    }));
+    setTransformationConfig(
+      deepMergeObjects(transformationConfig, newTransformation) // deepMergeObjects is a custom function that merges two objects deeply created with chatgpt
+    );
+
+    setNewTransformation(null);
 
     startTransition(async () => {
       await updateCredits(userId, creditFee);
     });
   };
 
+  useEffect(() => {
+    if (image && (type === "restore" || type === "removeBackground")) {
+      setNewTransformation(transformationType.config);
+    }
+  }, [image, transformationType.config, type]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-        {isAuthorized && creditBalance < creditFee && (
+        {isAuthorizedToUpdate && creditBalance < creditFee && (
           <InsufficientCreditsModal />
         )}
 
@@ -244,6 +255,7 @@ export const TransformationForm = ({
                 onValueChange={(value) =>
                   onSelectFieldHandler(value, field.onChange)
                 }
+                value={field.value}
               >
                 <SelectTrigger className="select-field">
                   <SelectValue placeholder="Select size" />
@@ -318,10 +330,9 @@ export const TransformationForm = ({
           <CustomField
             control={form.control}
             name="publicId"
-            className="flex h-full w-full flex-col"
+            className="flex size-full flex-col"
             render={({ field }) => (
               <MediaUploader
-                isAuthorized={isAuthorized}
                 onValueChange={field.onChange}
                 setImage={setImage}
                 publicId={field.value}
@@ -343,12 +354,12 @@ export const TransformationForm = ({
         </div>
 
         {/* ACTIONS */}
-        <div className={`${!isAuthorized ? "hidden" : "flex"} flex-col gap-4`}>
+        <div className={`flex flex-col gap-4`}>
           {/* APPLY TRANSFORMATION BUTTON */}
           <Button
             type="button"
             className="submit-button capitalize"
-            disabled={isTransforming}
+            disabled={isTransforming || newTransformation === null}
             onClick={onTransformHandler}
           >
             {isTransforming ? "Transforming..." : "Apply Transformation"}
@@ -362,9 +373,6 @@ export const TransformationForm = ({
           >
             {isSubmitting ? "Saving..." : "Save Image"}
           </Button>
-
-          {/* DELETE BUTTON/CONFIRMATION */}
-          {data && <DeleteConfirmation imageId={data._id} />}
         </div>
       </form>
     </Form>

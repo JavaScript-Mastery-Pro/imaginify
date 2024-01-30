@@ -29,7 +29,7 @@ export const Sidebar = () => {
           <SignedIn>
             <ul className="hidden w-full flex-col items-start gap-2 md:flex">
               {/* Render up to Object recolor */}
-              {navLinks.slice(0, 5).map((link) => {
+              {navLinks.slice(0, 6).map((link) => {
                 const isActive = link.route === pathname;
 
                 return (
@@ -59,7 +59,7 @@ export const Sidebar = () => {
 
             <ul className="hidden w-full flex-col items-start gap-2 md:flex">
               {/* Render from profile to credits navLinks */}
-              {navLinks.slice(5).map((link) => {
+              {navLinks.slice(6).map((link) => {
                 const isActive = link.route === pathname;
 
                 return (
