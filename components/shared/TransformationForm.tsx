@@ -66,8 +66,6 @@ export const TransformationForm = ({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const transformationType = transformationTypes[type]; // Holds the transformation config type what will be used to transform the image
-  const isAuthorizedToUpdate =
-    action === "Update" && userId === data?.author?._id; // Disable state holder if user is not authorized to update the image
 
   const [image, setImage] = useState<any>(data); // Holds the uploaded image data
   const [newTransformation, setNewTransformation] =
@@ -225,9 +223,7 @@ export const TransformationForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-        {isAuthorizedToUpdate && creditBalance < creditFee && (
-          <InsufficientCreditsModal />
-        )}
+        {creditBalance < creditFee && <InsufficientCreditsModal />}
 
         {/* TITLE FIELD */}
         <CustomField
