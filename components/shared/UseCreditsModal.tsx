@@ -59,7 +59,7 @@ export const UseCreditsModal = ({
           <AlertDialogDescription className="p-16-regular py-3">
             Using this service will deduct
             <span className="p-16-semibold text-dark-600">
-              {creditFee} credit
+              {Math.abs(creditFee)} credit
             </span>
             from your remaining balance. Are you sure you want to proceed?
           </AlertDialogDescription>

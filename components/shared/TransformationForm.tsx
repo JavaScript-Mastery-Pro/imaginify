@@ -224,7 +224,7 @@ export const TransformationForm = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-        {creditBalance < creditFee && <InsufficientCreditsModal />}
+        {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal />}
 
         {/* TITLE FIELD */}
         <CustomField
