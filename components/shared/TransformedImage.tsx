@@ -25,7 +25,6 @@ const TransformedImage = ({
   setIsTransforming,
   hasDownload = false,
 }: TransformedImageProps) => {
-  console.log("transformationConfig---", transformationConfig);
   // DOWNLOAD HANDLER
   const downloadHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>

@@ -76,11 +76,6 @@ export const TransformationForm = ({
   const [isTransforming, setIsTransforming] = useState(false); // Loading state on image transformation
   const [isSubmitting, setSubmitting] = useState(false); // Loading state on image save
 
-  console.log({ config });
-  console.log({ image });
-  console.log({ newTransformation });
-  console.log({ transformationConfig });
-
   const initialValues =
     data && action === "Update"
       ? {
