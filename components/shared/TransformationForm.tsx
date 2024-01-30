@@ -68,11 +68,12 @@ export const TransformationForm = ({
   const transformationType = transformationTypes[type]; // Holds the transformation config type what will be used to transform the image
 
   const [image, setImage] = useState<any>(data); // Holds the uploaded image data
+  const [isSubmitting, setSubmitting] = useState(false); // Loading state on image save
+
   const [newTransformation, setNewTransformation] =
     useState<Transformations | null>(null); // Temporarily holds the transformation changes which will be applied after clickng the apply button
   const [transformationConfig, setTransformationConfig] = useState(config); // Holds the final transformation config that will be applied to the image
   const [isTransforming, setIsTransforming] = useState(false); // Loading state on image transformation
-  const [isSubmitting, setSubmitting] = useState(false); // Loading state on image save
 
   const initialValues =
     data && action === "Update"
@@ -204,7 +205,7 @@ export const TransformationForm = ({
     setIsTransforming(true);
 
     setTransformationConfig(
-      deepMergeObjects(transformationConfig, newTransformation) // deepMergeObjects is a custom function that merges two objects deeply created with chatgpt
+      deepMergeObjects(newTransformation, transformationConfig) // deepMergeObjects is a custom function that merges two objects deeply created with chatgpt
     );
 
     setNewTransformation(null);

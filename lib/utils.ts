@@ -136,7 +136,12 @@ export const deepMergeObjects = (obj1: any, obj2: any) => {
 
   for (let key in obj2) {
     if (obj2.hasOwnProperty(key)) {
-      if (typeof obj2[key] === "object" && obj2[key] !== null && obj1[key]) {
+      if (
+        obj1[key] &&
+        typeof obj1[key] === "object" &&
+        obj2[key] &&
+        typeof obj2[key] === "object"
+      ) {
         output[key] = deepMergeObjects(obj1[key], obj2[key]);
       } else {
         output[key] = obj2[key];
