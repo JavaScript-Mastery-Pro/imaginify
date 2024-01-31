@@ -4,10 +4,12 @@ import { Header } from "@/components/shared/Header";
 import { TransformationForm } from "@/components/shared/TransformationForm";
 import { transformationTypes } from "@/constants";
 import { getUserById } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
 
 const AddImage = async ({ params: { type } }: SearchParamProps) => {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
+  const { userId } = auth();
+
+  if (!userId) redirect("/sign-in");
 
   const user = await getUserById(userId);
   const transformation = transformationTypes[type];
@@ -19,7 +21,7 @@ const AddImage = async ({ params: { type } }: SearchParamProps) => {
       <section className="mt-10">
         <TransformationForm
           action="Add"
-          userId={userId}
+          userId={user._id}
           type={transformation.type as TransformationTypeKey}
           creditBalance={user.creditBalance}
         />

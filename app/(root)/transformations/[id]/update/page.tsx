@@ -5,10 +5,12 @@ import { TransformationForm } from "@/components/shared/TransformationForm";
 import { getImageById } from "@/lib/actions/image.actions";
 import { transformationTypes } from "@/constants";
 import { getUserById } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
 
 const UpdateImage = async ({ params: { id } }: SearchParamProps) => {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
+  const { userId } = auth();
+
+  if (!userId) redirect("/sign-in");
 
   const user = await getUserById(userId);
   const image = await getImageById(id);

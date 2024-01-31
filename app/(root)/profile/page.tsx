@@ -5,15 +5,16 @@ import { Header } from "@/components/shared/Header";
 import { Collection } from "@/components/shared/Collection";
 import { getUserById } from "@/lib/actions/user.actions";
 import { getUserImages } from "@/lib/actions/image.actions";
+import { redirect } from "next/navigation";
 
 const Profile = async ({ searchParams }: SearchParamProps) => {
   const page = Number(searchParams?.page) || 1;
+  const { userId } = auth();
 
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
+  if (!userId) redirect("/sign-in");
 
   const user = await getUserById(userId);
-  const images = await getUserImages({ page, userId });
+  const images = await getUserImages({ page, userId: user._id });
 
   return (
     <>
@@ -28,7 +29,7 @@ const Profile = async ({ searchParams }: SearchParamProps) => {
               alt="coins"
               width={50}
               height={50}
-              className="h-9 w-9 md:h-12 md:w-12"
+              className="size-9 md:size-12"
             />
             <h2 className="h2-bold text-dark-600">{user.creditBalance}</h2>
           </div>
@@ -42,7 +43,7 @@ const Profile = async ({ searchParams }: SearchParamProps) => {
               alt="coins"
               width={50}
               height={50}
-              className="h-9 w-9 md:h-12 md:w-12"
+              className="size-9 md:size-12"
             />
             <h2 className="h2-bold text-dark-600">{images?.data.length}</h2>
           </div>
