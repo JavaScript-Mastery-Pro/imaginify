@@ -5,10 +5,15 @@ import { plans } from "@/constants";
 import { Header } from "@/components/shared/Header";
 import Checkout from "@/components/shared/Checkout";
 import { Button } from "@/components/ui/button";
+import { getUserById } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
 
 const Credits = async () => {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
+  const { userId } = auth();
+
+  if (!userId) redirect("/sign-in");
+
+  const user = await getUserById(userId);
 
   return (
     <>
@@ -66,7 +71,7 @@ const Credits = async () => {
                     plan={plan.name}
                     amount={plan.price}
                     credits={plan.credits}
-                    buyerId={userId}
+                    buyerId={user._id}
                   />
                 </SignedIn>
               )}
