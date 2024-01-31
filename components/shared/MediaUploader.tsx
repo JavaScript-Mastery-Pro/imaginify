@@ -80,6 +80,7 @@ export const MediaUploader = ({
                     height={getImageSize(type, image, "height")}
                     src={publicId}
                     alt="image"
+                    sizes="(max-width: 767px) 100vw, 50vw"
                     placeholder={dataUrl as PlaceholderValue}
                     className="h-fit min-h-72 w-full  rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2"
                   />
