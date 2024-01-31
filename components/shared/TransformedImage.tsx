@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { dataUrl, download, getImageSize } from "@/lib/utils";
+import { dataUrl, debounce, download, getImageSize } from "@/lib/utils";
 import { CldImage, getCldImageUrl } from "next-cloudinary";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 
@@ -78,7 +78,9 @@ const TransformedImage = ({
               setIsTransforming && setIsTransforming(false);
             }}
             onError={() => {
-              setIsTransforming && setIsTransforming(false);
+              debounce(() => {
+                setIsTransforming && setIsTransforming(false);
+              }, 8000)();
             }}
             sizes="(max-width: 767px) 100vw, 50vw"
             {...transformationConfig} // Image transformations
@@ -86,13 +88,14 @@ const TransformedImage = ({
           />
 
           {isTransforming && (
-            <div className="flex-center absolute left-[50%] top-[50%] size-full -translate-x-1/2 -translate-y-1/2 border bg-dark-700/30">
+            <div className="flex-center absolute left-[50%] top-[50%] size-full -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[10px] border bg-dark-700/90">
               <Image
                 src="/assets/icons/spinner.svg"
                 width={50}
                 height={50}
                 alt="spinner"
               />
+              <p className="text-white/80">Please wait...</p>
             </div>
           )}
         </div>
