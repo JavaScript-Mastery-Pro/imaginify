@@ -22,7 +22,7 @@ export const navLinks = [
   {
     label: "Object Recolor",
     route: "/transformations/add/recolor",
-    icon: "/assets/icons/camera.svg",
+    icon: "/assets/icons/filter.svg",
   },
   {
     label: "Background Remove",
@@ -184,7 +184,7 @@ export const aspectRatioOptions = {
 
 export const defaultValues = {
   title: "",
-  aspectRatio: "1:1",
+  aspectRatio: "",
   color: "",
   prompt: "",
   publicId: "",

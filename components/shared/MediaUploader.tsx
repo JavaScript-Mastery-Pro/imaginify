@@ -26,7 +26,7 @@ export const MediaUploader = ({
   const { toast } = useToast();
 
   // UPLOAD SUCCESS HANDLER
-  const onUploadSuccess = (result: any) => {
+  const onUploadSuccessHandler = (result: any) => {
     setImage((prevState: any) => ({
       ...prevState,
       publicId: result?.info?.public_id,
@@ -52,7 +52,7 @@ export const MediaUploader = ({
         multiple: false,
         resourceType: "image",
       }}
-      onSuccess={onUploadSuccess}
+      onSuccess={onUploadSuccessHandler}
       onError={() =>
         toast({
           title: "Something's wrong while uploading!",

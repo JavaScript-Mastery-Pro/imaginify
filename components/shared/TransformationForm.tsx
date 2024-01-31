@@ -65,7 +65,7 @@ export const TransformationForm = ({
 }: TransformationFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const transformationType = transformationTypes[type]; // Holds the transformation config type what will be used to transform the image
+  const transformationType = transformationTypes[type]; // Defines the transformation configuration type that will be applied to transform the image
 
   const [image, setImage] = useState<any>(data); // Holds the uploaded image data
   const [isSubmitting, setSubmitting] = useState(false); // Loading state on image save
@@ -93,7 +93,7 @@ export const TransformationForm = ({
   });
 
   // SUBMIT HANDLER
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmitHandler = async (values: z.infer<typeof formSchema>) => {
     setSubmitting(true);
 
     if (data || image) {
@@ -223,7 +223,7 @@ export const TransformationForm = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+      <form onSubmit={form.handleSubmit(onSubmitHandler)} className="space-y-5">
         {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal />}
 
         {/* TITLE FIELD */}
