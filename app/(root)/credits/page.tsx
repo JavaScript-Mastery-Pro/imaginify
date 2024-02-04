@@ -1,12 +1,12 @@
-import Image from "next/image";
 import { SignedIn, auth } from "@clerk/nextjs";
-
-import { plans } from "@/constants";
-import { Header } from "@/components/shared/Header";
-import Checkout from "@/components/shared/Checkout";
-import { Button } from "@/components/ui/button";
-import { getUserById } from "@/lib/actions/user.actions";
+import Image from "next/image";
 import { redirect } from "next/navigation";
+
+import Checkout from "@/components/shared/Checkout";
+import { Header } from "@/components/shared/Header";
+import { Button } from "@/components/ui/button";
+import { plans } from "@/constants";
+import { getUserById } from "@/lib/actions/user.actions";
 
 const Credits = async () => {
   const { userId } = auth();

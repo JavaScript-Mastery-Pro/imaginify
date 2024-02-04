@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Collection } from "@/components/shared/Collection";
-import { getAllImages } from "@/lib/actions/image.actions";
 import { navLinks } from "@/constants";
+import { getAllImages } from "@/lib/actions/image.actions";
 
 const Home = async ({ searchParams }: SearchParamProps) => {
   const page = Number(searchParams?.page) || 1;

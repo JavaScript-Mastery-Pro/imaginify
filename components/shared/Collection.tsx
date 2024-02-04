@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { CldImage } from "next-cloudinary";
 import { useSearchParams, useRouter } from "next/navigation";
+import { CldImage } from "next-cloudinary";
 
 import {
   Pagination,
@@ -11,10 +11,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { formUrlQuery } from "@/lib/utils";
 import { transformationTypes } from "@/constants";
 import { IImage } from "@/lib/database/models/image.model";
+import { formUrlQuery } from "@/lib/utils";
+
 import { Button } from "../ui/button";
+
 import { Search } from "./Search";
 
 export const Collection = ({

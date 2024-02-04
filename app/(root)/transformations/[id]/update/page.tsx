@@ -1,11 +1,11 @@
 import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 import { Header } from "@/components/shared/Header";
 import { TransformationForm } from "@/components/shared/TransformationForm";
-import { getImageById } from "@/lib/actions/image.actions";
 import { transformationTypes } from "@/constants";
+import { getImageById } from "@/lib/actions/image.actions";
 import { getUserById } from "@/lib/actions/user.actions";
-import { redirect } from "next/navigation";
 
 const UpdateImage = async ({ params: { id } }: SearchParamProps) => {
   const { userId } = auth();

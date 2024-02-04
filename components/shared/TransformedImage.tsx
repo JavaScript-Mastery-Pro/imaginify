@@ -1,10 +1,10 @@
 "use client";
 
+import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
+import { CldImage, getCldImageUrl } from "next-cloudinary";
 
 import { dataUrl, debounce, download, getImageSize } from "@/lib/utils";
-import { CldImage, getCldImageUrl } from "next-cloudinary";
-import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 
 type TransformedImageProps = {
   image: any;

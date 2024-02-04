@@ -6,8 +6,9 @@ import { redirect } from "next/navigation";
 
 import { handleError } from "@/lib//utils";
 import User from "@/lib/database/models/user.model";
-import Image from "../database/models/image.model";
 import { connectToDatabase } from "@/lib/database/mongoose";
+
+import Image from "../database/models/image.model";
 
 // POPULATE USER
 const populateUser = (query: any) => {

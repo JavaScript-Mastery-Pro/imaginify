@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
+import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
+import { CldImage, CldUploadWidget } from "next-cloudinary";
+import React from "react";
 
 import { useToast } from "@/components/ui/use-toast";
-import { CldImage, CldUploadWidget } from "next-cloudinary";
-import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import { dataUrl, getImageSize } from "@/lib/utils";
 
 type MediaUploaderProps = {
