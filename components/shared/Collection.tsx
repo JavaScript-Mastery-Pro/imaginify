@@ -46,19 +46,19 @@ export const Collection = ({
 
   return (
     <>
-      <div className="md:flex-between mb-6 flex flex-col gap-5 md:flex-row">
+      <div className="collection-heading">
         <h2 className="h2-bold text-dark-600">Recent Edits</h2>
         {hasSearch && <Search />}
       </div>
 
       {images.length > 0 ? (
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+        <ul className="collection-list">
           {images.map((image) => (
-            <Card image={image} key={image.id} />
+            <Card image={image} key={image._id} />
           ))}
         </ul>
       ) : (
-        <div className="flex-center h-60 w-full rounded-[10px] border border-dark-400/10 bg-white/20">
+        <div className="collection-empty">
           <p className="p-20-semibold">Empty List</p>
         </div>
       )}
@@ -68,7 +68,7 @@ export const Collection = ({
           <PaginationContent className="flex w-full">
             <Button
               disabled={Number(page) <= 1}
-              className="button w-32 bg-purple-gradient bg-cover text-white"
+              className="collection-btn"
               onClick={() => onPageChange("prev")}
             >
               <PaginationPrevious className="hover:bg-transparent hover:text-white" />
@@ -79,7 +79,7 @@ export const Collection = ({
             </p>
 
             <Button
-              className="button w-32 bg-purple-gradient bg-cover text-white "
+              className="button w-32 bg-purple-gradient bg-cover text-white"
               onClick={() => onPageChange("next")}
               disabled={Number(page) >= totalPages}
             >
@@ -95,10 +95,7 @@ export const Collection = ({
 const Card = ({ image }: { image: IImage }) => {
   return (
     <li>
-      <Link
-        href={`/transformations/${image._id}`}
-        className="flex flex-1 cursor-pointer flex-col gap-5 rounded-[16px] border-2 border-purple-200/15 bg-white p-4 shadow-xl shadow-purple-200/10 transition-all hover:shadow-purple-200/20"
-      >
+      <Link href={`/transformations/${image._id}`} className="collection-card">
         <CldImage
           src={image.publicId}
           alt={image.title}

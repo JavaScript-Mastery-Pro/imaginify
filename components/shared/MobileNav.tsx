@@ -13,7 +13,7 @@ export const MobileNav = () => {
   const pathname = usePathname();
 
   return (
-    <header className="flex-between fixed h-16 w-full border-b-4 border-purple-100 bg-white p-5 lg:hidden ">
+    <header className="header">
       {/* LOGO */}
       <Link href="/" className="flex items-center gap-2 md:py-2">
         <Image
@@ -48,7 +48,7 @@ export const MobileNav = () => {
                   height={23}
                 />
 
-                <ul className="mt-8 flex w-full flex-col items-start gap-5">
+                <ul className="header-nav_elements">
                   {navLinks.map((link) => {
                     const isActive = link.route === pathname;
 

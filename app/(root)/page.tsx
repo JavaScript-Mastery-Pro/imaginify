@@ -14,8 +14,8 @@ const Home = async ({ searchParams }: SearchParamProps) => {
   return (
     <>
       {/* Banner */}
-      <section className="sm:flex-center hidden h-72 flex-col gap-4 rounded-[20px] border bg-banner bg-cover bg-no-repeat p-10 shadow-inner">
-        <h1 className="h1-semibold max-w-[500px] flex-wrap text-center text-white shadow-sm">
+      <section className="home">
+        <h1 className="home-heading">
           Unleash Your Creative Vision with Imaginify
         </h1>
         <ul className="flex-center w-full gap-20">

@@ -82,17 +82,14 @@ export const MediaUploader = ({
                     alt="image"
                     sizes="(max-width: 767px) 100vw, 50vw"
                     placeholder={dataUrl as PlaceholderValue}
-                    className="h-fit min-h-72 w-full  rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2"
+                    className="media-uploader_cldImage"
                   />
                 </div>
               </>
             ) : (
               // RENDER UPLOAD CTA
-              <div
-                className="flex-center flex h-72 cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20 shadow-inner"
-                onClick={() => open()}
-              >
-                <div className="rounded-[16px] bg-white  p-5 shadow-sm shadow-purple-200/50">
+              <div className="media-uploader_cta" onClick={() => open()}>
+                <div className="media-uploader_cta-image">
                   <Image
                     src="/assets/icons/add.svg"
                     alt="add image"

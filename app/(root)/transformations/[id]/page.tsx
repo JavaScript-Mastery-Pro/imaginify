@@ -59,7 +59,7 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
       </section>
 
       <section className="mt-10 border-t border-dark-400/15">
-        <div className="grid h-fit min-h-[200px] grid-cols-1 gap-5 py-8 md:grid-cols-2">
+        <div className="transformation-grid">
           {/* MEDIA UPLOADER */}
           <div className="flex flex-col gap-4">
             <h3 className="h3-bold text-dark-600">Original</h3>
@@ -69,7 +69,7 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
               height={getImageSize(image.transformationType, image, "height")}
               src={image.secureURL}
               alt="image"
-              className="h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2"
+              className="transformation-original_image"
             />
           </div>
 

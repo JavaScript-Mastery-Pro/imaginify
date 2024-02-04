@@ -36,7 +36,7 @@ export const Search = () => {
   }, [router, searchParams, query]);
 
   return (
-    <div className="flex w-full rounded-[16px] border-2 border-purple-200/20 bg-white px-4 shadow-sm shadow-purple-200/15 md:max-w-96">
+    <div className="search">
       <Image
         src="/assets/icons/search.svg"
         alt="search"

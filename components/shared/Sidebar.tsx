@@ -12,10 +12,10 @@ export const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden h-screen w-72 bg-white p-5 shadow-md shadow-purple-200/50 lg:flex">
-      <div className="flex h-full w-full flex-col gap-4">
+    <aside className="sidebar">
+      <div className="flex size-full flex-col gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 md:py-2">
+        <Link href="/" className="sidebar-logo">
           <Image
             src="/assets/images/logo-text.svg"
             alt="logo"
@@ -25,9 +25,9 @@ export const Sidebar = () => {
         </Link>
 
         {/* Nav Items */}
-        <nav className="h-full flex-col justify-between md:flex md:gap-4">
+        <nav className="sidebar-nav">
           <SignedIn>
-            <ul className="hidden w-full flex-col items-start gap-2 md:flex">
+            <ul className="sidebar-nav_elements">
               {/* Render up to Object recolor */}
               {navLinks.slice(0, 6).map((link) => {
                 const isActive = link.route === pathname;
@@ -35,14 +35,13 @@ export const Sidebar = () => {
                 return (
                   <li
                     key={link.route}
-                    className={`${
-                      isActive && "bg-purple-gradient text-white"
-                    } flex-center p-16-semibold group w-full whitespace-nowrap rounded-full bg-cover text-dark-700 transition-all hover:bg-purple-100 hover:shadow-inner `}
+                    className={`sidebar-nav_element group ${
+                      isActive
+                        ? "bg-purple-gradient text-white"
+                        : "text-dark-700"
+                    }`}
                   >
-                    <Link
-                      className="p-16-semibold flex h-full w-full gap-4 p-4"
-                      href={link.route}
-                    >
+                    <Link className="sidebar-link" href={link.route}>
                       <Image
                         src={link.icon}
                         alt="logo"
@@ -57,7 +56,7 @@ export const Sidebar = () => {
               })}
             </ul>
 
-            <ul className="hidden w-full flex-col items-start gap-2 md:flex">
+            <ul className="sidebar-nav_elements">
               {/* Render from profile to credits navLinks */}
               {navLinks.slice(6).map((link) => {
                 const isActive = link.route === pathname;
@@ -65,14 +64,13 @@ export const Sidebar = () => {
                 return (
                   <li
                     key={link.route}
-                    className={`${
-                      isActive && "bg-purple-gradient text-white"
-                    } flex-center p-16-semibold group w-full whitespace-nowrap rounded-full bg-cover text-dark-700 transition-all hover:bg-purple-100 hover:shadow-inner `}
+                    className={`sidebar-nav_element group ${
+                      isActive
+                        ? "bg-purple-gradient text-white"
+                        : "text-dark-700"
+                    }`}
                   >
-                    <Link
-                      className="p-16-semibold flex h-full w-full gap-4 p-4"
-                      href={link.route}
-                    >
+                    <Link className="sidebar-link" href={link.route}>
                       <Image
                         src={link.icon}
                         alt="logo"

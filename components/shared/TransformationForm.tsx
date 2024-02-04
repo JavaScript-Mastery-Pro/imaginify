@@ -267,7 +267,7 @@ export const TransformationForm = ({
 
         {(type === "remove" || type === "recolor") && (
           /* PROMPT FIELD */
-          <div className="flex flex-col gap-5 lg:flex-row lg:gap-10">
+          <div className="prompt-field">
             <CustomField
               control={form.control}
               name="prompt"
@@ -317,7 +317,7 @@ export const TransformationForm = ({
           </div>
         )}
 
-        <div className="grid h-fit min-h-[200px] grid-cols-1 gap-5 py-4 md:grid-cols-2">
+        <div className="media-uploader-field">
           {/* MEDIA UPLOADER */}
           <CustomField
             control={form.control}

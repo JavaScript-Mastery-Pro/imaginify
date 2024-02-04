@@ -205,6 +205,149 @@
   .error-toast {
     @apply bg-red-100 text-red-900;
   }
+
+  /* Home Page */
+  .home {
+    @apply sm:flex-center hidden h-72 flex-col gap-4 rounded-[20px] border bg-banner bg-cover bg-no-repeat p-10 shadow-inner;
+  }
+
+  .home-heading {
+    @apply h1-semibold max-w-[500px] flex-wrap text-center text-white shadow-sm;
+  }
+
+  /* Credits Page */
+  .credits-list {
+    @apply mt-11 grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-9 xl:grid-cols-3;
+  }
+
+  .credits-item {
+    @apply w-full rounded-[16px] border-2 border-purple-200/20 bg-white p-8 shadow-xl shadow-purple-200/20 lg:max-w-none;
+  }
+
+  .credits-btn {
+    @apply w-full rounded-full bg-purple-100 bg-cover text-purple-500 hover:text-purple-500;
+  }
+
+  /* Profile Page */
+  .profile {
+    @apply mt-5 flex flex-col gap-5 sm:flex-row md:mt-8 md:gap-10;
+  }
+
+  .profile-balance {
+    @apply w-full rounded-[16px] border-2 border-purple-200/20 bg-white p-5 shadow-lg shadow-purple-200/10 md:px-6 md:py-8;
+  }
+
+  .profile-image-manipulation {
+    @apply w-full rounded-[16px] border-2 border-purple-200/20 bg-white p-5 shadow-lg shadow-purple-200/10 md:px-6 md:py-8;
+  }
+
+  /* Transformation Details */
+  .transformation-grid {
+    @apply grid h-fit min-h-[200px] grid-cols-1 gap-5 py-8 md:grid-cols-2;
+  }
+
+  .transformation-original_image {
+    @apply h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2;
+  }
+
+  /* Collection Component */
+  .collection-heading {
+    @apply md:flex-between mb-6 flex flex-col gap-5 md:flex-row;
+  }
+
+  .collection-list {
+    @apply grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3;
+  }
+
+  .collection-empty {
+    @apply flex-center h-60 w-full rounded-[10px] border border-dark-400/10 bg-white/20;
+  }
+
+  .collection-btn {
+    @apply button w-32 bg-purple-gradient bg-cover text-white;
+  }
+
+  .collection-card {
+    @apply flex flex-1 cursor-pointer flex-col gap-5 rounded-[16px] border-2 border-purple-200/15 bg-white p-4 shadow-xl shadow-purple-200/10 transition-all hover:shadow-purple-200/20;
+  }
+
+  /* MediaUploader Component */
+  .media-uploader_cldImage {
+    @apply h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2;
+  }
+
+  .media-uploader_cta {
+    @apply flex-center flex h-72 cursor-pointer flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20 shadow-inner;
+  }
+
+  .media-uploader_cta-image {
+    @apply rounded-[16px] bg-white  p-5 shadow-sm shadow-purple-200/50;
+  }
+
+  /* Navbar Component */
+  .header {
+    @apply flex-between fixed h-16 w-full border-b-4 border-purple-100 bg-white p-5 lg:hidden;
+  }
+
+  .header-nav_elements {
+    @apply mt-8 flex w-full flex-col items-start gap-5;
+  }
+
+  /* Search Component */
+  .search {
+    @apply flex w-full rounded-[16px] border-2 border-purple-200/20 bg-white px-4 shadow-sm shadow-purple-200/15 md:max-w-96;
+  }
+
+  /* Sidebar Component */
+  .sidebar {
+    @apply hidden h-screen w-72 bg-white p-5 shadow-md shadow-purple-200/50 lg:flex;
+  }
+
+  .sidebar-logo {
+    @apply flex items-center gap-2 md:py-2;
+  }
+
+  .sidebar-nav {
+    @apply h-full flex-col justify-between md:flex md:gap-4;
+  }
+
+  .sidebar-nav_elements {
+    @apply hidden w-full flex-col items-start gap-2 md:flex;
+  }
+
+  .sidebar-nav_element {
+    @apply flex-center p-16-semibold w-full whitespace-nowrap rounded-full bg-cover  transition-all hover:bg-purple-100 hover:shadow-inner;
+  }
+
+  .sidebar-link {
+    @apply p-16-semibold flex size-full gap-4 p-4;
+  }
+
+  /* TransformationForm Component */
+  .prompt-field {
+    @apply flex flex-col gap-5 lg:flex-row lg:gap-10;
+  }
+
+  .media-uploader-field {
+    @apply grid h-fit min-h-[200px] grid-cols-1 gap-5 py-4 md:grid-cols-2;
+  }
+
+  /* TransformedImage Component */
+  .download-btn {
+    @apply p-14-medium mt-2 flex items-center gap-2 px-2;
+  }
+
+  .transformed-image {
+    @apply h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2;
+  }
+
+  .tranforming-loader {
+    @apply flex-center absolute left-[50%] top-[50%] size-full -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[10px] border bg-dark-700/90;
+  }
+
+  .transformed-placeholder {
+    @apply flex-center p-14-medium h-full min-h-72 flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20 shadow-inner;
+  }
 }
 
 /* =====  CLERK OVERRIDES */
