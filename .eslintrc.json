@@ -26,5 +26,13 @@
         }
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["./components/ui/**"],
+      "rules": {
+        "import/order": "off"
+      }
+    }
+  ]
 }

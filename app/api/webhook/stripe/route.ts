@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
-import stripe from "stripe";
 import { NextResponse } from "next/server";
+import stripe from "stripe";
+
 import { createTransaction } from "@/lib/actions/transaction.actions";
 
 export async function POST(request: Request) {
