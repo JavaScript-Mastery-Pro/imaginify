@@ -4,7 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
 
 import { useToast } from "@/components/ui/use-toast";
-import { checkoutOrder } from "@/lib/actions/transaction.actions";
+import { checkoutCredits } from "@/lib/actions/transaction.actions";
 
 import { Button } from "../ui/button";
 
@@ -55,11 +55,11 @@ const Checkout = ({
       buyerId,
     };
 
-    await checkoutOrder(transaction);
+    await checkoutCredits(transaction);
   };
 
   return (
-    <form action={onCheckout}>
+    <form action={onCheckout} method="POST">
       <section>
         <Button
           type="submit"

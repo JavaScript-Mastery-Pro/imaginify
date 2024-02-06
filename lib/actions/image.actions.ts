@@ -82,12 +82,10 @@ export async function getAllImages({
       };
     }
 
-    // Calculate how many images to skip
     const skipAmount = (Number(page) - 1) * limit;
 
-    // Find all images, sort by upvotes, skip and limit
     const images = await populateUser(Image.find(query))
-      .sort({ updatedAt: -1 }) // Sort by highest upvotes
+      .sort({ updatedAt: -1 })
       .skip(skipAmount)
       .limit(limit);
 
@@ -117,12 +115,10 @@ export async function getUserImages({
   try {
     await connectToDatabase();
 
-    // Calculate how many images to skip
     const skipAmount = (Number(page) - 1) * limit;
 
-    // Find all images, sort by upvotes, skip and limit
     const images = await populateUser(Image.find({ author: userId }))
-      .sort({ updatedAt: -1 }) // Sort by highest upvotes
+      .sort({ updatedAt: -1 })
       .skip(skipAmount)
       .limit(limit);
 

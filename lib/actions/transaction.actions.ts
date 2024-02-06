@@ -10,7 +10,7 @@ import { handleError } from "../utils";
 import { updateCredits } from "./user.actions";
 
 // CHECKOUT
-export async function checkoutOrder(transaction: CheckoutTransactionParams) {
+export async function checkoutCredits(transaction: CheckoutTransactionParams) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
   const amount = Number(transaction.amount) * 100;
