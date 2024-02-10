@@ -16,7 +16,7 @@ type TransformedImageProps = {
   setIsTransforming?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const TransformedImage = ({
+export const TransformedImage = ({
   image,
   type,
   title,
@@ -103,5 +103,3 @@ const TransformedImage = ({
     </div>
   );
 };
-
-export default TransformedImage;

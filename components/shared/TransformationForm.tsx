@@ -32,7 +32,7 @@ import { debounce, deepMergeObjects } from "@/lib/utils";
 import { CustomField } from "./CustomField";
 import { InsufficientCreditsModal } from "./InsufficientCreditsModal";
 import { MediaUploader } from "./MediaUploader";
-import TransformedImage from "./TransformedImage";
+import { TransformedImage } from "./TransformedImage";
 
 // ZOD VALIDATION
 export const formSchema = z.object({
